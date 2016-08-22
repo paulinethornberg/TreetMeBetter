@@ -17,7 +17,7 @@ namespace GoodBadStuff
         public void ConfigureServices(IServiceCollection services)
         {
             var connstring = "tcp:ggbg.database.windows.net,1433; Initial Catalog = TBA; Persist Security Info = False; User ID = viktor; Password = Hansen90; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30";
-
+          //  services.AddDbContext<PokemonContext>(options => options.UseSqlServer(conString));
             services.AddMvc();
         }
 
