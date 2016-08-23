@@ -136,6 +136,12 @@
             directionsDisplay = new google.maps.DirectionsRenderer();
             directionsService = new google.maps.DirectionsService();
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                draggable: true,
+                title: "Drag me!"
+            });
             directionsDisplay.setMap(map);
         }
 
