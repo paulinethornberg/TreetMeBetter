@@ -43,6 +43,8 @@
         var map;
         var fromResult;
         var toResult;
+        var directionsService; 
+        var directionsDisplay; 
 
         function onClick() {
             from = document.getElementById('from').value;
@@ -66,10 +68,23 @@
                 toPromise.then(function () {
                     console.log(fromResult.lat() + " " + fromResult.lng());
                     console.log(toResult.lat() + " " + toResult.lng());
+                    drawRoute();
                 });
             });
         }
+        function drawRoute() {
+            var request = {
+                origin: fromResult,
+                destination: toResult,
+                travelMode: 'DRIVING'
+            };
+            directionsService.route(request, function (result, status) {
+                if (status == 'OK') {
+                    directionsDisplay.setDirections(result);
+                }
+            });
 
+        }
         function initialize() {
             geocoder = new google.maps.Geocoder();
             var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -77,7 +92,10 @@
                 zoom: 8,
                 center: latlng
             }
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsService = new google.maps.DirectionsService();
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            directionsDisplay.setMap(map);
         }
 
         function doGeoCall(address)
