@@ -30,6 +30,7 @@
             padding-left: 10px;
         }
     </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body onload="initialize()">
     <div id="map" style="width: 320px; height: 480px;"></div>
@@ -43,9 +44,9 @@
         <input type="radio" name="type" value="WALKING">
         <label>Bicycle</label>
         <input type="radio" name="type" value="BICYCLING">
-        <label>tRANSIT</label>
+        <label>Bus</label>
         <input type="radio" name="type" value="BUS">
-        <label>tRANSIT</label>
+        <label>Train</label>
         <input type="radio" name="type" value="TRAIN">
     </div>
     <script>
@@ -82,8 +83,17 @@
                     console.log(fromResult.lat() + " " + fromResult.lng());
                     console.log(toResult.lat() + " " + toResult.lng());
                     drawRoute();
+                    getCarbon();
                 });
             });
+        }
+
+        function getCarbon() {
+            var locArray = [fromResult.ltd(), fromResult.lng(), toResult.ltd(), toResult.lng()]
+            $.get("/home/GetCarbonData", null,  function (result) {
+                console.log(result);
+            });
+
         }
 
         function drawRoute() {
