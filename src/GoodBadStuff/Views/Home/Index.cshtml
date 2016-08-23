@@ -89,11 +89,22 @@
         }
 
         function getCarbon() {
-            var locArray = [fromResult.ltd(), fromResult.lng(), toResult.ltd(), toResult.lng()]
-            $.get("/home/GetCarbonData", null,  function (result) {
+            ////var locArray = [fromResult.ltd(), fromResult.lng(), toResult.ltd(), toResult.lng()]
+            $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
                 console.log(result);
             });
 
+            //var urlString = `http://api.commutegreener.com/api/co2/emissions?startLat=${encodeURI(fromResult.lat)}&startLng=${encodeURI(fromResult.lng)}&endLat=${encodeURI(toResult.lat)}&endLng=${encodeURI(toResult.lng)}&format=json`;
+
+            //$.ajax({
+            //    type: 'POST',
+            //    url: '/home/GetCarbonData/',
+            //    data: urlString,
+            //    contentType: 'application/json',
+            //    error: function (err) {
+            //        alert("error - " + err);
+            //    }
+            //})
         }
 
         function drawRoute() {

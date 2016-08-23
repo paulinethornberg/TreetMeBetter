@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GoodBadStuff.Models.ViewModels
+namespace GoodBadStuff.Models
 {
-    public class HomeIndexVM
+    public class TravelInfo
     {
         public string FromLat { get; set; }
         public string FromLng { get; set; }
         public string ToLat { get; set; }
         public string ToLng { get; set; }
-        public string UrlInCaseOfFire { get; set; }
+        //&public string UrlInCaseOfFire { get; set; }
     }
 }

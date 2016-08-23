@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using GoodBadStuff.Models;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,9 +15,6 @@ namespace GoodBadStuff.Controllers
 {
     public class HomeController : Controller
     {
-
-        HttpClient _client;
-
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -24,28 +22,13 @@ namespace GoodBadStuff.Controllers
             return View();
         }
 
-        
-        public async Task<ActionResult> GetCarbonData()
+        [HttpPost]
+        public async Task<ActionResult> GetCarbonData(TravelInfo travelInfo)
         {
-            string webapiurl = "http://api.commutegreener.com/api/co2/emissions?startLat=57.7097704&startLng=11.9661608&endLat=57.6969943&endLng=11.9865&format=json";
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(webapiurl);
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var ResponseMessage = await _client.GetAsync(webapiurl);
-
-            if (ResponseMessage.IsSuccessStatusCode)
-            {
-
-                var data = ResponseMessage.Content.ReadAsStringAsync().Result;
-                //var datasource = JsonConvert.DeserializeObject<List<DataSourceInfo>>(data);
-                return Json(data);
-
-            }
-
-            return View("Error");
-   
+            string webapiurl = $"http://api.commutegreener.com/api/co2/emissions?startLat={travelInfo.FromLat}&startLng={travelInfo.FromLng}&endLat={travelInfo.ToLat}&endLng={travelInfo.ToLng}&format=json";
+            var client = new HttpClient();
+            var json = await client.GetStringAsync(webapiurl);
+            return Content(json, "application/json");
         }
-
     }
 }
