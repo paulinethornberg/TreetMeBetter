@@ -49,6 +49,8 @@
         <label>Train</label>
         <input type="radio" name="type" value="TRAIN">
     </div>
+    <div id="postCarbon" style="font-size:19px">
+    </div>
     <script>
         var geocoder;
         var map;
@@ -88,23 +90,12 @@
             });
         }
 
+        // Send and get JSON from Carbon-API
         function getCarbon() {
-            ////var locArray = [fromResult.ltd(), fromResult.lng(), toResult.ltd(), toResult.lng()]
             $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
                 console.log(result);
+                document.getElementById("postCarbon").innerHTML = result.emissions[5].totalCo2;
             });
-
-            //var urlString = `http://api.commutegreener.com/api/co2/emissions?startLat=${encodeURI(fromResult.lat)}&startLng=${encodeURI(fromResult.lng)}&endLat=${encodeURI(toResult.lat)}&endLng=${encodeURI(toResult.lng)}&format=json`;
-
-            //$.ajax({
-            //    type: 'POST',
-            //    url: '/home/GetCarbonData/',
-            //    data: urlString,
-            //    contentType: 'application/json',
-            //    error: function (err) {
-            //        alert("error - " + err);
-            //    }
-            //})
         }
 
         function drawRoute() {
@@ -163,7 +154,7 @@
         }
 
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw">
     </script>
 </body>
 </html>
