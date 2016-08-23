@@ -37,18 +37,28 @@
         <input id="from" type="text" value="Stockholm">
         <input id="to" type="text" value="Malmö">
         <input type="button" value="Encode" onclick="onClick()">
+        <label>DRIVE</label>
+        <input type="radio" name="type" value="DRIVING">
+        <label>Walking</label>
+        <input type="radio" name="type" value="WALKING">
+        <label>Bicycle</label>
+        <input type="radio" name="type" value="BICYCLING">
+        <label>tRANSIT</label>
+        <input type="radio" name="type" value="TRANSIT">
     </div>
     <script>
         var geocoder;
         var map;
         var fromResult;
         var toResult;
-        var directionsService; 
-        var directionsDisplay; 
+        var directionsService;
+        var directionsDisplay;
+        var type;
 
         function onClick() {
             from = document.getElementById('from').value;
             to = document.getElementById('to').value;
+            type = document.querySelector('input[name="type"]:checked').value;
 
             //  Do from-call
             var fromPromise = doGeoCall(from).then(function (result) {
@@ -76,7 +86,7 @@
             var request = {
                 origin: fromResult,
                 destination: toResult,
-                travelMode: 'DRIVING'
+                travelMode: type
             };
             directionsService.route(request, function (result, status) {
                 if (status == 'OK') {
@@ -98,8 +108,7 @@
             directionsDisplay.setMap(map);
         }
 
-        function doGeoCall(address)
-        {
+        function doGeoCall(address) {
             return new Promise(function (resolve, reject) {
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == 'OK') {
