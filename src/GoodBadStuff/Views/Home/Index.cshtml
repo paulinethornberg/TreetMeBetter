@@ -44,7 +44,9 @@
         <label>Bicycle</label>
         <input type="radio" name="type" value="BICYCLING">
         <label>tRANSIT</label>
-        <input type="radio" name="type" value="TRANSIT">
+        <input type="radio" name="type" value="BUS">
+        <label>tRANSIT</label>
+        <input type="radio" name="type" value="TRAIN">
     </div>
     <script>
         var geocoder;
@@ -53,12 +55,13 @@
         var toResult;
         var directionsService;
         var directionsDisplay;
-        var type;
+        var transit;
 
         function onClick() {
             from = document.getElementById('from').value;
             to = document.getElementById('to').value;
-            type = document.querySelector('input[name="type"]:checked').value;
+
+            
 
             //  Do from-call
             var fromPromise = doGeoCall(from).then(function (result) {
@@ -82,11 +85,27 @@
                 });
             });
         }
+
         function drawRoute() {
-            var request = {
-                origin: fromResult,
-                destination: toResult,
-                travelMode: type
+            // Todo: putsa på koden så denna lösning blir snyggare
+            type = document.querySelector('input[name="type"]:checked').value;
+            var request;
+
+            if (type === 'BUS' || type === 'TRAIN') {
+                request = {
+                    origin: fromResult,
+                    destination: toResult,
+                    travelMode: 'TRANSIT',
+                    transitOptions: {
+                        modes: [type]
+                    }
+                }
+            }
+            else
+                request = {
+                    origin: fromResult,
+                    destination: toResult,
+                    travelMode: type
             };
             directionsService.route(request, function (result, status) {
                 if (status == 'OK') {
