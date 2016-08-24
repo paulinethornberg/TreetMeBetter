@@ -1,26 +1,14 @@
-﻿<div>
+﻿
+<div>
     <div id="map" style="width: 320px; height: 480px;"></div>
 </div>
+@Html.Partial("_Search")
+@Html.Partial("_SearchResult")
 
-<div>
-    <input id="from" type="text" value="Stockholm">
-    <input id="to" type="text" value="Malmö">
-    <input type="button" value="Encode" onclick="onClick()">
-    <label>DRIVE</label>
-    <input type="radio" name="type" value="DRIVING">
-    <label>Walking</label>
-    <input type="radio" name="type" value="WALKING">
-    <label>Bicycle</label>
-    <input type="radio" name="type" value="BICYCLING">
-    <label>Bus</label>
-    <input type="radio" name="type" value="BUS">
-    <label>Train</label>
-    <input type="radio" name="type" value="TRAIN">
-</div>
-<div id="postCarbon" style="font-size:19px">
-</div>
+
 
 @section Script{
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw"></script>
+    @*tog bort asynkron inladdning*@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw"></script>
 <script src="~/Scripts/App.js"></script>
 }
