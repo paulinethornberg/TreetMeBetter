@@ -61,20 +61,12 @@ namespace GoodBadStuff.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginVM viewModel)
+        public async Task<bool> Login(UserLoginVM viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            //Todo: KOlla ModelState isvalid
 
             var result = await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(nameof(UserLoginVM.Username), "Login failed");
-                return View(viewModel);
-            }
-            return RedirectToAction(nameof(HomeController.Index), "index");
+            return result.Succeeded;
         }
 
         public async Task<IActionResult> Logout()
