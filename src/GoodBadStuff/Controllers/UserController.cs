@@ -35,7 +35,6 @@ namespace GoodBadStuff.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Create(UserCreateVM viewModel)
         {
-            await _identityContext.Database.EnsureCreatedAsync();
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
