@@ -1,165 +1,26 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Directions service</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            height: 100%;
-        }
-
-        #floating-panel {
-            position: absolute;
-            top: 10px;
-            left: 25%;
-            z-index: 5;
-            background-color: #fff;
-            padding: 5px;
-            border: 1px solid #999;
-            text-align: center;
-            font-family: 'Roboto','sans-serif';
-            line-height: 30px;
-            padding-left: 10px;
-        }
-    </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-</head>
-<body onload="initialize()">
+﻿<div>
     <div id="map" style="width: 320px; height: 480px;"></div>
-    <div>
-        <input id="from" type="text" value="Stockholm">
-        <input id="to" type="text" value="Malmö">
-        <input type="button" value="Encode" onclick="onClick()">
-        <label>DRIVE</label>
-        <input type="radio" name="type" value="DRIVING">
-        <label>Walking</label>
-        <input type="radio" name="type" value="WALKING">
-        <label>Bicycle</label>
-        <input type="radio" name="type" value="BICYCLING">
-        <label>Bus</label>
-        <input type="radio" name="type" value="BUS">
-        <label>Train</label>
-        <input type="radio" name="type" value="TRAIN">
-    </div>
-    <div id="postCarbon" style="font-size:19px">
-    </div>
-    <script>
-        var geocoder;
-        var map;
-        var fromResult;
-        var toResult;
-        var directionsService;
-        var directionsDisplay;
-        var transit;
+</div>
 
-        function onClick() {
-            from = document.getElementById('from').value;
-            to = document.getElementById('to').value;
+<div>
+    <input id="from" type="text" value="Stockholm">
+    <input id="to" type="text" value="Malmö">
+    <input type="button" value="Encode" onclick="onClick()">
+    <label>DRIVE</label>
+    <input type="radio" name="type" value="DRIVING">
+    <label>Walking</label>
+    <input type="radio" name="type" value="WALKING">
+    <label>Bicycle</label>
+    <input type="radio" name="type" value="BICYCLING">
+    <label>Bus</label>
+    <input type="radio" name="type" value="BUS">
+    <label>Train</label>
+    <input type="radio" name="type" value="TRAIN">
+</div>
+<div id="postCarbon" style="font-size:19px">
+</div>
 
-            
-
-            //  Do from-call
-            var fromPromise = doGeoCall(from).then(function (result) {
-                fromResult = result[0].geometry.location;
-            }, function (err) {
-                alert('Geocode for from-call was not successful for the following reason: ' + err);
-            });
-
-            // Do to-call
-            var toPromise = doGeoCall(to).then(function (result) {
-                toResult = result[0].geometry.location;
-            }, function (err) {
-                alert('Geocode for to-call was not successful for the following reason: ' + err);
-            });
-
-            fromPromise.then(function () {
-                toPromise.then(function () {
-                    console.log(fromResult.lat() + " " + fromResult.lng());
-                    console.log(toResult.lat() + " " + toResult.lng());
-                    drawRoute();
-                    getCarbon();
-                });
-            });
-        }
-
-        // Send and get JSON from Carbon-API
-        function getCarbon() {
-            $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
-                console.log(result);
-                document.getElementById("postCarbon").innerHTML = result.emissions[5].totalCo2;
-            });
-        }
-
-        function drawRoute() {
-            // Todo: putsa på koden så denna lösning blir snyggare
-            type = document.querySelector('input[name="type"]:checked').value;
-            var request;
-
-            if (type === 'BUS' || type === 'TRAIN') {
-                request = {
-                    origin: fromResult,
-                    destination: toResult,
-                    travelMode: 'TRANSIT',
-                    transitOptions: {
-                        modes: [type]
-                    }
-                }
-            }
-            else
-                request = {
-                    origin: fromResult,
-                    destination: toResult,
-                    travelMode: type
-            };
-            directionsService.route(request, function (result, status) {
-                if (status == 'OK') {
-                    directionsDisplay.setDirections(result);
-                }
-            });
-
-        }
-        function initialize() {
-            geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(-34.397, 150.644);
-            var mapOptions = {
-                zoom: 8,
-                center: latlng
-            }
-            directionsDisplay = new google.maps.DirectionsRenderer();
-            directionsService = new google.maps.DirectionsService();
-            map = new google.maps.Map(document.getElementById('map'), mapOptions);
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                draggable: true,
-                title: "Drag me!"
-            });
-            directionsDisplay.setMap(map);
-        }
-
-        function doGeoCall(address) {
-            return new Promise(function (resolve, reject) {
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    if (status == 'OK') {
-                        resolve(results);
-                    }
-                    else {
-                        console.log("failed");
-                        reject(status);
-                    }
-                });
-            });
-        }
-
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw">
-    </script>
-</body>
-</html>
+@section Script{
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw"></script>
+<script src="~/Scripts/App.js"></script>
+}
