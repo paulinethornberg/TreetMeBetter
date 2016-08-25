@@ -43,6 +43,12 @@ function onClick() {
     });
 }
 
+// FIXA TILL DENNA TREE CONVERTER FUNKTION
+
+function treeConverter(co2) {
+
+}
+
 // Send and get JSON from Carbon-API
 function getCarbon() {
     $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
@@ -50,6 +56,7 @@ function getCarbon() {
         switch (type) {
             case 'BICYCLING':
                 document.getElementById('postCarbon').innerHTML = result.emissions[0].totalCo2;
+                treeConverter(result.emissions[0].totalCo2);
                 $('#vehicleIcon').attr('class', 'fa fa-bicycle fa-2x');
                 $('#vehicleIcon2').attr('class', 'fa fa-bicycle fa-2x');
                 break;
