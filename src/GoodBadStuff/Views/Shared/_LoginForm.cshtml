@@ -23,7 +23,7 @@
                         </div>
 
                         @*LOGIN DIVS*@
-                        <form name="formVal" onsubmit="return false">
+                        <form name="formVal" role="form" data-toggle="validator" onsubmit="return false">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -51,7 +51,7 @@
 
                                         @*REGISTER DIVS*@
 
-                                        <div id="register-form" action="user/register" method="post" role="form" style="display: none;">
+                                        <div id="register-form" style="display: none;">
 
                                             <div class="form-group">
                                                 <input type="text" name="username" id="usernameReg" tabindex="1" class="form-control" placeholder="Username" value="" required>
@@ -89,5 +89,6 @@
 @section Script{
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+    <script src ="https://cdnjs.com/libraries/1000hz-bootstrap-validator"></script>
     <script src="~/Scripts/Login.js"></script>
 }
