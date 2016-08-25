@@ -25,6 +25,7 @@ namespace GoodBadStuff
             {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Cookies.ApplicationCookie.LoginPath = "/home/index/";
             })
                 .AddEntityFrameworkStores<IdentityDbContext>()

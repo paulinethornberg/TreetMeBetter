@@ -34,9 +34,15 @@
     $("#closeBTN").click(function () {
         $('#myModal').modal('hide');
     });
-});
+
+//INPUT VALIDATER
+$("usernameReg")
+  .focusout(function () {
+      $("#usernameReg").addClass("");
+  })
 
 function LoggedIn() {
     $("#navBtns").html(" <li><a href='#'><span id='btn1' class='glyphicon glyphicon-user'></span> Sign Up</a></li>");
 }
 
+});
