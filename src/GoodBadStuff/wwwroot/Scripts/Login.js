@@ -14,21 +14,7 @@
     });
 
     //REGISTER JS
-
-    function RegPost() {
-        $("#messageLabel").empty();
-        $.post("/User/Create", { "Username": $("#usernameReg").val(), "Email": $("#emailReg").val(), "Password": $("#passwordReg").val() }, function (regResult) {
-            if (regResult === false)
-                $("#messageLabel").text("Registration failed, please try again");
-            else {
-                $("#register-form").html("<h1 style='color:green; text-align:center;'>Registration Successful!</h1>");
-                LoggedIn();
-            }
-
-            console.log(regResult);
-        });
-    }
-    $('#register-form').bootstrapValidator({
+    $('#formVal').bootstrapValidator({
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -65,7 +51,7 @@
                     },
                     notEmpty: {
                         message: 'Please supply your first name'
-                    }
+                    },
                 }
             },
 
@@ -73,11 +59,15 @@
                 validators: {
 
                     notEmpty: {
-                        message: 'Please supply your password'
+                        message: 'Passwords doesnt match'
                     },
                     stringLength: {
                         min: 6,
-                        message: 'Password does not match'
+                        message: 'Passwords doesnt match'
+                    },
+                    identical: {
+                        field: 'passwordReg',
+                        message: 'Passwords doesnt match'
                     }
                 }
             }
@@ -91,7 +81,17 @@
                    // Prevent form submission
                    e.preventDefault();
                    // Use Ajax to submit form data
-                   RegPost();
+                   $("#messageLabel").empty();
+                   $.post("/User/Create", { "Username": $("#usernameReg").val(), "Email": $("#emailReg").val(), "Password": $("#passwordReg").val() }, function (regResult) {
+                       if (regResult === false)
+                           $("#messageLabel").text("Registration failed, please try again");
+                       else {
+                           $("#register-form").html("<h1 style='color:green; text-align:center;'>Registration Successful!</h1>");
+                           LoggedIn();
+                       }
+
+                       console.log(regResult);
+                   });
 
                });
 
