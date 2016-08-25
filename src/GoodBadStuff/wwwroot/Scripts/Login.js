@@ -14,21 +14,21 @@
     });
 
     //REGISTER JS
-    
+
     function RegPost() {
         $("#messageLabel").empty();
         $.post("/User/Create", { "Username": $("#usernameReg").val(), "Email": $("#emailReg").val(), "Password": $("#passwordReg").val() }, function (regResult) {
             if (regResult === false)
                 $("#messageLabel").text("Registration failed, please try again");
             else {
-                $("#registerForm").html("<h1 style='color:green; text-align:center;'>Registration Successful!</h1>");
+                $("#register-form").html("<h1 style='color:green; text-align:center;'>Registration Successful!</h1>");
                 LoggedIn();
             }
 
             console.log(regResult);
         });
     }
-    $('#registerForm').bootstrapValidator({
+    $('#register-form').bootstrapValidator({
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -86,15 +86,15 @@
     })
                .on('success.form.bv', function (e) {
                    $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-                   $('#registerForm').data('bootstrapValidator').resetForm();
+                   //$('#registerForm').data('bootstrapValidator').resetForm();
 
                    // Prevent form submission
                    e.preventDefault();
                    // Use Ajax to submit form data
                    RegPost();
-               
+
                });
-    });
+
 
     //CLOSE MODAL
     $("#closeBTN").click(function () {
@@ -102,13 +102,13 @@
     });
 
     //INPUT VALIDATER
-    $("usernameReg")
-      .focusout(function () {
-          $("#usernameReg").addClass("");
-      })
+    //$("usernameReg")
+    //  .focusout(function () {
+    //      $("#usernameReg").addClass("");
+    //  })
 
-    function LoggedIn() {
-        $("#navBtns").html(" <li><a href='#'><span id='btn1' class='glyphicon glyphicon-user'></span> Sign Up</a></li>");
-    }
+    //function LoggedIn() {
+    //    $("#navBtns").html(" <li><a href='#'><span id='btn1' class='glyphicon glyphicon-user'></span> Sign Up</a></li>");
+    //}
 
 });

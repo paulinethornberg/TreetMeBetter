@@ -1,4 +1,5 @@
 ﻿@model UserCreateVM
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css" />
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -51,7 +52,7 @@
 
                                         @*REGISTER DIVS*@
 
-                                        <div id="registerForm" name="registerForm" style="display: none;">
+                                        <div id="register-form" name="register-form" style="display: none;">
 
                                             <div class="form-group">
                                                 <input type="text" name="usernameReg" id="usernameReg" tabindex="1" class="form-control" placeholder="Username" value="" required>
@@ -86,9 +87,3 @@
     </div>
 </div>
 
-@section Script{
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
-    <script src ="https://cdnjs.com/libraries/1000hz-bootstrap-validator"></script>
-    <script src="~/Scripts/Login.js"></script>
-}
