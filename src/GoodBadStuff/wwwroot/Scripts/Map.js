@@ -60,11 +60,11 @@ function getCarbon() {
             case 'BUS':
                 document.getElementById('postCarbon').innerHTML = result.emissions[3].totalCo2;
                 break;
-            case 'MOTORCYCLE':
-                document.getElementById('postCarbon').innerHTML = result.emissions[4].totalCo2;
-                break;
             case 'DRIVING':
-                document.getElementById('postCarbon').innerHTML = result.emissions[5].totalCo2;
+                if (document.querySelector('input[id="MOTORCYCLE"]:checked'))
+                    document.getElementById('postCarbon').innerHTML = result.emissions[4].totalCo2;
+                else
+                    document.getElementById('postCarbon').innerHTML = result.emissions[5].totalCo2;
                 break;
             case 'AIRCRAFT':
                 document.getElementById('postCarbon').innerHTML = result.emissions[9].totalCo2;
