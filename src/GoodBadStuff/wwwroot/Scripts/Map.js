@@ -9,6 +9,8 @@
     var directionsService;
     var directionsDisplay;
     var transit;
+    var from;
+    var to;
 
     function onClick() {
         from = document.getElementById('from').value;
@@ -44,7 +46,11 @@
     function getCarbon() {
         $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
             console.log(result);
-            document.getElementById("postCarbon").innerHTML = result.emissions[5].totalCo2;
+            document.getElementById('postCarbon').innerHTML = result.emissions[5].totalCo2;
+            document.getElementById('fromAddress').innerHTML = from;
+            document.getElementById('toAddress').innerHTML = to;
+            
+
         });
     }
 
