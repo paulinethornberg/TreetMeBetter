@@ -15,7 +15,7 @@
 
     //REGISTER JS
     $("#register-submit").click(function () {
-
+        $("#messageLabel").empty();
         $.post("/User/Create", { "Username": $("#usernameReg").val(), "Email": $("#emailReg").val(), "Password": $("#passwordReg").val() }, function (regResult) {
             if (regResult === false)
                 $("#messageLabel").text("Registration failed, please try again");
