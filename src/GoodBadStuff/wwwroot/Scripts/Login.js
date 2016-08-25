@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+
+    //LOGIN JS
     $("#login-submit").click(function () {
         $.post("/User/Login", { "Username": document.getElementById("username").value, "Password": document.getElementById("password").value }, function (result) {
             if (result === false)
@@ -9,7 +11,18 @@
             console.log(result);
         });
     });
+
+    //REGISTER JS
+    $("#register-submit").click(function () {
+        $.post("/User/Create", { "Username": $("#usernameReg").val(), "Email": $("#emailReg").val(), "Password": $("#passwordReg").val()}, function(regResult) {
+            console.log(regResult);
+        });
+    });
+
+    //CLOSE MODAL
     $("#closeBTN").click(function () {
         $('#myModal').modal('hide');
     });
 });
+
+

@@ -33,23 +33,19 @@ namespace GoodBadStuff.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Create(UserCreateVM viewModel)
+        public async Task<bool> Create(UserCreateVM viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
-
             var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(nameof(UserCreateVM.Username), result.Errors.First().Description);
-                return View(viewModel);
-            }
 
-            await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
+            //if (!result.Succeeded)
+            //{
+            //    ModelState.AddModelError(nameof(UserCreateVM.Username), result.Errors.First().Description);
+            //    return View(viewModel);
+            //}
 
-            return RedirectToAction("index", "cars");
+            //await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
+
+            return result.Succeeded;
 
         }
 
