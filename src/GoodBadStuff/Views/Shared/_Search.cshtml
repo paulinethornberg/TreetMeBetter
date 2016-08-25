@@ -1,52 +1,40 @@
-﻿<script src="https://use.fontawesome.com/4c6ae65ba0.js"></script>
-<link href="~/CSS/Style.css" rel="stylesheet" />
+﻿
 <div class="row">
-        <form class="form-inline col-md-4 col-md-offset-4">
-            <div class="form-group">
-                <label for="from">From:</label>
-                <input id="from" type="text" value="Stockholm" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="to">To:</label>
-                <input id="to" type="text" value="Malmö" class="form-control">
-            </div>
-            <input type="button" class="btn btn-default" value="GO" onclick="onClick()" />
-        </form>
-</div>
-
-<div class="row">
-        <div class="btn-group col-md-4 col-md-offset-4" data-toggle="buttons">
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="TRAIN" autocomplete="off"><span aria-hidden="true" class="fa fa-train fa-2x unchecked"></span> <span class="fa fa-car-checked fa-2x checked "></span>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="BUS" autocomplete="off"> <span class="fa fa-bus fa-2x unchecked"></span> <span class="fa fa-bus-checked fa-2x checked"></span>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="DRIVING" autocomplete="off"> <span class="fa fa-car fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="BICYCLING" autocomplete="off"> <span class="fa fa-bicycle fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="WALKING" autocomplete="off"> <span class="fa fa-blind fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="DRIVING" id="MOTORCYCLE" autocomplete="off"> <span class="fa fa-motorcycle fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="type" value="FLYING" autocomplete="off"> <span class="fa fa-plane fa-2x unchecked"></span> <span class="fa fa-plane-checked fa-2x checked"></span>
-            </label>
+    <form class="form-inline col-md-8 col-md-offset-2">
+        <div class="form-group col-md-6">
+            <label for="from">From:</label>
+            <input id="from" type="text" value="Stockholm" class="form-control">
         </div>
+        <div class="form-group col-md-6">
+            <label for="to">To:</label>
+            <input id="to" type="text" value="Malmö" class="form-control">
+            <input type="button" class="btn btn-default" value="GO" onclick="onClick()" />
+        </div>
+    </form>
 </div>
 
-@*<label>DRIVE</label>
-    <input type="radio" name="type" value="DRIVING">
-    <label>Walking</label>
-    <input type="radio" name="type" value="WALKING">
-    <label>Bicycle</label>
-    <input type="radio" name="type" value="BICYCLING">
-    <label>Bus</label>
-    <input type="radio" name="type" value="BUS">
-    <label>Train</label>
-    <input type="radio" name="type" value="TRAIN">*@
+<div class="row">
+    <div class="btn-group col-md-6 col-md-offset-3" data-toggle="buttons">
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="TRAIN" autocomplete="off"><span aria-hidden="true" class="fa fa-train fa-2x unchecked"></span> <span class="fa fa-car-checked fa-2x checked "></span>
+        </label>
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="BUS" autocomplete="off"> <span class="fa fa-bus fa-2x unchecked"></span> <span class="fa fa-bus-checked fa-2x checked"></span>
+        </label>
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="DRIVING" autocomplete="off"> <span class="fa fa-car fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
+        </label>
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="BICYCLING" autocomplete="off"> <span class="fa fa-bicycle fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
+        </label>
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="WALKING" autocomplete="off"> <span class="fa fa-blind fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
+        </label>
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="DRIVING" id="MOTORCYCLE" autocomplete="off"> <span class="fa fa-motorcycle fa-2x unchecked"></span> <span class="fa fa-train-checked fa-2x checked"></span>
+        </label>
+        <label class="btn btn-default">
+            <input type="radio" name="type" value="FLYING" autocomplete="off"> <span class="fa fa-plane fa-2x unchecked"></span> <span class="fa fa-plane-checked fa-2x checked"></span>
+        </label>
+    </div>
+</div>
