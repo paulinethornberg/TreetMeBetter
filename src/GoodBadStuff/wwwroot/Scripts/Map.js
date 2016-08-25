@@ -50,24 +50,40 @@ function getCarbon() {
         switch (type) {
             case 'BICYCLING':
                 document.getElementById('postCarbon').innerHTML = result.emissions[0].totalCo2;
+                $('#vehicleIcon').attr('class', 'fa fa-bicycle fa-2x');
+                $('#vehicleIcon2').attr('class', 'fa fa-bicycle fa-2x');
                 break;
             case 'WALKING':
                 document.getElementById('postCarbon').innerHTML = result.emissions[1].totalCo2;
+                $('#vehicleIcon').attr('class', 'fa fa-blind fa-2x');
+                $('#vehicleIcon2').attr('class', 'fa fa-blind fa-2x');
                 break;
             case 'TRAIN':
                 document.getElementById('postCarbon').innerHTML = result.emissions[2].totalCo2;
+                $('#vehicleIcon').attr('class', 'fa fa-train fa-2x');
+                $('#vehicleIcon2').attr('class', 'fa fa-train fa-2x');
                 break;
             case 'BUS':
                 document.getElementById('postCarbon').innerHTML = result.emissions[3].totalCo2;
+                $('#vehicleIcon').attr('class', 'fa fa-bus fa-2x');
+                $('#vehicleIcon2').attr('class', 'fa fa-bus fa-2x');
                 break;
             case 'DRIVING':
-                if (document.querySelector('input[id="MOTORCYCLE"]:checked'))
+                if (document.querySelector('input[id="MOTORCYCLE"]:checked')) {
                     document.getElementById('postCarbon').innerHTML = result.emissions[4].totalCo2;
-                else
+                    $('#vehicleIcon').attr('class', 'fa fa-motorcycle fa-2x');
+                    $('#vehicleIcon2').attr('class', 'fa fa-motorcycle fa-2x');
+                }
+                else {
                     document.getElementById('postCarbon').innerHTML = result.emissions[5].totalCo2;
+                    $('#vehicleIcon').attr('class', 'fa fa-car fa-2x');
+                    $('#vehicleIcon2').attr('class', 'fa fa-car fa-2x');
+                }
                 break;
             case 'AIRCRAFT':
                 document.getElementById('postCarbon').innerHTML = result.emissions[9].totalCo2;
+                $('#vehicleIcon').attr('class', 'fa fa-plane fa-2x');
+                $('#vehicleIcon2').attr('class', 'fa fa-plane fa-2x');
                 break;
 
         }
