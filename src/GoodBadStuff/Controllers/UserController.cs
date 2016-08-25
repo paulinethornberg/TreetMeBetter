@@ -43,7 +43,7 @@ namespace GoodBadStuff.Controllers
             //    return View(viewModel);
             //}
 
-            //await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
+            await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
 
             return result.Succeeded;
 
