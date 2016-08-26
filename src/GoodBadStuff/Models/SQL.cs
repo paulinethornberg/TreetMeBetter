@@ -18,7 +18,7 @@ namespace GoodBadStuff.Models
             SqlConnection myConnection = new SqlConnection(CON_STR);
             SqlCommand myCommand = new SqlCommand();
 
-            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress, UserId) values ('{travelInfo.Transport}', '{travelInfo.Co2}', '{travelInfo.Created}', '{travelInfo.FromAddress}', '{travelInfo.ToAddress}', '{travelInfo.UserId}')";
+            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress, UserId) values ('{travelInfoDb.Transport}', '{travelInfoDb.Co2}', '{travelInfoDb.Created}', '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', '{travelInfoDb.UserId}')";
             myCommand.Connection = myConnection;
 
             try
