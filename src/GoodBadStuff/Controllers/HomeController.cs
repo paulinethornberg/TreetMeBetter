@@ -35,10 +35,10 @@ namespace GoodBadStuff.Controllers
 
             travelInfoDb.FromAddress = travelInfo.FromAddress;
             travelInfoDb.ToAddress = travelInfo.ToAddress;
-            
+            travelInfoDb.Transport = travelInfo.Transport;
 
-            JObject o = JObject.Parse(json);
-            travelInfoDb.Transport = (string)o.SelectToken("Transportname");
+            //JObject o = JObject.Parse(json);
+            //travelInfoDb.Transport = (string)o.SelectToken("Transportname");
 
             SQL.AddNewTravel(travelInfoDb);
             return Content(json, "application/json");
