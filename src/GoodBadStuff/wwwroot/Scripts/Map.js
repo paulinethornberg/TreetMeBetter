@@ -62,7 +62,7 @@ function treeConverter(co2) {
 
 // Send and get JSON from Carbon-API
 function getCarbon() {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('fromAddress').innerHTML, "ToAddress": document.getElementById('toAddress').innerHTML }, function (result) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('from').value, "ToAddress": to }, function (result) {
         switch (type) {
             case 'BICYCLING':
                 document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[0].totalCo2 / 1000) + ' ' + 'Kg CO2';

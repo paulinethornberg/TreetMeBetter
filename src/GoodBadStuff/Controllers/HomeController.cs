@@ -30,9 +30,11 @@ namespace GoodBadStuff.Controllers
             var client = new HttpClient();
             var json = await client.GetStringAsync(webapiurl);
             // SAVE TO DATABASE() - GET INFO FROM json strängen här && get more 
-            var travelInfodb = new TravelInfoDb();
-            travelInfodb.ToAddress = travelInfo.ToAddress;
-            //SQL.AddNewTravel(travel)
+            var travelInfoDb = new TravelInfoDb();
+
+            travelInfoDb.FromAddress = travelInfo.FromAddress;
+            travelInfoDb.ToAddress = travelInfo.ToAddress;
+            SQL.AddNewTravel(travelInfoDb);
             return Content(json, "application/json");
         }
 
