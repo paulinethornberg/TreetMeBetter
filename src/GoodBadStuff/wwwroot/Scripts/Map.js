@@ -112,8 +112,7 @@ function getCarbon() {
         }
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
-
-
+        $("#searchContainer").removeClass('none');
     });
 }
 //Search and send vehicle type
