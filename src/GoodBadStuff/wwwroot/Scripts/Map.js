@@ -8,14 +8,11 @@ var fromResult;
 var toResult;
 var directionsService;
 var directionsDisplay;
-var transit;
-var from;
-var to;
 var type;
 
 function onClick() {
-    from = document.getElementById('from').value;
-    to = document.getElementById('to').value;
+    var from = document.getElementById('from').value;
+    var to = document.getElementById('to').value;
 
 
 
@@ -35,15 +32,13 @@ function onClick() {
 
     fromPromise.then(function () {
         toPromise.then(function () {
-            console.log(fromResult.lat() + " " + fromResult.lng());
-            console.log(toResult.lat() + " " + toResult.lng());
             drawRoute();
-            getCarbon();
+            getCarbon(from, to);
         });
     });
 }
 
-// FIXA TILL DENNA TREE CONVERTER FUNKTION
+// CONVERT TO TREES
 
 function treeConverter(co2) {
     $("#treeDiv").empty();
@@ -60,64 +55,40 @@ function treeConverter(co2) {
     }
 }
 
-// Send and get JSON from Carbon-API
-function getCarbon() {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('from').value, "ToAddress": to }, function (result) {
+// SEND AND GET CARBON FROM API
+
+function getCarbon(from, to) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to },  function (result) {
         switch (type) {
             case 'BICYCLING':
-                document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[0].totalCo2 / 1000) + ' ' + 'Kg CO2';
-                treeConverter(result.emissions[0].totalCo2);
-                $('#vehicleIcon').attr('class', 'fa fa-bicycle fa-2x');
-                $('#vehicleIcon2').attr('class', 'fa fa-bicycle fa-2x');
+                setHTML(0, 'fa-bicycle', result);
                 break;
             case 'WALKING':
-                document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[1].totalCo2 / 1000) + ' ' + 'Kg CO2';
-                treeConverter(result.emissions[1].totalCo2);
-                $('#vehicleIcon').attr('class', 'fa fa-blind fa-2x');
-                $('#vehicleIcon2').attr('class', 'fa fa-blind fa-2x');
+                setHTML(1, 'fa-blind', result);
                 break;
             case 'TRAIN':
-                document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[2].totalCo2/1000) + ' ' + 'Kg CO2';
-                treeConverter(result.emissions[2].totalCo2);
-                $('#vehicleIcon').attr('class', 'fa fa-train fa-2x');
-                $('#vehicleIcon2').attr('class', 'fa fa-train fa-2x');
+                setHTML(2, 'fa-train', result);
                 break;
             case 'BUS':
-                document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[3].totalCo2 / 1000) + ' ' + 'Kg CO2';
-                $('#vehicleIcon').attr('class', 'fa fa-bus fa-2x');
-                $('#vehicleIcon2').attr('class', 'fa fa-bus fa-2x');
-                treeConverter(result.emissions[3].totalCo2);
+                setHTML(3, 'fa-bus', result)
                 break;
             case 'DRIVING':
                 if (document.querySelector('input[id="MOTORCYCLE"]:checked')) {
-                    document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[4].totalCo2 / 1000) + ' ' + 'Kg CO2';
-                    treeConverter(result.emissions[4].totalCo2);
-                    $('#vehicleIcon').attr('class', 'fa fa-motorcycle fa-2x');
-                    $('#vehicleIcon2').attr('class', 'fa fa-motorcycle fa-2x');
+                    setHTML(4, 'fa-motorcycle', result)
                 }
                 else {
-                    document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[5].totalCo2 / 1000) + ' ' + 'Kg CO2';
-                    treeConverter(result.emissions[5].totalCo2);
-                    $('#vehicleIcon').attr('class', 'fa fa-car fa-2x');
-                    $('#vehicleIcon2').attr('class', 'fa fa-car fa-2x');
+                    setHTML(5, 'fa-car', result)
                 }
                 break;
-            case 'AIRCRAFT':
-                document.getElementById('postCarbon').innerHTML = result.emissions[9].totalCo2;
-                treeConverter(result.emissions[9].totalCo2);
-                $('#vehicleIcon').attr('class', 'fa fa-plane fa-2x');
-                $('#vehicleIcon2').attr('class', 'fa fa-plane fa-2x');
-                break;
-
         }
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
         $("#searchContainer").removeClass('none');
     });
 }
-//Search and send vehicle type
+
+//SEARCH AND SEND VEHICLE TYPE
 function drawRoute() {
-    // Todo: putsa på koden så denna lösning blir snyggare
     type = document.querySelector('input[name="type"]:checked').value;
     var request;
 
@@ -154,12 +125,6 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsService = new google.maps.DirectionsService();
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    //var marker = new google.maps.Marker({
-    //    position: latlng,
-    //    map: map,
-    //    draggable: true,
-    //    title: "Drag me!"
-    //});
     directionsDisplay.setMap(map);
 }
 
@@ -170,9 +135,15 @@ function doGeoCall(address) {
                 resolve(results);
             }
             else {
-                console.log("failed");
                 reject(status);
             }
         });
     });
 }
+
+function setHTML(position, type, result) {
+    document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[position].totalCo2 / 1000) + ' ' + 'Kg CO2';
+    treeConverter(result.emissions[position].totalCo2);
+    $('#vehicleIcon').attr('class', 'fa ' + type + ' fa-2x');
+    $('#vehicleIcon2').attr('class', 'fa ' + type + ' fa-2x');
+};
