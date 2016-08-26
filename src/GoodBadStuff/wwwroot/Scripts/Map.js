@@ -8,14 +8,11 @@ var fromResult;
 var toResult;
 var directionsService;
 var directionsDisplay;
-var transit;
-var from;
-var to;
 var type;
 
 function onClick() {
-    from = document.getElementById('from').value;
-    to = document.getElementById('to').value;
+    var from = document.getElementById('from').value;
+    var to = document.getElementById('to').value;
 
 
 
@@ -38,7 +35,7 @@ function onClick() {
             console.log(fromResult.lat() + " " + fromResult.lng());
             console.log(toResult.lat() + " " + toResult.lng());
             drawRoute();
-            getCarbon();
+            getCarbon(from, to);
         });
     });
 }
@@ -61,7 +58,7 @@ function treeConverter(co2) {
 }
 
 // Send and get JSON from Carbon-API
-function getCarbon() {
+function getCarbon(from, to) {
     $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to },  function (result) {
         switch (type) {
             case 'BICYCLING':
