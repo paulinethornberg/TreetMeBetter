@@ -45,7 +45,7 @@ function onClick() {
 
 // Send and get JSON from Carbon-API
 function getCarbon() {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress":fromResult. }, function (result) {
         console.log(result);
         switch (type) {
             case 'BICYCLING':
@@ -89,7 +89,7 @@ function getCarbon() {
         }
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
-
+        
 
     });
 }
