@@ -46,34 +46,39 @@ function onClick() {
 // FIXA TILL DENNA TREE CONVERTER FUNKTION
 
 function treeConverter(co2) {
-    console.log(co2);
-    var numberOfTrees = co2 / 10000;
-    var rounded = Math.ceil(numberOfTrees)
-    console.log(numberOfTrees);
-    for (var i = 0; i < rounded; i++) {
-        var i = $('<div>Test</div>');
+    $("#treeDiv").empty();
+
+    var numberOfBigTrees = Math.round(co2 / 20000);
+    var numberOfSmallTrees = Math.round(co2 % 20000 / 5000);
+
+    for (var i = 0; i < numberOfBigTrees; i++) {
+        $("<span style='color:green;' class='glyphicon glyphicon-tree-deciduous glyphicon-large'></span>").appendTo("#treeDiv");
+    }
+
+    for (var i = 0; i < numberOfSmallTrees; i++) {
+        $("<span style='color:green;' class='glyphicon glyphicon-tree-deciduous glyphicon-small'></span>").appendTo("#treeDiv");
     }
 }
 
 // Send and get JSON from Carbon-API
 function getCarbon() {
     $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() }, function (result) {
-        console.log(result);
         switch (type) {
             case 'BICYCLING':
                 document.getElementById('postCarbon').innerHTML = result.emissions[0].totalCo2;
-              
+                treeConverter(result.emissions[0].totalCo2);
                 $('#vehicleIcon').attr('class', 'fa fa-bicycle fa-2x');
                 $('#vehicleIcon2').attr('class', 'fa fa-bicycle fa-2x');
                 break;
             case 'WALKING':
                 document.getElementById('postCarbon').innerHTML = result.emissions[1].totalCo2;
+                treeConverter(result.emissions[1].totalCo2);
                 $('#vehicleIcon').attr('class', 'fa fa-blind fa-2x');
                 $('#vehicleIcon2').attr('class', 'fa fa-blind fa-2x');
                 break;
             case 'TRAIN':
                 document.getElementById('postCarbon').innerHTML = result.emissions[2].totalCo2;
-               
+                treeConverter(result.emissions[2].totalCo2);
                 $('#vehicleIcon').attr('class', 'fa fa-train fa-2x');
                 $('#vehicleIcon2').attr('class', 'fa fa-train fa-2x');
                 break;
@@ -86,17 +91,20 @@ function getCarbon() {
             case 'DRIVING':
                 if (document.querySelector('input[id="MOTORCYCLE"]:checked')) {
                     document.getElementById('postCarbon').innerHTML = result.emissions[4].totalCo2;
+                    treeConverter(result.emissions[4].totalCo2);
                     $('#vehicleIcon').attr('class', 'fa fa-motorcycle fa-2x');
                     $('#vehicleIcon2').attr('class', 'fa fa-motorcycle fa-2x');
                 }
                 else {
                     document.getElementById('postCarbon').innerHTML = result.emissions[5].totalCo2;
+                    treeConverter(result.emissions[5].totalCo2);
                     $('#vehicleIcon').attr('class', 'fa fa-car fa-2x');
                     $('#vehicleIcon2').attr('class', 'fa fa-car fa-2x');
                 }
                 break;
             case 'AIRCRAFT':
                 document.getElementById('postCarbon').innerHTML = result.emissions[9].totalCo2;
+                treeConverter(result.emissions[9].totalCo2);
                 $('#vehicleIcon').attr('class', 'fa fa-plane fa-2x');
                 $('#vehicleIcon2').attr('class', 'fa fa-plane fa-2x');
                 break;
