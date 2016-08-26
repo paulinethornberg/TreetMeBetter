@@ -14,6 +14,8 @@ namespace GoodBadStuff.Models
 
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
+
+        public string Transport { get; set; }
         //&public string UrlInCaseOfFire { get; set; }
     }
 }
