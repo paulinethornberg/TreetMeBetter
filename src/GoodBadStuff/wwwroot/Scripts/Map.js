@@ -32,8 +32,6 @@ function onClick() {
 
     fromPromise.then(function () {
         toPromise.then(function () {
-            console.log(fromResult.lat() + " " + fromResult.lng());
-            console.log(toResult.lat() + " " + toResult.lng());
             drawRoute();
             getCarbon(from, to);
         });
@@ -81,13 +79,6 @@ function getCarbon(from, to) {
                     setHTML(5, 'fa-car', result)
                 }
                 break;
-            //case 'AIRCRAFT':
-            //    document.getElementById('postCarbon').innerHTML = result.emissions[9].totalCo2;
-            //    treeConverter(result.emissions[9].totalCo2);
-            //    $('#vehicleIcon').attr('class', 'fa fa-plane fa-2x');
-            //    $('#vehicleIcon2').attr('class', 'fa fa-plane fa-2x');
-            //    break;
-
         }
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
