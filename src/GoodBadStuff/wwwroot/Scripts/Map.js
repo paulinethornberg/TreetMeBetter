@@ -38,7 +38,7 @@ function onClick() {
     });
 }
 
-// FIXA TILL DENNA TREE CONVERTER FUNKTION
+// CONVERT TO TREES
 
 function treeConverter(co2) {
     $("#treeDiv").empty();
@@ -55,7 +55,8 @@ function treeConverter(co2) {
     }
 }
 
-// Send and get JSON from Carbon-API
+// SEND AND GET CARBON FROM API
+
 function getCarbon(from, to) {
     $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to },  function (result) {
         switch (type) {
@@ -85,9 +86,9 @@ function getCarbon(from, to) {
         $("#searchContainer").removeClass('none');
     });
 }
-//Search and send vehicle type
+
+//SEARCH AND SEND VEHICLE TYPE
 function drawRoute() {
-    // Todo: putsa på koden så denna lösning blir snyggare
     type = document.querySelector('input[name="type"]:checked').value;
     var request;
 
@@ -124,12 +125,6 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsService = new google.maps.DirectionsService();
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    //var marker = new google.maps.Marker({
-    //    position: latlng,
-    //    map: map,
-    //    draggable: true,
-    //    title: "Drag me!"
-    //});
     directionsDisplay.setMap(map);
 }
 
@@ -140,7 +135,6 @@ function doGeoCall(address) {
                 resolve(results);
             }
             else {
-                console.log("failed");
                 reject(status);
             }
         });
