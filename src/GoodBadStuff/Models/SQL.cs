@@ -10,31 +10,36 @@ namespace GoodBadStuff.Models
 {
     public class SQL
     {
-        const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
-      
+        //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
+        const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
         public static void AddNewTravel(TravelInfoDb travelInfoDb)
         {
             SqlConnection myConnection = new SqlConnection(CON_STR);
             SqlCommand myCommand = new SqlCommand();
 
-            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress, UserId) values ('{travelInfoDb.Transport}', '{travelInfoDb.Co2}', '{travelInfoDb.Created}', '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', '{travelInfoDb.UserId}')";
+            //myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2}, {travelInfoDb.Created}, {travelInfoDb.TreeCount}, {travelInfoDb.Distance}, '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
+            myCommand.CommandText = $"insert into TravelInfo (Transport, FromAddress, ToAddress) values ('{travelInfoDb.Transport}','{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
+
+            myCommand.CommandType = System.Data.CommandType.Text;
             myCommand.Connection = myConnection;
 
-            try
-            {
-                myConnection.Open();
+            myConnection.Open();
+            myCommand.ExecuteNonQuery();
+            myConnection.Close();
 
-                myCommand.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                myConnection.Close();
-            }
+            //try
+            //{
+            //    myConnection.Open();
+            //    myCommand.ExecuteNonQuery();
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //}
 
         }
 

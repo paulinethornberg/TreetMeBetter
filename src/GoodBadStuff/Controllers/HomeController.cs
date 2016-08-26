@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using GoodBadStuff.Models;
 using GoodBadStuff.Models.ViewModels;
+using Newtonsoft.Json.Linq;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -34,6 +35,11 @@ namespace GoodBadStuff.Controllers
 
             travelInfoDb.FromAddress = travelInfo.FromAddress;
             travelInfoDb.ToAddress = travelInfo.ToAddress;
+            
+
+            JObject o = JObject.Parse(json);
+            travelInfoDb.Transport = (string)o.SelectToken("Transportname");
+
             SQL.AddNewTravel(travelInfoDb);
             return Content(json, "application/json");
         }

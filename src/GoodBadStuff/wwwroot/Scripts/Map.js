@@ -138,7 +138,7 @@ function drawRoute() {
             travelMode: type
         };
     directionsService.route(request, function (result, status) {
-        if (status == 'OK') {
+        if (status === 'OK') {
             directionsDisplay.setDirections(result);
         }
     });
@@ -166,7 +166,7 @@ function initialize() {
 function doGeoCall(address) {
     return new Promise(function (resolve, reject) {
         geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == 'OK') {
+            if (status === 'OK') {
                 resolve(results);
             }
             else {
