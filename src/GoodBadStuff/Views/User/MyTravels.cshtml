@@ -1,0 +1,13 @@
+﻿@model UserMyTravelsVM[]
+
+@foreach (var item in Model)
+{
+   <ul>
+       <li>@item.Date</li>
+       <li>@item.FromAddress</li>
+       <li>@item.ToAddress</li>
+       <li>@item.Distance</li>
+       <li>@item.Co2</li>
+   </ul> 
+}
+

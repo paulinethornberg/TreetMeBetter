@@ -24,6 +24,10 @@ namespace GoodBadStuff.Controllers
             _signinManager = signinManager;
             _identityContext = dbContext;
         }
+        public IActionResult MyTravels()
+        {
+            return View();
+        }
 
         [AllowAnonymous]
         public IActionResult Create()

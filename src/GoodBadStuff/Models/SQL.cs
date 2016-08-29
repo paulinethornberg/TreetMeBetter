@@ -1,4 +1,5 @@
 ﻿using GoodBadStuff.Models;
+using GoodBadStuff.Models.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,13 @@ namespace GoodBadStuff.Models
         //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
         const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
-        public  void GetValuesFromAPIs(TravelInfo travelInfo, string json)
+        public int GetValuesFromAPIs(TravelInfo travelInfo, string json)
         {
-
+// 
             travelInfoDb.FromAddress = travelInfo.FromAddress;
             travelInfoDb.ToAddress = travelInfo.ToAddress;
             travelInfoDb.Transport = travelInfo.Transport;
+
             JObject o = JObject.Parse(json);
 
             string tempDist = (string)o.SelectToken("emissions[1].routedDistance");
@@ -40,11 +42,14 @@ namespace GoodBadStuff.Models
                 case "BUS":
                         GetCo2(o, 3);
                         break;
+                case "MOTORCYCLE":
+                        GetCo2(o, 4);
+                        break;
                 case "DRIVING":
                         GetCo2(o, 7);
                         break;
             }
-            AddNewTravel(travelInfoDb);
+            return AddNewTravel(travelInfoDb);
         }
 
         private void GetCo2(JObject o, int i)
@@ -54,13 +59,15 @@ namespace GoodBadStuff.Models
             travelInfoDb.Co2 = Co2;
         }
 
-        public static void AddNewTravel(TravelInfoDb travelInfoDb)
+        public static int AddNewTravel(TravelInfoDb travelInfoDb)
         {
+            int? ret = null;
             SqlConnection myConnection = new SqlConnection(CON_STR);
             SqlCommand myCommand = new SqlCommand();
 
             //myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2}, {travelInfoDb.Created}, {travelInfoDb.TreeCount}, {travelInfoDb.Distance}, '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
-            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance})";
+            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance}); select @@identity";
+
 
             myCommand.CommandType = System.Data.CommandType.Text;
             myCommand.Connection = myConnection;
@@ -68,18 +75,19 @@ namespace GoodBadStuff.Models
             try
             {
                 myConnection.Open();
-                myCommand.ExecuteNonQuery();
+                //myCommand.ExecuteNonQuery();
+                ret = Convert.ToInt32(myCommand.ExecuteScalar());
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }
             finally
             {
             }
-
+            return ret.Value;
         }
-       
+
 
         //public static Contact GetContact(string cid)
         //{
@@ -113,35 +121,38 @@ namespace GoodBadStuff.Models
         //    return tmpContact;
         //}
 
-        //public static List<Contact> LoadContacts()
-        //{
-        //    SqlConnection myConnection = new SqlConnection(CON_STR);
-        //    SqlCommand myCommand = new SqlCommand("select * from Contact order by ID", myConnection);
+        public static List<UserMyTravelsVM> LoadTravels()
+        {
+            SqlConnection myConnection = new SqlConnection(CON_STR);
+            SqlCommand myCommand = new SqlCommand("select * from TravelInfo order by UserId", myConnection);
 
-        //    List<Contact> myContacts = new List<Contact>();
-        //    try
-        //    {
-        //        myConnection.Open();  
-        //        SqlDataReader myReader = myCommand.ExecuteReader();
-        //        while (myReader.Read())
-        //        {
-        //            string id = myReader["ID"].ToString();
-        //            string firstname = myReader["firstname"].ToString();
-        //            string lastname = myReader["lastname"].ToString();
+            List<UserMyTravelsVM> myTravels = new List<UserMyTravelsVM>();
+            try
+            {
+                myConnection.Open();
+                SqlDataReader myReader = myCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    string transport = myReader["Transport"].ToString();
+                    float co2 = (float)myReader["Co2"];
+                    string date = myReader["Date"].ToString();
+                    float distance = (float)myReader["Distance"];
+                    string fromAddress = myReader["FromAddress"].ToString();
+                    string toAddress = myReader["ToAddress"].ToString();
 
-        //            myContacts.Add(new Contact(id, firstname, lastname));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Response.Write($"<script>alert('{ex.Message}');</script>");
-        //    }
-        //    finally
-        //    {
-        //        myConnection.Close();
-        //    }
-        //    return myContacts;
-        //}
+                    myTravels.Add(new UserMyTravelsVM(transport, co2, date, distance, fromAddress, toAddress));
+                }
+            }
+            catch (Exception ex)
+            {
+                //Response.Write($"<script>alert('{ex.Message}');</script>");
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+            return myTravels;
+        }
 
         //public static void UpdateContact(string cid, string firstname, string lastname)
         //{
