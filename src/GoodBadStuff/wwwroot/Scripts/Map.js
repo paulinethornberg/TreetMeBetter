@@ -58,7 +58,7 @@ function treeConverter(co2) {
 // SEND AND GET CARBON FROM API
 
 function getCarbon(from, to) {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to },  function (result) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('from').value, "ToAddress": to }, function (result) {
         switch (type) {
             case 'BICYCLING':
                 setHTML(0, 'fa-bicycle', result);
@@ -70,15 +70,13 @@ function getCarbon(from, to) {
                 setHTML(2, 'fa-train', result);
                 break;
             case 'BUS':
-                setHTML(3, 'fa-bus', result)
+                setHTML(3, 'fa-bus', result);
                 break;
             case 'DRIVING':
-                if (document.querySelector('input[id="MOTORCYCLE"]:checked')) {
-                    setHTML(4, 'fa-motorcycle', result)
-                }
-                else {
-                    setHTML(5, 'fa-car', result)
-                }
+                setHTML(5, 'fa-car', result);
+                break;
+            case 'MOTORCYCLE':
+                setHTML(4, 'fa-motorcycle', result);
                 break;
         }
         document.getElementById('fromAddress').innerHTML = from;
@@ -87,10 +85,17 @@ function getCarbon(from, to) {
     });
 }
 
+$("span").click(function () {
+    $("span").removeClass('fa-cog');
+    type = $(this).attr('value');
+    $(this).addClass('fa-cog');
+});
+
 //SEARCH AND SEND VEHICLE TYPE
 function drawRoute() {
-    type = document.querySelector('input[name="type"]:checked').value;
     var request;
+
+    
 
     if (type === 'BUS' || type === 'TRAIN') {
         request = {
@@ -102,12 +107,20 @@ function drawRoute() {
             }
         }
     }
-    else
+    else if(type === 'MOTORCYCLE') {
+        request = {
+            origin: fromResult,
+            destination: toResult,
+            travelMode: 'DRIVING'
+        };
+    }
+    else {
         request = {
             origin: fromResult,
             destination: toResult,
             travelMode: type
         };
+    }
     directionsService.route(request, function (result, status) {
         if (status === 'OK') {
             directionsDisplay.setDirections(result);
@@ -117,6 +130,12 @@ function drawRoute() {
 }
 function initialize() {
     geocoder = new google.maps.Geocoder();
+    var fromAutoComplete = document.getElementById('from');
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng()
+        )
+    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(fromAutoComplete);
+    var autocomplete = new google.maps.places.Autocomplete(fromAutoComplete);
     var latlng = new google.maps.LatLng(59.1946, 18.47);
     var mapOptions = {
         zoom: 7,
