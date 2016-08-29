@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     initialize();
+    checkIsLoggedIn();
 });
 
 var geocoder;
@@ -9,6 +10,25 @@ var toResult;
 var directionsService;
 var directionsDisplay;
 var type;
+
+function checkIsLoggedIn() {
+    $.get("/user/CheckIsLoggedIn", function (loggedIn) {
+        if (loggedIn) {
+            //Create navbar buttons
+            console.log(loggedIn);
+            $("#MyTravelsButton").removeClass('none');
+            $("#logOutButton").removeClass('none');
+            $("#loggBtn").addClass('none');
+        }
+        else {
+            console.log("Utloggad");
+            $("#MyTravelsButton").addClass('none');
+            $("#logOutButton").addClass('none');
+            $("#loggBtn").removeClass('none');
+        }
+    });
+}
+
 
 function onClick() {
     var from = document.getElementById('from').value;
@@ -58,7 +78,7 @@ function treeConverter(co2) {
 // SEND AND GET CARBON FROM API
 
 function getCarbon(from, to) {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('from').value, "ToAddress": to }, function (result) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type},  function (result) {
         switch (type) {
             case 'BICYCLING':
                 setHTML(0, 'fa-bicycle', result);
@@ -94,8 +114,6 @@ $("span").click(function () {
 //SEARCH AND SEND VEHICLE TYPE
 function drawRoute() {
     var request;
-
-    
 
     if (type === 'BUS' || type === 'TRAIN') {
         request = {
