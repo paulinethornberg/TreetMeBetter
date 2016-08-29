@@ -138,5 +138,8 @@
     .none {
         display:none;
     }
+    li.none{
+        display:none;
+    }
 
 
