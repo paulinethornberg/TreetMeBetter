@@ -58,7 +58,7 @@ function treeConverter(co2) {
 // SEND AND GET CARBON FROM API
 
 function getCarbon(from, to) {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to },  function (result) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type},  function (result) {
         switch (type) {
             case 'BICYCLING':
                 setHTML(0, 'fa-bicycle', result);
