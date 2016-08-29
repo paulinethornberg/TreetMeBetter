@@ -90,7 +90,8 @@ function treeConverter(co2) {
 function getCarbon(from, to) {
     $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type},  function (result) {
 
-        var apiJson = result.apiJson;
+        var apiJsonString = result.apiJson;
+        var apiJson = JSON.parse(apiJsonString);
         var travelInfoId = result.travelInfoId;
 
         console.log(travelInfoId);
