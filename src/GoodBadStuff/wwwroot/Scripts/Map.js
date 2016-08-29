@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     initialize();
+    checkIsLoggedIn();
 });
 
 var geocoder;
@@ -9,6 +10,18 @@ var toResult;
 var directionsService;
 var directionsDisplay;
 var type;
+
+function checkIsLoggedIn() {
+    $.get("/user/CheckIsLoggedIn", function (loggedIn) {
+        if (loggedIn) {
+            //Create navbar buttons
+            console.log(loggedIn);
+        }
+        else
+            console.log("Utloggad");
+    });
+}
+
 
 function onClick() {
     var from = document.getElementById('from').value;
@@ -116,6 +129,7 @@ function drawRoute() {
 
 }
 function initialize() {
+    
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(59.1946, 18.47);
     var mapOptions = {

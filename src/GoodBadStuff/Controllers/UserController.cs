@@ -49,11 +49,19 @@ namespace GoodBadStuff.Controllers
 
         }
 
-        [AllowAnonymous]
-        public IActionResult Login()
+        //[AllowAnonymous]
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
+
+        [HttpGet]
+        public bool CheckIsLoggedIn()
         {
-            return View();
+            bool isLogged = User.Identity.IsAuthenticated;
+            return isLogged;
         }
+
 
         [HttpPost]
         [AllowAnonymous]

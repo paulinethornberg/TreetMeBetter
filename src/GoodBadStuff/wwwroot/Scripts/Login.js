@@ -10,6 +10,7 @@
             //stäng rutan
             //Ändra massa greher till inloggat och sånt Gott och blandat.
             console.log(result);
+
         });
     });
 
