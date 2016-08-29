@@ -71,10 +71,22 @@ $('#goBtn').click(function () {
 function treeConverter(co2) {
     $("#treeDiv").empty();
 
-    if (co2 / 2000 >= 20)
-    var numberOfBigTrees = Math.round(co2 / 20000);
-    
-    var numberOfSmallTrees = Math.round(co2 % 20000 / 5000);
+    if (co2 >= 20000) {
+        var numberOfBigTrees = Math.round(co2 / 20000);
+        if ((numberOfBigTrees * 20000) - co2 >= 4000) {
+            numberOfBigTrees = numberOfBigTrees - 1;
+            co2 = co2 - (numberOfBigTrees * 20000);
+            var numberOfSmallTrees = Math.round(co2/5000);
+        }
+        else if ((numberOfBigTrees * 20000) - co2 <= -4000)
+        {
+            co2 = co2 - (numberOfBigTrees * 20000);
+            var numberOfSmallTrees = Math.round(co2 / 5000);
+        }
+    }
+    else if(co2 < 20000) {
+        var numberOfSmallTrees = Math.round(co2 % 20000 / 5000);
+    }
 
     for (var i = 0; i < numberOfBigTrees; i++) {
         $("<span style='color:green;' class='glyphicon glyphicon-tree-deciduous glyphicon-large'></span>").appendTo("#treeDiv");
@@ -88,7 +100,7 @@ function treeConverter(co2) {
 // SEND AND GET CARBON FROM API
 
 function getCarbon(from, to) {
-    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type},  function (result) {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type }, function (result) {
 
         var apiJsonString = result.apiJson;
         var apiJson = JSON.parse(apiJsonString);
@@ -142,7 +154,7 @@ function drawRoute() {
             }
         }
     }
-    else if(type === 'MOTORCYCLE') {
+    else if (type === 'MOTORCYCLE') {
         request = {
             origin: fromResult,
             destination: toResult,
@@ -166,7 +178,7 @@ function drawRoute() {
 function initialize() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(59.334591, 18.063240);
-    
+
     var mapOptions = {
         zoom: 7,
         center: latlng,
