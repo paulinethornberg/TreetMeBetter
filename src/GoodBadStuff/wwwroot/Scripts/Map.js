@@ -110,7 +110,7 @@ function getCarbon(from, to) {
                 setHTML(3, 'fa-bus', apiJson);
                 break;
             case 'DRIVING':
-                setHTML(5, 'fa-car', apiJson);
+                setHTML(7, 'fa-car', apiJson);
                 break;
             case 'MOTORCYCLE':
                 setHTML(4, 'fa-motorcycle', apiJson);
