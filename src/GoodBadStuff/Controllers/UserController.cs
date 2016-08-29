@@ -76,7 +76,7 @@ namespace GoodBadStuff.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signinManager.SignOutAsync();
-            return RedirectToAction(nameof(UserController.Login));
+            return RedirectToAction("Index", "Home");
         }
     }
 }

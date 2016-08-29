@@ -5,12 +5,21 @@
         $.post("/User/Login", { "Username": document.getElementById("username").value, "Password": document.getElementById("password").value }, function (result) {
             if (result === false)
                 $("#messageLabel").text("Login failed, please try again");
-            else
+            else {
                 $('#myModal').modal('hide');
+                checkIsLoggedIn()
+            }
             //stäng rutan
             //Ändra massa greher till inloggat och sånt Gott och blandat.
             console.log(result);
 
+        });
+    });
+
+    //Log Out
+    $("#logOutButton").click(function () {
+        $.post("/User/Logout", function () {
+            checkIsLoggedIn();
         });
     });
 

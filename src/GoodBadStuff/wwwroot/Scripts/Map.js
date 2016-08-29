@@ -20,11 +20,12 @@ function checkIsLoggedIn() {
             $("#logOutButton").removeClass('none');
             $("#loggBtn").addClass('none');
         }
-        else
+        else {
             console.log("Utloggad");
-        $("#MyTravelsButton").addClass('none');
-        $("#logOutButton").addClass('none');
-        $("#loggBtn").removeClass('none');
+            $("#MyTravelsButton").addClass('none');
+            $("#logOutButton").addClass('none');
+            $("#loggBtn").removeClass('none');
+        }
     });
 }
 
