@@ -42,7 +42,7 @@ namespace GoodBadStuff.Models
                 case "BUS":
                         GetCo2(o, 3);
                         break;
-                case "TWO-WHEELER":
+                case "MOTORCYCLE":
                         GetCo2(o, 4);
                         break;
                 case "DRIVING":
