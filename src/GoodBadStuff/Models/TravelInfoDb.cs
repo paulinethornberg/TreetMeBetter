@@ -10,7 +10,7 @@ namespace GoodBadStuff.Models
         public int Id { get; set; }
         public string Transport { get; set; }
         public float Co2 { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Date { get; set; }
         public int TreeCount { get; set; }
         public float Distance { get; set; }
         public string FromAddress { get; set; }

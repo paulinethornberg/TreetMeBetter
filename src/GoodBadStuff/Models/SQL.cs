@@ -1,4 +1,5 @@
 ﻿using GoodBadStuff.Models;
+using GoodBadStuff.Models.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace GoodBadStuff.Models
             travelInfoDb.FromAddress = travelInfo.FromAddress;
             travelInfoDb.ToAddress = travelInfo.ToAddress;
             travelInfoDb.Transport = travelInfo.Transport;
+
             JObject o = JObject.Parse(json);
 
             string tempDist = (string)o.SelectToken("emissions[1].routedDistance");
@@ -39,6 +41,9 @@ namespace GoodBadStuff.Models
                         break;
                 case "BUS":
                         GetCo2(o, 3);
+                        break;
+                case "TWO-WHEELER":
+                        GetCo2(o, 4);
                         break;
                 case "DRIVING":
                         GetCo2(o, 7);
@@ -79,7 +84,7 @@ namespace GoodBadStuff.Models
             }
 
         }
-       
+
 
         //public static Contact GetContact(string cid)
         //{
@@ -113,35 +118,38 @@ namespace GoodBadStuff.Models
         //    return tmpContact;
         //}
 
-        //public static List<Contact> LoadContacts()
-        //{
-        //    SqlConnection myConnection = new SqlConnection(CON_STR);
-        //    SqlCommand myCommand = new SqlCommand("select * from Contact order by ID", myConnection);
+        public static List<UserMyTravelsVM> LoadTravels()
+        {
+            SqlConnection myConnection = new SqlConnection(CON_STR);
+            SqlCommand myCommand = new SqlCommand("select * from TravelInfo order by UserId", myConnection);
 
-        //    List<Contact> myContacts = new List<Contact>();
-        //    try
-        //    {
-        //        myConnection.Open();  
-        //        SqlDataReader myReader = myCommand.ExecuteReader();
-        //        while (myReader.Read())
-        //        {
-        //            string id = myReader["ID"].ToString();
-        //            string firstname = myReader["firstname"].ToString();
-        //            string lastname = myReader["lastname"].ToString();
+            List<UserMyTravelsVM> myTravels = new List<UserMyTravelsVM>();
+            try
+            {
+                myConnection.Open();
+                SqlDataReader myReader = myCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    string transport = myReader["Transport"].ToString();
+                    float co2 = (float)myReader["Co2"];
+                    string date = myReader["Date"].ToString();
+                    float distance = (float)myReader["Distance"];
+                    string fromAddress = myReader["FromAddress"].ToString();
+                    string toAddress = myReader["ToAddress"].ToString();
 
-        //            myContacts.Add(new Contact(id, firstname, lastname));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Response.Write($"<script>alert('{ex.Message}');</script>");
-        //    }
-        //    finally
-        //    {
-        //        myConnection.Close();
-        //    }
-        //    return myContacts;
-        //}
+                    myTravels.Add(new UserMyTravelsVM(transport, co2, date, distance, fromAddress, toAddress));
+                }
+            }
+            catch (Exception ex)
+            {
+                //Response.Write($"<script>alert('{ex.Message}');</script>");
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+            return myTravels;
+        }
 
         //public static void UpdateContact(string cid, string firstname, string lastname)
         //{
