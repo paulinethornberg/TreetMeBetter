@@ -11,6 +11,12 @@ var directionsService;
 var directionsDisplay;
 var type;
 
+function saveTravel() {
+    $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng(), "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type }, function (result) {
+    });
+}
+
+
 function checkIsLoggedIn() {
     $.get("/user/CheckIsLoggedIn", function (loggedIn) {
         if (loggedIn) {
@@ -18,12 +24,14 @@ function checkIsLoggedIn() {
             console.log(loggedIn);
             $("#MyTravelsButton").removeClass('none');
             $("#logOutButton").removeClass('none');
+            $("#saveBtnDiv").removeClass('none');
             $("#loggBtn").addClass('none');
         }
         else {
             console.log("Utloggad");
             $("#MyTravelsButton").addClass('none');
             $("#logOutButton").addClass('none');
+            $("#saveBtnDiv").addClass('none');
             $("#loggBtn").removeClass('none');
         }
     });
@@ -63,7 +71,9 @@ function onClick() {
 function treeConverter(co2) {
     $("#treeDiv").empty();
 
+    if (co2 / 2000 >= 20)
     var numberOfBigTrees = Math.round(co2 / 20000);
+    
     var numberOfSmallTrees = Math.round(co2 % 20000 / 5000);
 
     for (var i = 0; i < numberOfBigTrees; i++) {
@@ -79,24 +89,30 @@ function treeConverter(co2) {
 
 function getCarbon(from, to) {
     $.post("/home/GetCarbonData", { "FromLat": fromResult.lat(), "FromLng": fromResult.lng(), "ToLat": toResult.lat(), "ToLng": toResult.lng() , "FromAddress": document.getElementById('from').value, "ToAddress": to, "Transport": type},  function (result) {
+
+        var apiJson = result.apiJson;
+        var travelInfoId = result.travelInfoId;
+
+        console.log(travelInfoId);
+
         switch (type) {
             case 'BICYCLING':
-                setHTML(0, 'fa-bicycle', result);
+                setHTML(0, 'fa-bicycle', apiJson);
                 break;
             case 'WALKING':
-                setHTML(1, 'fa-blind', result);
+                setHTML(1, 'fa-blind', apiJson);
                 break;
             case 'TRAIN':
-                setHTML(2, 'fa-train', result);
+                setHTML(2, 'fa-train', apiJson);
                 break;
             case 'BUS':
-                setHTML(3, 'fa-bus', result);
+                setHTML(3, 'fa-bus', apiJson);
                 break;
             case 'DRIVING':
-                setHTML(5, 'fa-car', result);
+                setHTML(5, 'fa-car', apiJson);
                 break;
             case 'MOTORCYCLE':
-                setHTML(4, 'fa-motorcycle', result);
+                setHTML(4, 'fa-motorcycle', apiJson);
                 break;
         }
         document.getElementById('fromAddress').innerHTML = from;
@@ -179,6 +195,7 @@ function doGeoCall(address) {
 }
 
 function setHTML(position, type, result) {
+    console.log(result);
     document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[position].totalCo2 / 1000) + ' ' + 'Kg CO2';
     treeConverter(result.emissions[position].totalCo2);
     $('#vehicleIcon').attr('class', 'fa ' + type + ' fa-2x');

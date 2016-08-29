@@ -27,14 +27,19 @@ namespace GoodBadStuff.Controllers
         [HttpPost]
         public async Task<ActionResult> GetCarbonData(TravelInfo travelInfo)
         {
+
             string webapiurl = $"http://api.commutegreener.com/api/co2/emissions?startLat={travelInfo.FromLat}&startLng={travelInfo.FromLng}&endLat={travelInfo.ToLat}&endLng={travelInfo.ToLng}&format=json";
             var client = new HttpClient();
             var json = await client.GetStringAsync(webapiurl);
             // SAVE TO DATABASE() - GET INFO FROM json strängen här && get more 
-            SQL sql = new SQL();
-            sql.GetValuesFromAPIs(travelInfo, json);
 
-            return Content(json, "application/json");
+
+            SQL sql = new SQL();
+            var id = sql.GetValuesFromAPIs(travelInfo, json);
+
+            var ret = new { apiJson = json, travelInfoId = id };
+
+            return Json(ret);
         }
 
     }
