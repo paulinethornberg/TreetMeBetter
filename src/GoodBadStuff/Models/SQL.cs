@@ -16,9 +16,9 @@ namespace GoodBadStuff.Models
         //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
         const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
-        public  void GetValuesFromAPIs(TravelInfo travelInfo, string json)
+        public int GetValuesFromAPIs(TravelInfo travelInfo, string json)
         {
-
+// 
             travelInfoDb.FromAddress = travelInfo.FromAddress;
             travelInfoDb.ToAddress = travelInfo.ToAddress;
             travelInfoDb.Transport = travelInfo.Transport;
@@ -49,7 +49,7 @@ namespace GoodBadStuff.Models
                         GetCo2(o, 7);
                         break;
             }
-            AddNewTravel(travelInfoDb);
+            return AddNewTravel(travelInfoDb);
         }
 
         private void GetCo2(JObject o, int i)
@@ -59,13 +59,15 @@ namespace GoodBadStuff.Models
             travelInfoDb.Co2 = Co2;
         }
 
-        public static void AddNewTravel(TravelInfoDb travelInfoDb)
+        public static int AddNewTravel(TravelInfoDb travelInfoDb)
         {
+            int? ret = null;
             SqlConnection myConnection = new SqlConnection(CON_STR);
             SqlCommand myCommand = new SqlCommand();
 
             //myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2}, {travelInfoDb.Created}, {travelInfoDb.TreeCount}, {travelInfoDb.Distance}, '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
-            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance})";
+            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance}); select @@identity";
+
 
             myCommand.CommandType = System.Data.CommandType.Text;
             myCommand.Connection = myConnection;
@@ -73,16 +75,17 @@ namespace GoodBadStuff.Models
             try
             {
                 myConnection.Open();
-                myCommand.ExecuteNonQuery();
+                //myCommand.ExecuteNonQuery();
+                ret = Convert.ToInt32(myCommand.ExecuteScalar());
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }
             finally
             {
             }
-
+            return ret.Value;
         }
 
 
