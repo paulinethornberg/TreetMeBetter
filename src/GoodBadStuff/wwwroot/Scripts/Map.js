@@ -16,6 +16,9 @@ function checkIsLoggedIn() {
         if (loggedIn) {
             //Create navbar buttons
             console.log(loggedIn);
+            $("#MyTravelsButton").removeClass('none');
+            $("#logOutButton").removeClass('none');
+            $("#loggBtn").addClass('none');
         }
         else
             console.log("Utloggad");
