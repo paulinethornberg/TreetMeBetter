@@ -1,46 +1,56 @@
 ﻿<style>
-    .fa-cog {
-  color: green;
-}
+
 </style>
 
+<h2 class="text-center">
+    <label>Select departure and arrival</label>
+</h2>
 <div class="row">
-    <form class="form-inline">
-        <div class="form-group col-md-6">
-            <label for="from">From:</label>
-            <input id="from" type="text" class="form-control">
+    <div class="col-sm-4 col-sm-offset-2">
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-home"></i></span>
+            <input id="from" type="text" class="form-control" aria-describedby="basic-addon1">
         </div>
-        <div class="form-group col-md-6">
-            <label for="to">To:</label>
-            <input id="to" type="text" value="Malmö" class="form-control">
-            <input type="button" class="btn btn-lg btn-success pull-right" value="GO" onclick="onClick()" />
+    </div>
+    <div class="col-sm-4">
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" id="basic-addon2"><i class="fa fa-home"></i></span>
+            <input id="to" type="text" class="form-control" aria-describedby="basic-addon2">
         </div>
-    </form>
+    </div>
 </div>
-
+<h2 class="text-center">
+    <label>Select your choice of travel</label>
+</h2>
 <div class="row text-center">
-    <span value="TRAIN" class="fa-stack fa-3x fa-lg">
+    <span value="TRAIN" class="type fa-stack fa-3x fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-train fa-stack-1x fa-inverse"></i>
     </span>
-    <span value="BUS" class="fa-stack fa-3x fa-lg">
+    <span value="BUS" class="type fa-stack fa-3x fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-bus fa-stack-1x fa-inverse"></i>
     </span>
-    <span value="DRIVING" class="fa-stack fa-3x fa-lg">
+    <span value="DRIVING" class="type fa-stack fa-3x fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-car fa-stack-1x fa-inverse"></i>
     </span>
-    <span value="BICYCLING" class="fa-stack fa-3x fa-lg">
+    <span value="BICYCLING" class="type fa-stack fa-3x fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-bicycle fa-stack-1x fa-inverse"></i>
     </span>
-    <span value="WALKING" class="fa-stack fa-3x fa-lg">
+    <span value="WALKING" class="type fa-stack fa-3x fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-blind fa-stack-1x fa-inverse"></i>
     </span>
-    <span value="MOTORCYCLE" class="fa-stack fa-3x fa-lg">
+    <span value="MOTORCYCLE" class="type fa-stack fa-3x fa-lg">
         <i class="fa fa-circle fa-stack-2x"></i>
         <i class="fa fa-motorcycle fa-stack-1x fa-inverse"></i>
+    </span>
+</div>
+<div class="row text-center">
+    <span id="goBtn" class="fa-stack fa-4x fa-lg">
+        <i class="fa fa-circle fa-stack-2x" style="color:lightgrey;"></i>
+        <i class="fa circle-text fa-stack-1x fa-inverse">GO</i>
     </span>
 </div>

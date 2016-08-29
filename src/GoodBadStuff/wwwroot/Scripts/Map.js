@@ -30,7 +30,7 @@ function checkIsLoggedIn() {
 }
 
 
-function onClick() {
+$('#goBtn').click(function () {
     var from = document.getElementById('from').value;
     var to = document.getElementById('to').value;
 
@@ -56,7 +56,7 @@ function onClick() {
             getCarbon(from, to);
         });
     });
-}
+});
 
 // CONVERT TO TREES
 
@@ -93,7 +93,7 @@ function getCarbon(from, to) {
                 setHTML(3, 'fa-bus', result);
                 break;
             case 'DRIVING':
-                setHTML(5, 'fa-car', result);
+                setHTML(7, 'fa-car', result);
                 break;
             case 'MOTORCYCLE':
                 setHTML(4, 'fa-motorcycle', result);
@@ -105,8 +105,8 @@ function getCarbon(from, to) {
     });
 }
 
-$("span").click(function () {
-    $("span").removeClass('fa-cog');
+$('.type').click(function () {
+    $(".type").removeClass('fa-cog');
     type = $(this).attr('value');
     $(this).addClass('fa-cog');
 });
@@ -144,25 +144,33 @@ function drawRoute() {
             directionsDisplay.setDirections(result);
         }
     });
-
 }
+
 function initialize() {
     geocoder = new google.maps.Geocoder();
-    var fromAutoComplete = document.getElementById('from');
-    var defaultBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng()
-        )
-    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(fromAutoComplete);
-    var autocomplete = new google.maps.places.Autocomplete(fromAutoComplete);
-    var latlng = new google.maps.LatLng(59.1946, 18.47);
+    var latlng = new google.maps.LatLng(59.334591, 18.063240);
+    
     var mapOptions = {
         zoom: 7,
-        center: latlng
+        center: latlng,
+        scrollwheel: false,
+        draggable: false
     }
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsService = new google.maps.DirectionsService();
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsDisplay.setMap(map);
+
+    var fromInput = document.getElementById('from');
+    var toInput = document.getElementById('to');
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-90, -180));
+    var autoCompleteOptions = {
+        types: ['geocode'],
+        bounds: defaultBounds
+    };
+    fromAutoComplete = new google.maps.places.Autocomplete(fromInput, autoCompleteOptions);
+    toAutoComplete = new google.maps.places.Autocomplete(toInput, autoCompleteOptions);
 }
 
 function doGeoCall(address) {

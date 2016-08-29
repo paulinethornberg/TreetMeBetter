@@ -1,7 +1,9 @@
-﻿
-@Html.Partial("_Search")
-@Html.Partial("_searchresult")
-@Html.Partial("_LoginForm")
+﻿@Html.Partial("_Map")
+<div class="container">
+    @Html.Partial("_Search")
+    @Html.Partial("_searchresult")
+    @Html.Partial("_LoginForm")
+</div>
 
 @section Script{
     @*tog bort asynkron inladdning*@
@@ -13,6 +15,5 @@
     <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
     <script src="~/Scripts/Login.js"></script>
-
 }
 
