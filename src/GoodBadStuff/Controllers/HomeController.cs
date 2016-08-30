@@ -57,7 +57,7 @@ namespace GoodBadStuff.Controllers
             string userName = User.Identity.Name;
             await dataManager.SaveTravelToUser(travelId.Id, userName);
 
-            return View("home/index");
+            return Content("Your travel has been saved");
         }
 
     }
