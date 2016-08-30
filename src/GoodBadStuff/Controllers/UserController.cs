@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using GoodBadStuff.Models.ViewModels;
+using GoodBadStuff.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +18,7 @@ namespace GoodBadStuff.Controllers
         UserManager<IdentityUser> _userManager;
         SignInManager<IdentityUser> _signinManager;
         IdentityDbContext _identityContext;
+        DataManager dataManager;
 
         public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
@@ -26,6 +28,21 @@ namespace GoodBadStuff.Controllers
         }
         public IActionResult MyTravels()
         {
+            return View();
+        }
+        public IActionResult MyAccount()
+        {
+            return View();
+        }
+
+        public IActionResult Update()
+        {
+            dataManager.GetUserInfo();
+            return RedirectToAction(nameof(UserController.MyAccount));
+        }
+        public IActionResult GetUserInfo()
+        {
+            
             return View();
         }
 

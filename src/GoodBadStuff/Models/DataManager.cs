@@ -63,6 +63,11 @@ namespace GoodBadStuff.Models
             return AddNewTravel(travelInfo);
         }
 
+        internal void GetUserInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         internal async Task SaveTravelToUser(int travelInfoId, string userName)
         {
             // kod för att stoppa in UserID or Name i 
