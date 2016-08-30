@@ -15,6 +15,6 @@ namespace GoodBadStuff.Models
         public float Distance { get; set; }
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

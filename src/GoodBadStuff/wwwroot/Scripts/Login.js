@@ -7,7 +7,7 @@
                 $("#messageLabel").text("Login failed, please try again");
             else {
                 $('#myModal').modal('hide');
-                checkIsLoggedIn()
+                checkIsLoggedIn();
             }
             //stäng rutan
             //Ändra massa greher till inloggat och sånt Gott och blandat.

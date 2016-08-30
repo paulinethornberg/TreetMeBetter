@@ -17,6 +17,7 @@ namespace GoodBadStuff.Controllers
 {
     public class HomeController : Controller
     {
+        SQL sql = new SQL();
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -33,12 +34,20 @@ namespace GoodBadStuff.Controllers
             var json = await client.GetStringAsync(webapiurl);
             // SAVE TO DATABASE() - GET INFO FROM json strängen här && get more 
 
-            SQL sql = new SQL();
+            
             var id = sql.GetValuesFromAPIs(travelInfo, json);
             
             var ret = new { apiJson = json, travelInfoId = id };
 
             return Json(ret);
+        }
+
+        public IActionResult SaveCarbonData(int travelInfoId)
+        {
+            string userName = User.Identity.Name;
+            sql.SaveTravelToUser(travelInfoId, userName);
+                            
+            return View();
         }
 
     }

@@ -52,6 +52,41 @@ namespace GoodBadStuff.Models
             return AddNewTravel(travelInfoDb);
         }
 
+        internal void SaveTravelToUser(int id, string userName)
+        {
+            // kod för att stoppa in UserID or Name i 
+            GetIdFromUserName(userName);
+
+        }
+
+        private string GetIdFromUserName(string userName)
+        {
+            SqlConnection myConnection = new SqlConnection(CON_STR);
+            SqlCommand myCommand = new SqlCommand($"select Id from AspNetUsers WHERE UserName = '{userName}'", myConnection);
+            string id = "";
+            try
+            {
+                myConnection.Open();
+
+                SqlDataReader myReader = myCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    id = myReader["Id"].ToString();
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                //Response.Write($"<script>alert('{ex.Message}');</script>");
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+
+            return id;
+        }
+
         private void GetCo2(JObject o, int i)
         {
             string tempCo2 = (string)o.SelectToken($"emissions[{i}].totalCo2");
