@@ -25,6 +25,7 @@ function checkIsLoggedIn() {
             //Create navbar buttons
             console.log(loggedIn);
             $("#MyTravelsButton").removeClass('none');
+            $("#MyAccountButton").removeClass('none');
             $("#logOutButton").removeClass('none');
             $("#saveBtnDiv").removeClass('none');
             $("#loggBtn").addClass('none');
@@ -32,6 +33,7 @@ function checkIsLoggedIn() {
         else {
             console.log("Utloggad");
             $("#MyTravelsButton").addClass('none');
+            $("#MyAccountButton").addClass('none');
             $("#logOutButton").addClass('none');
             $("#saveBtnDiv").addClass('none');
             $("#loggBtn").removeClass('none');
