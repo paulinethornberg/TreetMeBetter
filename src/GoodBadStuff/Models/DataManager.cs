@@ -25,7 +25,7 @@ namespace GoodBadStuff.Models
         }
 
         //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
-        const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
+        //const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
         public int GetValuesFromAPIs(TravelInfoVM travelInfoVM, string json)
         {
@@ -76,58 +76,12 @@ namespace GoodBadStuff.Models
             var travelInfo = _context.TravelInfo.Single(o => o.Id == travelInfoId);
             travelInfo.UserId = userId;
             _context.SaveChanges();
-
-            //SqlConnection myConnection = new SqlConnection(CON_STR);
-            //SqlCommand myCommand = new SqlCommand($"update TravelInfo set UserId = '{userId}' where Id = {travelInfoId}", myConnection);
-
-            //myCommand.CommandType = System.Data.CommandType.Text;
-            //myCommand.Connection = myConnection;
-
-            //try
-            //{
-            //    myConnection.Open();
-            //    myCommand.ExecuteNonQuery();
-
-            //}
-            //catch (Exception e)
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    myConnection.Close();
-            //}
-
         }
 
         async Task<string> GetIdFromUserName(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
             return user.Id;
-            //SqlConnection myConnection = new SqlConnection(CON_STR);
-            //SqlCommand myCommand = new SqlCommand($"select Id from AspNetUsers WHERE UserName = '{userName}'", myConnection);
-            //string id = "";
-            //try
-            //{
-            //    myConnection.Open();
-
-            //    SqlDataReader myReader = myCommand.ExecuteReader();
-            //    while (myReader.Read())
-            //    {
-            //        id = myReader["Id"].ToString();
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    //Response.Write($"<script>alert('{ex.Message}');</script>");
-            //}
-            //finally
-            //{
-            //    myConnection.Close();
-            //}
-
-            //return id;
         }
 
         private void GetCo2(JObject o, int i, TravelInfo travelInfo)
@@ -173,139 +127,15 @@ namespace GoodBadStuff.Models
             //return ret.Value;
             #endregion
         }
-
-
-        //public static Contact GetContact(string cid)
-        //{
-        //    Contact tmpContact = null;
-        //    SqlConnection myConnection = new SqlConnection(CON_STR);
-        //    SqlCommand myCommand = new SqlCommand("select * from Contact WHERE ID=" + cid, myConnection);
-
-        //    try
-        //    {
-        //        myConnection.Open();
-
-        //        SqlDataReader myReader = myCommand.ExecuteReader();
-        //        while (myReader.Read())
-        //        {
-        //            string id = myReader["ID"].ToString();
-        //            string firstname = myReader["firstname"].ToString();
-        //            string lastname = myReader["lastname"].ToString();
-
-        //            tmpContact = new Contact(id, firstname, lastname);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Response.Write($"<script>alert('{ex.Message}');</script>");
-        //    }
-        //    finally
-        //    {
-        //        myConnection.Close();
-        //    }
-
-        //    return tmpContact;
-        //}
-
-        public static List<UserMyTravelsVM> LoadTravels()
+        
+        public UserMyTravelsVM[] LoadTravels(string userId)
         {
-            SqlConnection myConnection = new SqlConnection(CON_STR);
-            SqlCommand myCommand = new SqlCommand("select * from TravelInfo order by UserId", myConnection);
+            return _context.TravelInfo
+                 .Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress })
+                 .Where(a => a.UserId == userId)
+                 .ToArray();
+    
+    }
 
-            List<UserMyTravelsVM> myTravels = new List<UserMyTravelsVM>();
-            try
-            {
-                myConnection.Open();
-                SqlDataReader myReader = myCommand.ExecuteReader();
-                while (myReader.Read())
-                {
-                    string transport = myReader["Transport"].ToString();
-                    float co2 = (float)myReader["Co2"];
-                    string date = myReader["Date"].ToString();
-                    float distance = (float)myReader["Distance"];
-                    string fromAddress = myReader["FromAddress"].ToString();
-                    string toAddress = myReader["ToAddress"].ToString();
-
-                    myTravels.Add(new UserMyTravelsVM(transport, co2, date, distance, fromAddress, toAddress));
-                }
-            }
-            catch (Exception ex)
-            {
-                //Response.Write($"<script>alert('{ex.Message}');</script>");
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-            return myTravels;
-        }
-
-        //public static void UpdateContact(string cid, string firstname, string lastname)
-        //{
-
-        //    SqlConnection myConnection = new SqlConnection(CON_STR);
-        //    SqlCommand myCommand = new SqlCommand($"update Contact set FirstName='{firstname}', LastName='{lastname}' WHERE ID=" + cid, myConnection);
-
-        //    try
-        //    {
-        //        myConnection.Open();
-
-        //        //SqlDataReader myReader = myCommand.ExecuteReader();
-        //        //while (myReader.Read())
-        //        //{
-        //        //    string id = myReader["ID"].ToString();
-        //        //    string firstname = myReader["firstname"].ToString();
-        //        //    string lastname = myReader["lastname"].ToString();
-
-        //        //    tmpContact = new Contact(id, firstname, lastname);
-        //        myCommand.ExecuteNonQuery();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Response.Write($"<script>alert('{ex.Message}');</script>");
-        //    }
-        //    finally
-        //    {
-        //        myConnection.Close();
-        //    }
-
-
-        //}
-
-        //public static Contact DeleteContact(string cid)
-        //{
-        //    Contact tmpContact = null;
-        //    SqlConnection myConnection = new SqlConnection(CON_STR);
-        //    SqlCommand myCommand = new SqlCommand();
-
-        //    myCommand.CommandText = $"delete from Contact where Id = '{Convert.ToInt32(cid)}'";
-        //    myCommand.Connection = myConnection;
-
-        //    try
-        //    {
-        //        myConnection.Open();
-
-        //        SqlDataReader myReader = myCommand.ExecuteReader();
-        //        while (myReader.Read())
-        //        {
-        //            string id = myReader["ID"].ToString();
-        //            string firstname = myReader["firstname"].ToString();
-        //            string lastname = myReader["lastname"].ToString();
-
-        //            tmpContact = new Contact(id, firstname, lastname);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Response.Write($"<script>alert('{ex.Message}');</script>");
-        //    }
-        //    finally
-        //    {
-        //        myConnection.Close();
-        //    }
-
-        //    return tmpContact;
-        //}
     }
 }

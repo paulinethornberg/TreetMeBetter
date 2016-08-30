@@ -7,25 +7,27 @@ namespace GoodBadStuff.Models.ViewModels
 {
     public class UserMyTravelsVM
     {
-        public UserMyTravelsVM(string transport, float co2, string date, float distance, string fromAddress, string toAddress )
-        {
-            Transport = transport;
-            Co2 = co2;
-            Date = date;
-            Distance = distance;
-            FromAddress = fromAddress;
-            ToAddress = toAddress;
+        //public UserMyTravelsVM(string transport, double co2, DateTime date, double distance, string fromAddress, string toAddress )
+        //{
+        //    Transport = transport;
+        //    Co2 = co2;
+        //    Date = date;
+        //    Distance = distance;
+        //    FromAddress = fromAddress;
+        //    ToAddress = toAddress;
 
 
 
-        }
+        //}
         public string Transport { get; set; }
-        public float Co2 { get; set; }
-        public string Date { get; set; }
-        public float Distance { get; set; }
+        public double? Co2 { get; set; }
+        public int Id { get; set; }
+        public DateTime? Date { get; set; }
+        public int? TreeCount { get; set; }
+        public double? Distance { get; set; }
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
-        public string Id { get; set; }
+        public string UserId { get; set; }
 
     }
 }
