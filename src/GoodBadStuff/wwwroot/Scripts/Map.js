@@ -13,7 +13,7 @@ var type;
 var travelInfoId
 
 $('#addTravelBtn').click(function () {
-    $.post("/home/SaveCarbonData", { "Id": travelInfoId }, function () {
+    $.post("/home/SaveCarbonData", { "Id":travelInfoId}, function () {
         alert("Travel saved!")
     });
 });
@@ -106,7 +106,7 @@ $('#addTravelBtn').click(function () {
 
             var apiJsonString = result.apiJson;
             var apiJson = JSON.parse(apiJsonString);
-             travelInfoId = result.travelInfoId;
+            travelInfoId = result.travelInfoId;
 
             console.log(travelInfoId);
 

@@ -41,21 +41,20 @@ namespace GoodBadStuff.Controllers
 
             return Json(ret);
         }
+
         [HttpPost]
-        public IActionResult SaveCarbonData(int travelInfoId)
+        public IActionResult SaveCarbonData(GetTravelId travelId)
         {
             string userName = User.Identity.Name;
-            sql.SaveTravelToUser(travelInfoId, userName);
+            sql.SaveTravelToUser(travelId.Id, userName);
 
             return View("home/index");
         }
 
     }
 
-    //public class GetCarbonDataVM
-    //{
-    //    public int TravelInfoId { get; set; }
-        
-    //    public string ApiJson { get; set; }
-    //}
+    public class GetTravelId
+    {
+        public int Id { get; set; }
+    }
 }

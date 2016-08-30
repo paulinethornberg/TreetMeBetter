@@ -25,7 +25,7 @@ namespace GoodBadStuff.Models.ViewModels
         public float Distance { get; set; }
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
-       // public string Id { get; set; }
+        public string Id { get; set; }
 
     }
 }
