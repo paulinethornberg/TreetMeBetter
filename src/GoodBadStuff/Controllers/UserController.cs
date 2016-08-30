@@ -82,5 +82,10 @@ namespace GoodBadStuff.Controllers
             await _signinManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult SadFacts()
+        {
+            return View();
+        }
     }
 }
