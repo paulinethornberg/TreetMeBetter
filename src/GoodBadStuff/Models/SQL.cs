@@ -16,7 +16,7 @@ namespace GoodBadStuff.Models
         //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
         const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
-        public int GetValuesFromAPIs(TravelInfo travelInfo, string json)
+        public int GetValuesFromAPIs(TravelInfoVM travelInfo, string json)
         {
 // 
             travelInfoDb.FromAddress = travelInfo.FromAddress;

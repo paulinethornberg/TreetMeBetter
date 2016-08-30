@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GoodBadStuff.Models
 {
-    public class TravelInfo
+    public class TravelInfoVM
     {
         public string FromLat { get; set; }
         public string FromLng { get; set; }

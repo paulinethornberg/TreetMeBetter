@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using GoodBadStuff.Models;
 using GoodBadStuff.Models.ViewModels;
 using Newtonsoft.Json.Linq;
+using GoodBadStuff.Models.Entities;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,6 +18,13 @@ namespace GoodBadStuff.Controllers
 {
     public class HomeController : Controller
     {
+        TrvlrContext _context;
+
+        public HomeController(TrvlrContext context)
+        {
+            _context = context;
+        }
+
         SQL sql = new SQL();
         // GET: /<controller>/
         public IActionResult Index()
@@ -26,7 +34,7 @@ namespace GoodBadStuff.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetCarbonData(TravelInfo travelInfo)
+        public async Task<ActionResult> GetCarbonData(TravelInfoVM travelInfo)
         {
 
             string webapiurl = $"http://api.commutegreener.com/api/co2/emissions?startLat={travelInfo.FromLat}&startLng={travelInfo.FromLng}&endLat={travelInfo.ToLat}&endLng={travelInfo.ToLng}&format=json";
