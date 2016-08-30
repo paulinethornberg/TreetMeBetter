@@ -20,7 +20,7 @@
 
 #goBtn {
     margin: 20px;
-}
+ }
 
 .panel-login {
     border-color: #ccc;
@@ -169,4 +169,8 @@ p.centerLarge {
 
 li.none {
     display: none;
+}
+
+span.type {
+    cursor:pointer;
 }
