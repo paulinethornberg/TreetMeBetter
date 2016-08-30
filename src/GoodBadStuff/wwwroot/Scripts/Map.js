@@ -12,13 +12,11 @@ var directionsDisplay;
 var type;
 var travelInfoId
 
-function saveTravel() {
-    
+$('#addTravelBtn').click(function () {
     $.post("/home/SaveCarbonData", { "Id": travelInfoId }, function () {
         alert("Travel saved!")
-        
+    });
 });
-}
 
 
     function checkIsLoggedIn() {

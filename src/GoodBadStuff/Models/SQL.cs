@@ -52,14 +52,40 @@ namespace GoodBadStuff.Models
             return AddNewTravel(travelInfoDb);
         }
 
-        internal void SaveTravelToUser(int id, string userName)
+        internal void SaveTravelToUser(int travelInfoId, string userName)
         {
             // kod för att stoppa in UserID or Name i 
-            GetIdFromUserName(userName);
+            var userId = GetIdFromUserName(userName);
 
+            AddUserIdToTravelInfoDBTable(userId, travelInfoId);
         }
 
-        private string GetIdFromUserName(string userName)
+        private void AddUserIdToTravelInfoDBTable(string userId, int travelInfoId)
+        {
+            SqlConnection myConnection = new SqlConnection(CON_STR);
+            SqlCommand myCommand = new SqlCommand($"update TravelInfo set UserId = '{userId}' where Id = {travelInfoId}", myConnection);
+
+            myCommand.CommandType = System.Data.CommandType.Text;
+            myCommand.Connection = myConnection;
+
+            try
+            {
+                myConnection.Open();
+                myCommand.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+           
+    }
+
+    private string GetIdFromUserName(string userName)
         {
             SqlConnection myConnection = new SqlConnection(CON_STR);
             SqlCommand myCommand = new SqlCommand($"select Id from AspNetUsers WHERE UserName = '{userName}'", myConnection);
@@ -119,6 +145,7 @@ namespace GoodBadStuff.Models
             }
             finally
             {
+                myConnection.Close();
             }
             return ret.Value;
         }
