@@ -130,8 +130,10 @@ namespace GoodBadStuff.Models
 
         public UserMyTravelsVM[] LoadTravels(string userId)
         {
-            return _context.TravelInfo.Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress })
-            //.Where(a => a.UserId.Equals("0a82c597-0ce8-4f5b-a8fd-bbe0da5be280", StringComparison.OrdinalIgnoreCase)).ToArray();
+            return _context.TravelInfo.Where(a => a.UserId == userId)
+                .Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress, UserId = c.UserId })
+                
+            //.Where(a => a.UserId.Equals("0a82c597-0ce8-4f5b-a8fd-bbe0da5be280", StringComparison.OrdinalIgnoreCase))
             .ToArray();
 
 
