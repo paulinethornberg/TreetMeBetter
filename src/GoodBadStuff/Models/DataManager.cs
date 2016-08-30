@@ -132,15 +132,17 @@ namespace GoodBadStuff.Models
             //return ret.Value;
             #endregion
         }
-        
+
         public UserMyTravelsVM[] LoadTravels(string userId)
         {
-            return _context.TravelInfo
-                 .Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress })
-                 .Where(a => a.UserId == userId)
-                 .ToArray();
-    
-    }
+            return _context.TravelInfo.Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress })
+            //.Where(a => a.UserId.Equals("0a82c597-0ce8-4f5b-a8fd-bbe0da5be280", StringComparison.OrdinalIgnoreCase)).ToArray();
+            .ToArray();
+
+
+
+        }
 
     }
 }
+//
