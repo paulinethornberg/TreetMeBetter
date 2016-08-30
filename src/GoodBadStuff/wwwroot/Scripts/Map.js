@@ -13,8 +13,8 @@ var type;
 var travelInfoId
 
 $('#addTravelBtn').click(function () {
-    $.post("/home/SaveCarbonData", { "Id": travelInfoId }, function () {
-        alert("Travel saved!")
+    $.post("/home/SaveCarbonData", { "Id": travelInfoId }, function (resultMessage) {
+        console.log(resultMessage);
     });
 });
 
