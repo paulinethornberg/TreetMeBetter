@@ -1,5 +1,8 @@
 ﻿using GoodBadStuff.Models;
+using GoodBadStuff.Models.Entities;
 using GoodBadStuff.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,146 +13,165 @@ using System.Threading.Tasks;
 
 namespace GoodBadStuff.Models
 {
-    public class SQL
+    public class DataManager
     {
-        TravelInfoDb travelInfoDb = new TravelInfoDb();
+        TrvlrContext _context;
+        UserManager<IdentityUser> _userManager;
+
+        public DataManager(TrvlrContext context, UserManager<IdentityUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+
         //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
         const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
-        public int GetValuesFromAPIs(TravelInfoVM travelInfo, string json)
+        public int GetValuesFromAPIs(TravelInfoVM travelInfoVM, string json)
         {
-// 
-            travelInfoDb.FromAddress = travelInfo.FromAddress;
-            travelInfoDb.ToAddress = travelInfo.ToAddress;
-            travelInfoDb.Transport = travelInfo.Transport;
+            var travelInfo = new TravelInfo();
+            travelInfo.FromAddress = travelInfoVM.FromAddress;
+            travelInfo.ToAddress = travelInfoVM.ToAddress;
+            travelInfo.Transport = travelInfoVM.Transport;
 
             JObject o = JObject.Parse(json);
 
             string tempDist = (string)o.SelectToken("emissions[1].routedDistance");
-            travelInfoDb.Distance = Convert.ToSingle(tempDist);
+            travelInfo.Distance = Convert.ToSingle(tempDist);
 
-            switch (travelInfoDb.Transport)
+            switch (travelInfo.Transport)
             {
                 case "BICYCLE":
-                        GetCo2(o, 0);
-                        break;
+                    GetCo2(o, 0, travelInfo);
+                    break;
                 case "WALKING":
-                        GetCo2(o, 1);
-                        break;
+                    GetCo2(o, 1, travelInfo);
+                    break;
                 case "TRAIN":
-                        GetCo2(o, 2);
-                        break;
+                    GetCo2(o, 2, travelInfo);
+                    break;
                 case "BUS":
-                        GetCo2(o, 3);
-                        break;
+                    GetCo2(o, 3, travelInfo);
+                    break;
                 case "MOTORCYCLE":
-                        GetCo2(o, 4);
-                        break;
+                    GetCo2(o, 4, travelInfo);
+                    break;
                 case "DRIVING":
-                        GetCo2(o, 7);
-                        break;
+                    GetCo2(o, 7, travelInfo);
+                    break;
             }
-            return AddNewTravel(travelInfoDb);
+            return AddNewTravel(travelInfo);
         }
 
-        internal void SaveTravelToUser(int travelInfoId, string userName)
+        internal async Task SaveTravelToUser(int travelInfoId, string userName)
         {
             // kod för att stoppa in UserID or Name i 
-            var userId = GetIdFromUserName(userName);
+            var userId = await GetIdFromUserName(userName);
 
             AddUserIdToTravelInfoDBTable(userId, travelInfoId);
         }
 
         private void AddUserIdToTravelInfoDBTable(string userId, int travelInfoId)
         {
-            SqlConnection myConnection = new SqlConnection(CON_STR);
-            SqlCommand myCommand = new SqlCommand($"update TravelInfo set UserId = '{userId}' where Id = {travelInfoId}", myConnection);
+            var travelInfo = _context.TravelInfo.Single(o => o.Id == travelInfoId);
+            travelInfo.UserId = userId;
+            _context.SaveChanges();
 
-            myCommand.CommandType = System.Data.CommandType.Text;
-            myCommand.Connection = myConnection;
+            //SqlConnection myConnection = new SqlConnection(CON_STR);
+            //SqlCommand myCommand = new SqlCommand($"update TravelInfo set UserId = '{userId}' where Id = {travelInfoId}", myConnection);
 
-            try
-            {
-                myConnection.Open();
-                myCommand.ExecuteNonQuery();
+            //myCommand.CommandType = System.Data.CommandType.Text;
+            //myCommand.Connection = myConnection;
 
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-           
-    }
+            //try
+            //{
+            //    myConnection.Open();
+            //    myCommand.ExecuteNonQuery();
 
-    private string GetIdFromUserName(string userName)
-        {
-            SqlConnection myConnection = new SqlConnection(CON_STR);
-            SqlCommand myCommand = new SqlCommand($"select Id from AspNetUsers WHERE UserName = '{userName}'", myConnection);
-            string id = "";
-            try
-            {
-                myConnection.Open();
+            //}
+            //catch (Exception e)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    myConnection.Close();
+            //}
 
-                SqlDataReader myReader = myCommand.ExecuteReader();
-                while (myReader.Read())
-                {
-                    id = myReader["Id"].ToString();
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                //Response.Write($"<script>alert('{ex.Message}');</script>");
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-
-            return id;
         }
 
-        private void GetCo2(JObject o, int i)
+        async Task<string> GetIdFromUserName(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            return user.Id;
+            //SqlConnection myConnection = new SqlConnection(CON_STR);
+            //SqlCommand myCommand = new SqlCommand($"select Id from AspNetUsers WHERE UserName = '{userName}'", myConnection);
+            //string id = "";
+            //try
+            //{
+            //    myConnection.Open();
+
+            //    SqlDataReader myReader = myCommand.ExecuteReader();
+            //    while (myReader.Read())
+            //    {
+            //        id = myReader["Id"].ToString();
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //Response.Write($"<script>alert('{ex.Message}');</script>");
+            //}
+            //finally
+            //{
+            //    myConnection.Close();
+            //}
+
+            //return id;
+        }
+
+        private void GetCo2(JObject o, int i, TravelInfo travelInfo)
         {
             string tempCo2 = (string)o.SelectToken($"emissions[{i}].totalCo2");
             if (tempCo2.StartsWith("-"))
                 tempCo2 = tempCo2.Substring(1);
             float Co2 = Convert.ToSingle(tempCo2);
-            travelInfoDb.Co2 = Co2;
+            travelInfo.Co2 = Co2;
         }
 
-        public static int AddNewTravel(TravelInfoDb travelInfoDb)
+        public int AddNewTravel(TravelInfo travelInfo)
         {
-            int? ret = null;
-            SqlConnection myConnection = new SqlConnection(CON_STR);
-            SqlCommand myCommand = new SqlCommand();
+            _context.TravelInfo.Add(travelInfo);
+            _context.SaveChanges();
+            return travelInfo.Id;
 
-            //myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2}, {travelInfoDb.Created}, {travelInfoDb.TreeCount}, {travelInfoDb.Distance}, '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
-            myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance}); select @@identity";
+            #region Old ugly SQL solution
+            //SqlConnection myConnection = new SqlConnection(CON_STR);
+            //SqlCommand myCommand = new SqlCommand();
+
+            ////myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2}, {travelInfoDb.Created}, {travelInfoDb.TreeCount}, {travelInfoDb.Distance}, '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
+            //myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance}); select @@identity";
 
 
-            myCommand.CommandType = System.Data.CommandType.Text;
-            myCommand.Connection = myConnection;
-            
-            try
-            {
-                myConnection.Open();
-                //myCommand.ExecuteNonQuery();
-                ret = Convert.ToInt32(myCommand.ExecuteScalar());
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-            return ret.Value;
+            //myCommand.CommandType = System.Data.CommandType.Text;
+            //myCommand.Connection = myConnection;
+
+            //try
+            //{
+            //    myConnection.Open();
+            //    //myCommand.ExecuteNonQuery();
+            //    ret = Convert.ToInt32(myCommand.ExecuteScalar());
+            //}
+            //catch (Exception e)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    myConnection.Close();
+            //}
+            //return ret.Value;
+            #endregion
         }
 
 

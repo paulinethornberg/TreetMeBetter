@@ -10,6 +10,8 @@ using GoodBadStuff.Models;
 using GoodBadStuff.Models.ViewModels;
 using Newtonsoft.Json.Linq;
 using GoodBadStuff.Models.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,14 +20,13 @@ namespace GoodBadStuff.Controllers
 {
     public class HomeController : Controller
     {
-        TrvlrContext _context;
+        DataManager dataManager;
 
-        public HomeController(TrvlrContext context)
+        public HomeController(TrvlrContext context, UserManager<IdentityUser> userManager)
         {
-            _context = context;
+            dataManager= new DataManager(context, userManager);
         }
 
-        SQL sql = new SQL();
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -43,7 +44,7 @@ namespace GoodBadStuff.Controllers
             // SAVE TO DATABASE() - GET INFO FROM json strängen här && get more 
 
             
-            var id = sql.GetValuesFromAPIs(travelInfo, json);
+            var id = dataManager.GetValuesFromAPIs(travelInfo, json);
             
             var ret = new { apiJson = json, travelInfoId = id };
 
@@ -51,10 +52,10 @@ namespace GoodBadStuff.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveCarbonData(GetTravelId travelId)
+        public async Task<IActionResult> SaveCarbonData(GetTravelId travelId)
         {
             string userName = User.Identity.Name;
-            sql.SaveTravelToUser(travelId.Id, userName);
+            await dataManager.SaveTravelToUser(travelId.Id, userName);
 
             return View("home/index");
         }
