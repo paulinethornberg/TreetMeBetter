@@ -116,6 +116,8 @@ namespace GoodBadStuff.Models
         private void GetCo2(JObject o, int i)
         {
             string tempCo2 = (string)o.SelectToken($"emissions[{i}].totalCo2");
+            if (tempCo2.StartsWith("-"))
+                tempCo2 = tempCo2.Substring(1);
             float Co2 = Convert.ToSingle(tempCo2);
             travelInfoDb.Co2 = Co2;
         }

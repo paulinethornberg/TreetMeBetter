@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using GoodBadStuff.Models.Entities;
 
 namespace GoodBadStuff
 {
@@ -19,6 +20,7 @@ namespace GoodBadStuff
         public void ConfigureServices(IServiceCollection services)
         {
             var connString = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
+            services.AddDbContext<TrvlrContext>();
             services.AddDbContext<IdentityDbContext>(
                 options => options.UseSqlServer(connString));
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
