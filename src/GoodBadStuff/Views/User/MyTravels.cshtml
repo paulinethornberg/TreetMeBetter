@@ -1,10 +1,11 @@
 ﻿@model UserMyTravelsVM[]
+<script type="text/javascript" src="/assets/script/canvasjs.min.js"></script>
 
 @*@foreach (var item in Model)
-{
-    <li>@item.TreeCount</li>
-}
-<p>@Model.Length</p>*@
+    {
+        <li>@item.TreeCount</li>
+    }
+    <p>@Model.Length</p>*@
 
 @for (int i = 0; i < Model.Length; i++)
 {
@@ -18,7 +19,50 @@
     <li>Till: @Model[i].ToAddress</li>
     <li>Användar id: @Model[i].UserId</li>
     <br />
-} 
+}
+<div>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer",
+            {
+                title: {
+                    text: "Desktop Search Engine Market Share, Dec-2012"
+                },
+                animationEnabled: true,
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                theme: "theme2",
+                data: [
+                {
+                    type: "pie",
+                    indexLabelFontFamily: "Garamond",
+                    indexLabelFontSize: 20,
+                    indexLabel: "{Transport} {Model[i].Transport}%",
+                    startAngle: -20,
+                    showInLegend: true,
+                    toolTipContent: "{Model.Transport} {Model[i].Transport}%",
+                    dataPoints: [
+                        { y: 83.24, legendText: "Car", label: "Car" },
+                        { y: 8.16, legendText: "Train!", label: "Train!" },
+                        { y: 4.67, legendText: "Bus", label: "Bus" },
+                        { y: 1.67, legendText: "Motorcycle", label: "Motorcycle" },
+                        { y: 0.98, legendText: "Bicycle", label: "Green" }
+                    ]
+                }
+                ]
+            });
+            chart.render();
+        }
+    </script>
+</div>
+
+
+
+
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
     <script src="~/Scripts/Map.js"></script>
