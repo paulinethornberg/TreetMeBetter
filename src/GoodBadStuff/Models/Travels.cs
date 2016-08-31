@@ -5,21 +5,8 @@ using System.Threading.Tasks;
 
 namespace GoodBadStuff.Models.ViewModels
 {
-    public class UserMyTravelsVM
+    public class Travels
     {
-        //public UserMyTravelsVM()
-        //{
-
-        //}
-        //public UserMyTravelsVM(string transport, double co2, DateTime date, double distance, string fromAddress, string toAddress)
-        //{
-        //    Transport = transport;
-        //    Co2 = co2;
-        //    Date = date;
-        //    Distance = distance;
-        //    FromAddress = fromAddress;
-        //    ToAddress = toAddress;
-        //}
         public string Transport { get; set; }
         public double? Co2 { get; set; }
         public int Id { get; set; }

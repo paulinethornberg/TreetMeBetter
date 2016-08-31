@@ -76,7 +76,6 @@ $('#goBtn').click(function () {
 
 function treeConverter(co2) {
     $("#treeDiv").empty();
-
     if (co2 >= 20000) {
         var numberOfBigTrees = Math.round(co2 / 20000);
         if ((numberOfBigTrees * 20000) - co2 >= 4000) {
@@ -137,8 +136,12 @@ function getCarbon(from, to) {
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
         $("#searchContainer").removeClass('none');
+        $("#addOrNew").removeClass('none');
+        $("#goBtn").addClass('none');
     });
 }
+
+$('#')
 
 $('.type').click(function () {
     $(".type").removeClass('fa-cog');
