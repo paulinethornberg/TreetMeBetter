@@ -29,6 +29,7 @@ namespace GoodBadStuff.Models.ViewModels
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
         public string UserId { get; set; }
+        public List<int> Vehicles { get; set; }
 
     }
 }

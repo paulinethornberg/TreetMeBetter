@@ -1,5 +1,5 @@
 ﻿@model UserMyTravelsVM[]
-<script type="text/javascript" src="/assets/script/canvasjs.min.js"></script>
+<script src="~/Scripts/canvasjs.min.js"></script>
 
 @*@foreach (var item in Model)
     {
@@ -7,26 +7,12 @@
     }
     <p>@Model.Length</p>*@
 
-@for (int i = 0; i < Model.Length; i++)
-{
-    <li>Transport: @Model[i].Transport</li>
-    <li>Emissioner: @Model[i].Co2</li>
-    <li>IdNummer: @Model[i].Id</li>
-    <li>Datum: @Model[i].Date</li>
-    <li>Antal träd: @Model[i].TreeCount</li>
-    <li>Längd: @Model[i].Distance</li>
-    <li>Från: @Model[i].FromAddress</li>
-    <li>Till: @Model[i].ToAddress</li>
-    <li>Användar id: @Model[i].UserId</li>
-    <br />
-}
-<div>
     <script type="text/javascript">
         window.onload = function () {
             var chart = new CanvasJS.Chart("chartContainer",
             {
                 title: {
-                    text: "Desktop Search Engine Market Share, Dec-2012"
+                    text: "Your most popular vehicle choices"
                 },
                 animationEnabled: true,
                 legend: {
@@ -41,16 +27,16 @@
                     type: "pie",
                     indexLabelFontFamily: "Garamond",
                     indexLabelFontSize: 20,
-                    indexLabel: "{Transport} {Model[i].Transport}%",
+                    indexLabel: "{label} {y}%",
                     startAngle: -20,
                     showInLegend: true,
-                    toolTipContent: "{Model.Transport} {Model[i].Transport}%",
+                    toolTipContent: "{legendText} {y}%",
                     dataPoints: [
-                        { y: 83.24, legendText: "Car", label: "Car" },
-                        { y: 8.16, legendText: "Train!", label: "Train!" },
-                        { y: 4.67, legendText: "Bus", label: "Bus" },
-                        { y: 1.67, legendText: "Motorcycle", label: "Motorcycle" },
-                        { y: 0.98, legendText: "Bicycle", label: "Green" }
+                        { y: 20, legendText: "Car", label: "Car" },
+                        { y: 20, legendText: "Train!", label: "Train!" },
+                        { y: 20, legendText: "Bus", label: "Bus" },
+                        { y: 20, legendText: "Motorcycle", label: "Motorcycle" },
+                      { y: 20, legendText: "Bicycle/Walking", label: "Emission free" }
                     ]
                 }
                 ]
@@ -58,7 +44,25 @@
             chart.render();
         }
     </script>
-</div>
+    <div id="chartContainer" style="height: 300px; width: 80%;"></div>
+
+@for (int i = 0; i < Model.Length; i++)
+{
+    @if (Model[i].Transport == "BUS")
+    {
+        
+    }
+    <li>Transport: @Model[i].Transport</li>
+    <li>Emissioner: @Model[i].Co2</li>
+    <li>IdNummer: @Model[i].Id</li>
+    <li>Datum: @Model[i].Date</li>
+    <li>Antal träd: @Model[i].TreeCount</li>
+    <li>Längd: @Model[i].Distance</li>
+    <li>Från: @Model[i].FromAddress</li>
+    <li>Till: @Model[i].ToAddress</li>
+    <li>Användar id: @Model[i].UserId</li>
+    <br />
+}
 
 
 

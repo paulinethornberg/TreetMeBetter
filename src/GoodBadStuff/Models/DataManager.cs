@@ -146,7 +146,10 @@ namespace GoodBadStuff.Models
             //.Where(a => a.UserId.Equals("0a82c597-0ce8-4f5b-a8fd-bbe0da5be280", StringComparison.OrdinalIgnoreCase))
             .ToArray();
 
-
+            var bus = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BUS").Count();
+            var walking = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "WALKING").Count();
+            var driving = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "DRIVING").Count();
+            var train = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "TRAIN").Count();
 
         }
 
