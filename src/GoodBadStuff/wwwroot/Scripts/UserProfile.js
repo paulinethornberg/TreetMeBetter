@@ -20,24 +20,14 @@ $("#oldpassword").focusout(function () {
     })
 });
 
-$("#deletebtn").click(function () {
-    ConfirmDelete();
-    if (ConfirmDelete())
-        $.post("/User/DeleteUser", function (deleteSuccess) {
-            if (deleteSuccess)
-                console.log("DELETED")
-            else (deleteSuccess)
-                console.log("STILL THERE MOAHAHAHAH")
-        })
+$("#deleteAccountbtn").click(function () {
+    $.post("/User/DeleteUser", function (deleteSuccess) {
+        if (deleteSuccess)
+            console.log("DELETED")
+        else
+        console.log("STILL THERE MOAHAHAHAH")
+    })
 });
-
-function ConfirmDelete() {
-    var result = confirm("Are you sure you want to delete your account?");
-    if (result)
-        return true;
-    else
-        return false; 
-    };
 
 
 $("#updatebtn").click(function () {
