@@ -141,7 +141,6 @@ function getCarbon(from, to) {
     });
 }
 
-$('#')
 
 $('.type').click(function () {
     $(".type").removeClass('fa-cog');
