@@ -62,7 +62,14 @@ namespace GoodBadStuff.Controllers
         [AllowAnonymous]
         public async Task<bool> Create(UserCreateVM viewModel)
         {
-            var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
+            var user = new IdentityUser()
+            {
+                UserName = viewModel.Username,
+                Email = viewModel.Email
+            };
+            var result = await _userManager.CreateAsync(user, viewModel.Password);
+            //var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
+
             await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
             return result.Succeeded;
 
