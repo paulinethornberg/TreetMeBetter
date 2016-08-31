@@ -6,27 +6,27 @@
 $("#oldpassword").focusout(function () {
     $.post("/User/CheckPassword", { "postContent": document.getElementById("oldpassword").value }, function (validCheck) {
         if (validCheck) {
-            $("#oldPasswordDiv").removeClass("has-feedback has-error")
+            $("#oldPasswordDiv").removeClass("has-feedback has-error");
             $("#errorCheck").addClass("none");
-            $("#oldPasswordDiv").addClass("has-feedback has-success")
+            $("#oldPasswordDiv").addClass("has-feedback has-success");
             $("#validCheck").removeClass("none");
         }
         else {
-            $("#oldPasswordDiv").removeClass("has-feedback has-success")
+            $("#oldPasswordDiv").removeClass("has-feedback has-success");
             $("#validCheck").addClass("none");
-            $("#oldPasswordDiv").addClass("has-feedback has-error")
+            $("#oldPasswordDiv").addClass("has-feedback has-error");
             $("#errorCheck").removeClass("none");
         }
-    })
+    });
 });
 
 $("#deleteAccountbtn").click(function () {
-    $.post("/User/DeleteUser", function (deleteSuccess) {
-        if (deleteSuccess)
-            console.log("DELETED")
+    $.post("/User/DeleteUser", function (deleteResult) {
+        if (deleteResult)
+            window.location.href = "/";
         else
-        console.log("STILL THERE MOAHAHAHAH")
-    })
+            window.location.href = "/User/MyAccount";
+    });
 });
 
 
