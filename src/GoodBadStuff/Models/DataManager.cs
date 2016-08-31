@@ -63,6 +63,11 @@ namespace GoodBadStuff.Models
             return AddNewTravel(travelInfo);
         }
 
+        internal static void GetUserInfoFromdb()
+        {
+            throw new NotImplementedException();
+        }
+
         internal void GetUserInfo()
         {
             throw new NotImplementedException();

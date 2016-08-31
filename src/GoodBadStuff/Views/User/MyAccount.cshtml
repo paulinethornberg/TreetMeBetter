@@ -2,10 +2,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "My Account";
 }
-<script>$(document).ready(function () {
-    checkIsLoggedIn();
-});</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css" />
+@*<script>$(document).ready(function () {
+    checkIsLoggedIn();
+});</script>*@
 
 <div onload="GetUserInfo()" class="container">
     <h2>Edit Profile</h2>
@@ -85,6 +85,7 @@
     </div>
 </div>
 <hr>
+
 @section Script{
     @*tog bort asynkron inladdning*@
     @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw"></script>*@

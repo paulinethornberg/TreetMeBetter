@@ -14,6 +14,6 @@
 
 function GetUserInfo() {
     $.get("/User/GetUserInfo"), function(result){
-
+        
     }
 }

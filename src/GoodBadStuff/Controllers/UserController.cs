@@ -42,6 +42,19 @@ namespace GoodBadStuff.Controllers
             return View();
         }
 
+        public IActionResult MyAccount()
+        {
+            return View();
+        }
+
+        public IActionResult GetUserInfo()
+        {
+            string userName = User.Identity.Name;
+            DataManager.GetUserInfoFromdb();
+            return View();
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<bool> Create(UserCreateVM viewModel)
