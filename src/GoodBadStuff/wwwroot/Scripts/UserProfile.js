@@ -42,6 +42,8 @@ $("#updatebtn").click(function () {
             //document.getElementById('passwordReg').value = '';
             document.getElementById("formVal").reset();
             $("#oldPasswordDiv").removeClass("has-feedback has-success");
+            $("#newPassword").removeClass("has-feedback has-success");
+            $("#confPassword").removeClass("has-feedback has-success");
             $("#validCheck").addClass("none");
             $("#errorCheck").addClass("none");
             //$("#").addClass("none");
