@@ -21,7 +21,12 @@ $("#oldpassword").focusout(function () {
 });
 
 $("#deleteAccountbtn").click(function () {
-    $.post("/User/DeleteUser");
+    $.post("/User/DeleteUser", function (deleteResult) {
+        if (deleteResult)
+            window.location.href = "/";
+        else
+            window.location.href = "/User/MyAccount";
+    });
 });
 
 
