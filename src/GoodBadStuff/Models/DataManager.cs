@@ -175,6 +175,7 @@ namespace GoodBadStuff.Models
             travelsToReturn.Co2Average = _context.TravelInfo.OrderByDescending(c => c.Co2)
                 .Select(c => new Travels { Co2 = c.Co2 })
                 .Average(c => c.Co2);
+            travelsToReturn.TotalCo2 = _context.TravelInfo.Sum(c => c.Co2);
 
             var resultSet = _context
                 .TravelInfo

@@ -17,15 +17,16 @@
     <h2 class="text-center">
         <br />
         <br />
-        <label>You have polluted xx kg of Co2 </label>
+        <label>You have polluted emissionConverter kg of Co2 </label>
         <br />
-        <br/>
+        <br />
         <label>You can reduce your carbon footprint by planting trees </label>
         <br />
         <br />
-        <label>xx kg of Co2 is equivalent to planting xx trees per year </label>
+        <label>@Model.Co2Max.Co2 kg of Co2 is equivalent to planting 50 trees per year. </label>
         <br />
         <br />
+        <label>Your Emission of @Model.TotalCo2 is 20% compared to other in the community</label>
         <br />
         <br />
     </h2>
@@ -34,12 +35,17 @@
 <br />
 <br />
 <br />
+
+<script>
+    function emissionConverter(co2) {
+        var personallEmission = {Math.round(@Model.TotalCo2 / 20000)}
+    };
+</script>
+
 <div class="text-center">
-<button style="background-color:green" style="color:white" type="button" class="btn btn-default btn-lg">See my travels</button> <button type="button" style="color:green" class="btn btn-default btn-lg">See my funky stats</button>
-    </div>
+    <button style="background-color:green" style="color:white" type="button" class="btn btn-default btn-lg">See my travels</button> <button type="button" style="color:green" class="btn btn-default btn-lg">See my funky stats</button>
+</div>
 <script type="text/javascript">
-
-
 
     window.onload = function () {
         var pieChart = new CanvasJS.Chart("chartContainer",
@@ -168,9 +174,9 @@
 
         <div class="col-md-6">
 
-                <div id="chartContainer3" style="height: 500px; width: 100%;"></div>
+            <div id="chartContainer3" style="height: 500px; width: 100%;"></div>
 
-            </div>
+        </div>
 
     </div>
 
@@ -210,6 +216,11 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    var procentOftotal = "valueToShow";
+    {Math.Round(@Model.TotalCo2/@Model.Co2Max.Co2))};
+</script>
 
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
