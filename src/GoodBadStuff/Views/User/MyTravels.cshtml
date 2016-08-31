@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
     window.onload = function () {
-        var chart = new CanvasJS.Chart("chartContainer",
+        var pieChart = new CanvasJS.Chart("chartContainer",
         {
             title: {
                 text: "Your most popular vehicle choices"
@@ -36,56 +36,102 @@
             }
             ]
         });
-        chart.render();
-    }
-    $('.canvasjs-chart-credit').html('');
 
-</script>
-<div class="row">
+        pieChart.render();
+        pieChart = {};
 
-    <div class="col-md-6">
-
-        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-    </div>
-
-    <script type="text/javascript">
-  window.onload = function () {
-    var chart = new CanvasJS.Chart("chartContainer",
-    {
+        var columnChart = new CanvasJS.Chart("chartContainer2",
+  {
       title:{
-        text: "Emission values"
+          text: "Your emission values"
       },
       animationEnabled: true,
       axisY: {
-        title: "Total Emission"
+          title: "Emissions"
       },
       legend: {
-        verticalAlign: "bottom",
-        horizontalAlign: "center"
+          verticalAlign: "bottom",
+          horizontalAlign: "center"
       },
       theme: "theme2",
       data: [
 
       {
-        type: "column",
-        showInLegend: true,
-        legendMarkerColor: "Green",
-        legendText: "Values are shown in Kilos",
-        dataPoints: [
-        {y: 560, label: "Max emission"},
-        {y: 200,  label: "Average emission" },
-        {y: 275,  label: "Meadian emission"},
-        {y: 56,  label: "Minimum emission"}
-        ]
+          type: "column",
+          showInLegend: true,
+          legendMarkerColor: "Green",
+          legendText: "Values are shown in Kilos",
+          dataPoints: [
+          {y: 560, label: "Highest emission"},
+          {y: 200,  label: "Average emission" },
+          {y: 275,  label: "Meadian emission"},
+          {y: 56,  label: "Lowest emission"}
+          ]
       }
       ]
-    });
+  });
 
-    chart.render();
-  }
-    </script>
-        <div id="chartContainer2" style="height: 300px; width: 100%;">
-        </div>
+        columnChart.render();
+        columnChart = {};
+
+        var pieChartCities = new CanvasJS.Chart("chartContainer3",
+{
+    title: {
+        text: "Most visited cities"
+    },
+    animationEnabled: true,
+    legend: {
+        verticalAlign: "center",
+        horizontalAlign: "left",
+        fontSize: 20,
+        fontFamily: "Helvetica"
+    },
+    theme: "theme2",
+    data: [
+    {
+        type: "pie",
+        indexLabelFontFamily: "Garamond",
+        indexLabelFontSize: 20,
+        indexLabel: "{label} {y}",
+        startAngle: -20,
+        showInLegend: true,
+        toolTipContent: "{legendText} {y}",
+        dataPoints: [
+            { y: 20, legendText: "Malmö", label: "Malmö" },
+            { y: 20, legendText: "Umeå", label: "Umeå" },
+            { y: 20, legendText: "Jukkasjarrvi", label: "Jukkasjarrvi" },
+            { y: 20, legendText: "Joel", label: "Joel" },
+            { y: 20, legendText: "Mogadishu", label: "Mogadishu" },
+          { y: 20, legendText: "Kapstaden", label: "Kapstaden" }
+        ]
+    }
+    ]
+});
+
+        pieChartCities.render();
+        pieChartCities = {};
+    }
+
+</script>
+
+<div class="row">
+
+    <div class="col-md-6">
+
+        <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div id="chartContainer2" style="height: 500px; width: 100%;"></div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div id="chartContainer3" style="height: 500px; width: 100%;"></div>
+
+    </div>
 
 </div>
 @for (int i = 0; i < Model.TravelInfo.Count; i++)
