@@ -1,4 +1,11 @@
-﻿$("#update").click(function () {
+﻿$(document).ready(function () {
+    initialize();
+    checkIsLoggedIn();
+});
+
+
+
+$("#update").click(function () {
     $.post("/User/Update", { "Username": document.getElementById("username").value, "Password": document.getElementById("password").value, "Email": document.getElementById("email").value }, function (result) {
         if (result === false)
             $("#message").text("Update failed, please try again");
@@ -12,8 +19,8 @@
     });
 });
 
-function GetUserInfo() {
-    $.get("/User/GetUserInfo"), function(result){
+//function GetUserInfo() {
+//    $.get("/User/GetUserInfo"), function(result){
         
-    }
-}
+//    }
+//}

@@ -221,18 +221,15 @@ function doGeoCall(address) {
 }
 
 function setHTML(position, type, result) {
-    if (position == 7) {
-        console.log(result);
-        document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[position].routedDistance / 5556) + ' ' + 'Kg CO2';
-        treeConverter(result.emissions[position].routedDistance / 5, 5556);
-        $('#vehicleIcon').attr('class', 'fa ' + type + ' fa-2x');
-        $('#vehicleIcon2').attr('class', 'fa ' + type + ' fa-2x');
+    var distance = result.emissions[position].routedDistance;
+    if (position == 7 && distance > 2000000) {
+        document.getElementById('postCarbon').innerHTML = Math.round(distance / 5556) + ' ' + 'Kg CO2';
+        treeConverter(distance / 5, 5556);
     }
     else {
-        console.log(result);
         document.getElementById('postCarbon').innerHTML = Math.round(result.emissions[position].totalCo2 / 1000) + ' ' + 'Kg CO2';
         treeConverter(result.emissions[position].totalCo2);
+    }
         $('#vehicleIcon').attr('class', 'fa ' + type + ' fa-2x');
         $('#vehicleIcon2').attr('class', 'fa ' + type + ' fa-2x');
-    }
 }

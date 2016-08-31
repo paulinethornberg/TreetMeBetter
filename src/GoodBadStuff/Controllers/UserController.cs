@@ -20,6 +20,7 @@ namespace GoodBadStuff.Controllers
         SignInManager<IdentityUser> _signinManager;
         IdentityDbContext _identityContext;
         DataManager _dataManager;
+        
 
         public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
@@ -42,17 +43,24 @@ namespace GoodBadStuff.Controllers
             return View();
         }
 
-        public IActionResult MyAccount()
+        public async Task<IActionResult> MyAccount()
         {
-            return View();
+            UserMyAccountVM userMyAccountVm = new UserMyAccountVM();
+            var userName = User.Identity.Name;
+            _dataManager = new DataManager(new TrvlrContext(), _userManager);
+            var email = await _dataManager.GetUserInfoFromdb(userName);
+            userMyAccountVm.Email = email;
+            userMyAccountVm.UserName = userName;
+            
+            return View(userMyAccountVm);
         }
 
-        public IActionResult GetUserInfo()
-        {
-            string userName = User.Identity.Name;
-            DataManager.GetUserInfoFromdb();
-            return View();
-        }
+        //public GetUserInfo()
+        //{
+           
+
+        //    return UserMyAccountVM(userMyAccountVm);
+        //}
 
 
         [HttpPost]
