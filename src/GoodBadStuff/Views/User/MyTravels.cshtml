@@ -97,12 +97,12 @@
         showInLegend: true,
         toolTipContent: "{legendText} {y}",
         dataPoints: [
-            { y: 20, legendText: "Malmö", label: "Malmö" },
-            { y: 20, legendText: "Umeå", label: "Umeå" },
-            { y: 20, legendText: "Jukkasjarrvi", label: "Jukkasjarrvi" },
-            { y: 20, legendText: "Joel", label: "Joel" },
-            { y: 20, legendText: "Mogadishu", label: "Mogadishu" },
-          { y: 20, legendText: "Kapstaden", label: "Kapstaden" }
+            { y: @Model.CityStatistics[0].TimesVisited, legendText: "@Model.CityStatistics[0].CityName", label: "@Model.CityStatistics[0].CityName"},
+            { y: @Model.CityStatistics[1].TimesVisited, legendText: "@Model.CityStatistics[1].CityName", label: "@Model.CityStatistics[1].CityName"},
+            { y: @Model.CityStatistics[2].TimesVisited, legendText: "@Model.CityStatistics[2].CityName", label: "@Model.CityStatistics[2].CityName"},
+            { y: @Model.CityStatistics[3].TimesVisited, legendText: "@Model.CityStatistics[3].CityName", label: "@Model.CityStatistics[3].CityName"},
+            { y: @Model.CityStatistics[4].TimesVisited, legendText: "@Model.CityStatistics[4].CityName", label: "@Model.CityStatistics[4].CityName"},
+          { y: @Model.CityStatistics[5].TimesVisited, legendText: "@Model.CityStatistics[5].CityName", label: "@Model.CityStatistics[5].CityName"}
         ]
     }
     ]
