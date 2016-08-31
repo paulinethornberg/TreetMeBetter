@@ -21,13 +21,14 @@ namespace GoodBadStuff.Controllers
         IdentityDbContext _identityContext;
         DataManager _dataManager;
         
-
         public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
             _userManager = userManager;
             _signinManager = signinManager;
             _identityContext = dbContext;
         }
+
+        [Authorize]
         public async Task<IActionResult> MyTravels()
         {
             var userName = User.Identity.Name;
@@ -43,6 +44,7 @@ namespace GoodBadStuff.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> MyAccount()
         {
             UserMyAccountVM userMyAccountVm = new UserMyAccountVM();
@@ -74,7 +76,7 @@ namespace GoodBadStuff.Controllers
             return isLogged;
         }
 
-       
+       [Authorize]
         public async Task<IActionResult> DeleteUser()
         {
             var userName = User.Identity.Name;
@@ -101,6 +103,7 @@ namespace GoodBadStuff.Controllers
             return check;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<bool> UpdateUser(string Username, string CurrentPassword, string Password, string Email)
         { 
