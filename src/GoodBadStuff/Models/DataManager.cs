@@ -63,14 +63,16 @@ namespace GoodBadStuff.Models
             return AddNewTravel(travelInfo);
         }
 
-        internal static void GetUserInfoFromdb()
+        internal async Task<string> GetUserInfoFromdb(string userName)
         {
-            throw new NotImplementedException();
-        }
+    
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user.Email == null)
+                return user.Email = "";
+            else
+                return user.Email;
+ 
 
-        internal void GetUserInfo()
-        {
-            throw new NotImplementedException();
         }
 
         internal async Task SaveTravelToUser(int travelInfoId, string userName)
