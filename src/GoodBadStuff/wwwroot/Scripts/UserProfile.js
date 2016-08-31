@@ -5,10 +5,18 @@
 
 $("#oldpassword").focusout(function () {
     $.post("/User/CheckPassword", { "postContent": document.getElementById("oldpassword").value }, function (validCheck) {
-        $("#")
-        if (validCheck)
-            console.log("Yeeeeeeeeeiiii");
-        else console.log("oooh noooo");
+        if (validCheck) {
+            $("#oldPasswordDiv").removeClass("has-feedback has-error")
+            $("#errorCheck").addClass("none");
+            $("#oldPasswordDiv").addClass("has-feedback has-success")
+            $("#validCheck").removeClass("none");
+        }
+        else {
+            $("#oldPasswordDiv").removeClass("has-feedback has-success")
+            $("#validCheck").addClass("none");
+            $("#oldPasswordDiv").addClass("has-feedback has-error")
+            $("#errorCheck").removeClass("none");
+        }
     })
 });
 
@@ -19,7 +27,6 @@ $("#updatebtn").click(function () {
         if (result === false)
             $("#message").text("Update failed, please try again");
         else {
-            $("#formVal").Empty();
             $("#alertMessage").removeClass("none");
             document.getElementById('alertMessage').innerHTML = 'Update executed';
 
