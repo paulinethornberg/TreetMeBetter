@@ -1,13 +1,57 @@
 ﻿@model UserMyTravelsVM[]
+<script src="~/Scripts/canvasjs.min.js"></script>
 
 @*@foreach (var item in Model)
-{
-    <li>@item.TreeCount</li>
-}
-<p>@Model.Length</p>*@
+    {
+        <li>@item.TreeCount</li>
+    }
+    <p>@Model.Length</p>*@
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer",
+            {
+                title: {
+                    text: "Your most popular vehicle choices"
+                },
+                animationEnabled: true,
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                theme: "theme2",
+                data: [
+                {
+                    type: "pie",
+                    indexLabelFontFamily: "Garamond",
+                    indexLabelFontSize: 20,
+                    indexLabel: "{label} {y}%",
+                    startAngle: -20,
+                    showInLegend: true,
+                    toolTipContent: "{legendText} {y}%",
+                    dataPoints: [
+                        { y: 20, legendText: "Car", label: "Car" },
+                        { y: 20, legendText: "Train!", label: "Train!" },
+                        { y: 20, legendText: "Bus", label: "Bus" },
+                        { y: 20, legendText: "Motorcycle", label: "Motorcycle" },
+                      { y: 20, legendText: "Bicycle/Walking", label: "Emission free" }
+                    ]
+                }
+                ]
+            });
+            chart.render();
+        }
+    </script>
+    <div id="chartContainer" style="height: 300px; width: 80%;"></div>
 
 @for (int i = 0; i < Model.Length; i++)
 {
+    @if (Model[i].Transport == "BUS")
+    {
+        
+    }
     <li>Transport: @Model[i].Transport</li>
     <li>Emissioner: @Model[i].Co2</li>
     <li>IdNummer: @Model[i].Id</li>
@@ -18,7 +62,11 @@
     <li>Till: @Model[i].ToAddress</li>
     <li>Användar id: @Model[i].UserId</li>
     <br />
-} 
+}
+
+
+
+
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
     <script src="~/Scripts/Map.js"></script>

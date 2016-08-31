@@ -63,14 +63,16 @@ namespace GoodBadStuff.Models
             return AddNewTravel(travelInfo);
         }
 
-        internal static void GetUserInfoFromdb()
+        internal async Task<string> GetUserInfoFromdb(string userName)
         {
-            throw new NotImplementedException();
-        }
+    
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user.Email == null)
+                return user.Email = "";
+            else
+                return user.Email;
+ 
 
-        internal void GetUserInfo()
-        {
-            throw new NotImplementedException();
         }
 
         internal async Task SaveTravelToUser(int travelInfoId, string userName)
@@ -96,11 +98,21 @@ namespace GoodBadStuff.Models
 
         private void GetCo2(JObject o, int i, TravelInfo travelInfo)
         {
-            string tempCo2 = (string)o.SelectToken($"emissions[{i}].totalCo2");
-            if (tempCo2.StartsWith("-"))
-                tempCo2 = tempCo2.Substring(1);
-            float Co2 = Convert.ToSingle(tempCo2);
-            travelInfo.Co2 = Co2;
+            float Co2;
+            var distance = (int)o.SelectToken($"emissions[{i}].routedDistance");
+            if (i == 7 && distance > 2000000)
+            {
+                Co2 = Convert.ToSingle(distance / 5.556f);
+                travelInfo.Co2 = Co2;
+            }
+            else
+            {
+                string tempCo2 = (string)o.SelectToken($"emissions[{i}].totalCo2");
+                if (tempCo2.StartsWith("-"))
+                    tempCo2 = tempCo2.Substring(1);
+                Co2 = Convert.ToSingle(tempCo2);
+                travelInfo.Co2 = Co2;
+            }
         }
 
         public int AddNewTravel(TravelInfo travelInfo)
@@ -142,11 +154,14 @@ namespace GoodBadStuff.Models
         {
             return _context.TravelInfo.Where(a => a.UserId == userId)
                 .Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress, UserId = c.UserId })
-                
+
             //.Where(a => a.UserId.Equals("0a82c597-0ce8-4f5b-a8fd-bbe0da5be280", StringComparison.OrdinalIgnoreCase))
             .ToArray();
 
-
+            var bus = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BUS").Count();
+            var walking = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "WALKING").Count();
+            var driving = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "DRIVING").Count();
+            var train = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "TRAIN").Count();
 
         }
 
