@@ -76,8 +76,8 @@ namespace GoodBadStuff.Controllers
             return isLogged;
         }
 
-       [Authorize]
-        public async Task<IActionResult> DeleteUser()
+       
+        public async Task<bool> DeleteUser()
         {
             var userName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userName);
@@ -86,10 +86,10 @@ namespace GoodBadStuff.Controllers
             if (delete.Succeeded)
             {
                 await _signinManager.SignOutAsync();
-                return RedirectToAction("Index", "Home");
-            }
+                return delete.Succeeded;
+        }
             else
-                return RedirectToAction(nameof(UserController.MyAccount));
+                return false;
         }
 
 
