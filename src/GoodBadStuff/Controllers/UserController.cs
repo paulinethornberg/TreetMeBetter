@@ -73,10 +73,10 @@ namespace GoodBadStuff.Controllers
             bool isLogged = User.Identity.IsAuthenticated;
             return isLogged;
         }
+
         [HttpPost]
         public async Task<bool> DeleteUser()
         {
-           
             var userName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userName);
             var delete = await _userManager.DeleteAsync(user);
