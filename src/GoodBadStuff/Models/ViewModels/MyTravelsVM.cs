@@ -18,10 +18,11 @@ namespace GoodBadStuff.Models.ViewModels
         public Travels Co2Min { get; set; }
         public Double? Co2Average { get; set; }
         public Travels Co2Mean { get; set; }
+        public List<string> MostVisitedCities { get; set; }
         //public Travels City1 { get; set; }
         //public Travels City2 { get; set; }
         //public Travels City3 { get; set; }
-        //public Travels City4{ get; set; }
+        //public Travels City4 { get; set; }
         //public Travels City5 { get; set; }
     }
 }
