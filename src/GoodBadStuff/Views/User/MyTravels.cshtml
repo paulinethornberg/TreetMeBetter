@@ -62,10 +62,10 @@
           legendMarkerColor: "Green",
           legendText: "Values are shown in Kilos",
           dataPoints: [
-          {y: 560, label: "Highest emission"},
-          {y: 200,  label: "Average emission" },
-          {y: 275,  label: "Meadian emission"},
-          {y: 56,  label: "Lowest emission"}
+          {y: @(Model.Co2Max.Co2/1000), label: "Highest emission"},
+          {y: @(Model.Co2Average/1000),  label: "Average emission" },
+          {y: @(Model.Co2Min.Co2/1000),  label: "Meadian emission"},
+          {y: @(Model.Co2Min.Co2/1000), label: "Lowest emission"}
           ]
       }
       ]
