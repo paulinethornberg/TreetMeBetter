@@ -158,14 +158,56 @@ namespace GoodBadStuff.Models
             .ToList();
             travelsToReturn.TravelsByBus = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BUS").Count();
             travelsToReturn.TravelsByWalking = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "WALKING").Count();
-            travelsToReturn.TravelsByBicycling += _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BICYCLING").Count();
+            travelsToReturn.TravelsByBicycling = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BICYCLING").Count();
             travelsToReturn.TravelsByCar = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "DRIVING").Count();
             travelsToReturn.TravelsByTrain = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "TRAIN").Count();
             travelsToReturn.TravelsByMotorcycle = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "MOTORCYCLE").Count();
+            travelsToReturn.Co2Max = _context.TravelInfo.OrderByDescending(c => c.Co2)
+                .Select(c => new Travels { Co2 = c.Co2 })
+                .First();
+            travelsToReturn.Co2Min = _context.TravelInfo.OrderBy(c => c.Co2)
+                .Select(c => new Travels { Co2 = c.Co2 })
+                .First();
+            if (travelsToReturn.Co2Min.Co2 == null)
+            {
+                travelsToReturn.Co2Min.Co2 = 0;
+            }
+            travelsToReturn.Co2Average = _context.TravelInfo.OrderByDescending(c => c.Co2)
+                .Select(c => new Travels { Co2 = c.Co2 })
+                .Average(c => c.Co2);
+
+
+
+
+
+
+
+
+
+
+
+            var resultSet = _context
+                .TravelInfo
+                .ToLookup(t => t.ToAddress)
+                .OrderByDescending(g => g.Count());
+
+            int counter = 0;
+            travelsToReturn.MostVisitedCities = new List<string>();
+
+            foreach (var item in resultSet)
+            {
+                var s = item.Key; // Namn på ToAddress  (Malmö, Stockholm, etc.)
+                item.Count(); // Antal rader i tabellen med denna ToAddress (ex. Malmö)
+                counter++;
+
+
+                if (counter > 5)
+                    break;
+                travelsToReturn.MostVisitedCities.Add(item.ToString());
+            }
 
             return travelsToReturn;
         }
 
     }
 }
-//
