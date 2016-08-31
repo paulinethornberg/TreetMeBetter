@@ -13,8 +13,17 @@
         <div class="col-sm-4">
             <h2>My Account</h2>
         </div>
-        <div class="col-sm-8">
-            <h2><input type="button" id="deletebtn" class="btn btn-danger pull-right" value="Delete Account"></h2>
+        <div class="dropdown pull-right">
+           <br />
+                <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                  Delete Account
+                    @*<span class="caret"></span>*@
+                </button>
+            
+            <div class="dropdown-menu">
+                <div style="width:200px" align="center">Are you sure?</div><br />
+                <div align="center"><input type="button" id="deleteAccountbtn" class="btn btn-danger" value="Yes, please."/></div>
+            </div>
         </div>
     </div>
     <hr>
