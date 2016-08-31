@@ -176,34 +176,20 @@ namespace GoodBadStuff.Models
                 .Select(c => new Travels { Co2 = c.Co2 })
                 .Average(c => c.Co2);
 
-
-
-
-
-
-
-
-
-
-
             var resultSet = _context
                 .TravelInfo
                 .ToLookup(t => t.ToAddress)
                 .OrderByDescending(g => g.Count());
 
             int counter = 0;
-            travelsToReturn.MostVisitedCities = new List<string>();
 
             foreach (var item in resultSet)
             {
-                var s = item.Key; // Namn på ToAddress  (Malmö, Stockholm, etc.)
-                item.Count(); // Antal rader i tabellen med denna ToAddress (ex. Malmö)
                 counter++;
-
+                travelsToReturn.CityStatistics.Add(new CityStatistics { CityName = item.Key, TimesVisited = item.Count() });
 
                 if (counter > 5)
                     break;
-                travelsToReturn.MostVisitedCities.Add(item.ToString());
             }
 
             return travelsToReturn;

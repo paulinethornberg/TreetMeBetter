@@ -37,7 +37,14 @@ $("#updatebtn").click(function () {
         else {
             $("#alertMessage").removeClass("none");
             document.getElementById('alertMessage').innerHTML = 'Update executed';
-
+            //document.getElementById('oldpassword').value = '';
+            //document.getElementById('confirmPassword').value = '';
+            //document.getElementById('passwordReg').value = '';
+            document.getElementById("formVal").reset();
+            $("#oldPasswordDiv").removeClass("has-feedback has-success");
+            $("#validCheck").addClass("none");
+            $("#errorCheck").addClass("none");
+            //$("#").addClass("none");
         }
         //stäng rutan
         //Ändra massa greher till inloggat och sånt Gott och blandat.
