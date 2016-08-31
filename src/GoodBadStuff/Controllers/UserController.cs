@@ -74,18 +74,22 @@ namespace GoodBadStuff.Controllers
             return isLogged;
         }
 
-        [HttpPost]
-        public async Task<bool> DeleteUser()
+       
+        public async Task<IActionResult> DeleteUser()
         {
             var userName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userName);
             var delete = await _userManager.DeleteAsync(user);
 
             if (delete.Succeeded)
-                return true;
+            {
+                await _signinManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
             else
-                return false;
+                return RedirectToAction(nameof(UserController.MyAccount));
         }
+
 
         [HttpPost]
         public async Task<bool> CheckPassword(string postContent)
@@ -99,7 +103,8 @@ namespace GoodBadStuff.Controllers
 
         [HttpPost]
         public async Task<bool> UpdateUser(string Username, string CurrentPassword, string Password, string Email)
-        {
+        { 
+            
             var currentUsername = User.Identity.Name;
             var currentUser = await _userManager.FindByNameAsync(currentUsername);
 
