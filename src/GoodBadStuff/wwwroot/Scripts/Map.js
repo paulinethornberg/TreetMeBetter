@@ -136,11 +136,16 @@ function getCarbon(from, to) {
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
         $("#searchContainer").removeClass('none');
-        $("#addOrNew").removeClass('none');
+        $("#saveOrNew").removeClass('none');
         $("#goBtn").addClass('none');
     });
 }
 
+$('#MakeNewTravelBtn').click(function () {
+    $("#goBtn").removeClass('none');
+    $("#saveOrNew").addClass('none');
+    $("#searchContainer").addClass('none');
+});
 
 $('.type').click(function () {
     $(".type").removeClass('fa-cog');

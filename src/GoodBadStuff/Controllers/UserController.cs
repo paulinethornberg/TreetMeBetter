@@ -75,6 +75,19 @@ namespace GoodBadStuff.Controllers
         }
 
         [HttpPost]
+        public async Task<bool> DeleteUser()
+        {
+            var userName = User.Identity.Name;
+            var user = await _userManager.FindByNameAsync(userName);
+            var delete = await _userManager.DeleteAsync(user);
+
+            if (delete.Succeeded)
+                return true;
+            else
+                return false;
+        }
+
+        [HttpPost]
         public async Task<bool> CheckPassword(string postContent)
         {
             var userName = User.Identity.Name;
@@ -98,8 +111,11 @@ namespace GoodBadStuff.Controllers
             //var emailCheck= await _userManager.ChangeEmailAsync(currentUser, Email, emailConfirmationCode);
 
             var passwordChange = await _userManager.ChangePasswordAsync(currentUser, CurrentPassword, Password);
+            if (passwordChange.Succeeded)
+                return true;
+            else
+                return false;
 
-            return true;
         }
 
 
