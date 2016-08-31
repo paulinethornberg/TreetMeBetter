@@ -65,13 +65,13 @@ namespace GoodBadStuff.Models
 
         internal async Task<string> GetUserInfoFromdb(string userName)
         {
-    
+
             var user = await _userManager.FindByNameAsync(userName);
             if (user.Email == null)
                 return user.Email = "";
             else
                 return user.Email;
- 
+
 
         }
 
@@ -150,16 +150,20 @@ namespace GoodBadStuff.Models
             #endregion
         }
 
-        public UserMyTravelsVM[] LoadTravels(string userId)
+        public MyTravelsVM LoadTravels(string userId)
         {
-            return _context.TravelInfo.Where(a => a.UserId == userId)
-                .Select(c => new UserMyTravelsVM { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress, UserId = c.UserId })
+            MyTravelsVM travelsToReturn = new MyTravelsVM();
+            travelsToReturn.TravelInfo = _context.TravelInfo.Where(a => a.UserId == userId)
+                .Select(c => new Travels { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress, UserId = c.UserId })
+            .ToList();
+            travelsToReturn.TravelsByBus = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BUS").Count();
+            travelsToReturn.TravelsByWalking = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "WALKING").Count();
+            travelsToReturn.TravelsByBicycling += _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BICYCLING").Count();
+            travelsToReturn.TravelsByCar = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "DRIVING").Count();
+            travelsToReturn.TravelsByTrain = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "TRAIN").Count();
+            travelsToReturn.TravelsByMotorcycle = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "MOTORCYCLE").Count();
 
-            //.Where(a => a.UserId.Equals("0a82c597-0ce8-4f5b-a8fd-bbe0da5be280", StringComparison.OrdinalIgnoreCase))
-            .ToArray();
-
-
-
+            return travelsToReturn;
         }
 
     }

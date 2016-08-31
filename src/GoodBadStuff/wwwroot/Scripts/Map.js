@@ -46,23 +46,24 @@ function checkIsLoggedIn() {
 $('#goBtn').click(function () {
     var from = document.getElementById('from').value;
     var to = document.getElementById('to').value;
-
-
+    $('#error').html('');
+    if (type == null) {
+        $('#error').html('Oops... something went wrong');
+    }
 
     //  Do from-call
     var fromPromise = doGeoCall(from).then(function (result) {
         fromResult = result[0].geometry.location;
     }, function (err) {
-        alert('Geocode for from-call was not successful for the following reason: ' + err);
+        $('#error').html('Oops... something went wrong');
     });
 
     // Do to-call
     var toPromise = doGeoCall(to).then(function (result) {
         toResult = result[0].geometry.location;
     }, function (err) {
-        alert('Geocode for to-call was not successful for the following reason: ' + err);
+        $('#error').html('Oops... something went wrong');
     });
-
     fromPromise.then(function () {
         toPromise.then(function () {
             drawRoute();
@@ -75,7 +76,6 @@ $('#goBtn').click(function () {
 
 function treeConverter(co2) {
     $("#treeDiv").empty();
-
     if (co2 >= 20000) {
         var numberOfBigTrees = Math.round(co2 / 20000);
         if ((numberOfBigTrees * 20000) - co2 >= 4000) {
@@ -136,8 +136,12 @@ function getCarbon(from, to) {
         document.getElementById('fromAddress').innerHTML = from;
         document.getElementById('toAddress').innerHTML = to;
         $("#searchContainer").removeClass('none');
+        $("#addOrNew").removeClass('none');
+        $("#goBtn").addClass('none');
     });
 }
+
+$('#')
 
 $('.type').click(function () {
     $(".type").removeClass('fa-cog');

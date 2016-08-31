@@ -1,64 +1,106 @@
-﻿@model UserMyTravelsVM[]
-<script type="text/javascript" src="/assets/script/canvasjs.min.js"></script>
+﻿@model MyTravelsVM
+<script src="~/Scripts/canvasjs.min.js"></script>
 
-@*@foreach (var item in Model)
-    {
-        <li>@item.TreeCount</li>
+<script type="text/javascript">
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer",
+        {
+            title: {
+                text: "Your most popular vehicle choices"
+            },
+            animationEnabled: true,
+            legend: {
+                verticalAlign: "center",
+                horizontalAlign: "left",
+                fontSize: 20,
+                fontFamily: "Helvetica"
+            },
+            theme: "theme2",
+            data: [
+            {
+                type: "pie",
+                indexLabelFontFamily: "Garamond",
+                indexLabelFontSize: 20,
+                indexLabel: "{label} {y}",
+                startAngle: -20,
+                showInLegend: true,
+                toolTipContent: "{legendText} {y}",
+                dataPoints: [
+                    { y: @Model.TravelsByCar, legendText: "Car", label: "Car" },
+                    { y: @Model.TravelsByTrain, legendText: "Train", label: "Train" },
+                    { y: @Model.TravelsByBus, legendText: "Bus", label: "Bus" },
+                    { y: @Model.TravelsByMotorcycle, legendText: "Motorcycle", label: "Motorcycle" },
+                    { y: @Model.TravelsByBicycling, legendText: "Bicycle", label: "Bicycle" },
+                  { y: @Model.TravelsByWalking, legendText: "Walking", label: "Walking" }
+                ]
+            }
+            ]
+        });
+        chart.render();
     }
-    <p>@Model.Length</p>*@
+    $('.canvasjs-chart-credit').html('');
 
-@for (int i = 0; i < Model.Length; i++)
+</script>
+<div class="row">
+
+    <div class="col-md-6">
+
+        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Emission values"
+      },
+      animationEnabled: true,
+      axisY: {
+        title: "Total Emission"
+      },
+      legend: {
+        verticalAlign: "bottom",
+        horizontalAlign: "center"
+      },
+      theme: "theme2",
+      data: [
+
+      {
+        type: "column",
+        showInLegend: true,
+        legendMarkerColor: "Green",
+        legendText: "Values are shown in Kilos",
+        dataPoints: [
+        {y: 560, label: "Max emission"},
+        {y: 200,  label: "Average emission" },
+        {y: 275,  label: "Meadian emission"},
+        {y: 56,  label: "Minimum emission"}
+        ]
+      }
+      ]
+    });
+
+    chart.render();
+  }
+    </script>
+        <div id="chartContainer2" style="height: 300px; width: 100%;">
+        </div>
+
+</div>
+@for (int i = 0; i < Model.TravelInfo.Count; i++)
 {
-    <li>Transport: @Model[i].Transport</li>
-    <li>Emissioner: @Model[i].Co2</li>
-    <li>IdNummer: @Model[i].Id</li>
-    <li>Datum: @Model[i].Date</li>
-    <li>Antal träd: @Model[i].TreeCount</li>
-    <li>Längd: @Model[i].Distance</li>
-    <li>Från: @Model[i].FromAddress</li>
-    <li>Till: @Model[i].ToAddress</li>
-    <li>Användar id: @Model[i].UserId</li>
+    <li>Transport: @Model.TravelInfo[i].Transport</li>
+    <li>Emissioner: @Model.TravelInfo[i].Co2</li>
+    <li>IdNummer: @Model.TravelInfo[i].Id</li>
+    <li>Datum: @Model.TravelInfo[i].Date</li>
+    <li>Antal träd: @Model.TravelInfo[i].TreeCount</li>
+    <li>Längd: @Model.TravelInfo[i].Distance</li>
+    <li>Från: @Model.TravelInfo[i].FromAddress</li>
+    <li>Till: @Model.TravelInfo[i].ToAddress</li>
+    <li>Användar id: @Model.TravelInfo[i].UserId</li>
     <br />
 }
-<div>
-    <script type="text/javascript">
-        window.onload = function () {
-            var chart = new CanvasJS.Chart("chartContainer",
-            {
-                title: {
-                    text: "Desktop Search Engine Market Share, Dec-2012"
-                },
-                animationEnabled: true,
-                legend: {
-                    verticalAlign: "center",
-                    horizontalAlign: "left",
-                    fontSize: 20,
-                    fontFamily: "Helvetica"
-                },
-                theme: "theme2",
-                data: [
-                {
-                    type: "pie",
-                    indexLabelFontFamily: "Garamond",
-                    indexLabelFontSize: 20,
-                    indexLabel: "{Transport} {Model[i].Transport}%",
-                    startAngle: -20,
-                    showInLegend: true,
-                    toolTipContent: "{Model.Transport} {Model[i].Transport}%",
-                    dataPoints: [
-                        { y: 83.24, legendText: "Car", label: "Car" },
-                        { y: 8.16, legendText: "Train!", label: "Train!" },
-                        { y: 4.67, legendText: "Bus", label: "Bus" },
-                        { y: 1.67, legendText: "Motorcycle", label: "Motorcycle" },
-                        { y: 0.98, legendText: "Bicycle", label: "Green" }
-                    ]
-                }
-                ]
-            });
-            chart.render();
-        }
-    </script>
-</div>
 
 
 
