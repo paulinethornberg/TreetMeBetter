@@ -55,37 +55,17 @@ namespace GoodBadStuff.Controllers
             return View(userMyAccountVm);
         }
 
-        //public GetUserInfo()
-        //{
-           
-
-        //    return UserMyAccountVM(userMyAccountVm);
-        //}
-
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<bool> Create(UserCreateVM viewModel)
         {
             var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
-
-            //if (!result.Succeeded)
-            //{
-            //    ModelState.AddModelError(nameof(UserCreateVM.Username), result.Errors.First().Description);
-            //    return View(viewModel);
-            //}
-
             await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
-
             return result.Succeeded;
 
         }
 
-        //[AllowAnonymous]
-        //public IActionResult Login()
-        //{
-        //    return View();
-        //}
 
         [HttpGet]
         public bool CheckIsLoggedIn()
@@ -94,13 +74,39 @@ namespace GoodBadStuff.Controllers
             return isLogged;
         }
 
+        [HttpPost]
+        public async Task<bool> CheckPassword(string postContent)
+        {
+            var userName = User.Identity.Name;
+            var user = await _userManager.FindByNameAsync(userName);
+            var check =  await _userManager.CheckPasswordAsync(user, postContent);
+           
+            return check;
+        }
+
+        [HttpPost]
+        public async Task<bool> UpdateUser(string Username, string CurrentPassword, string Password, string Email)
+        {
+            var currentUsername = User.Identity.Name;
+            var currentUser = await _userManager.FindByNameAsync(currentUsername);
+
+            currentUser.UserName = Username;
+            currentUser.Email = Email;
+
+            await _userManager.UpdateAsync(currentUser);
+            //var emailConfirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(currentUser);
+            //var emailCheck= await _userManager.ChangeEmailAsync(currentUser, Email, emailConfirmationCode);
+
+            var passwordChange = await _userManager.ChangePasswordAsync(currentUser, CurrentPassword, Password);
+
+            return true;
+        }
+
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<bool> Login(UserLoginVM viewModel)
         {
-            //Todo: KOlla ModelState isvalid
-
             var result = await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
             return result.Succeeded;
         }
