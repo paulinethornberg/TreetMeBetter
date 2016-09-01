@@ -22,15 +22,15 @@
         <p style="color:red"> kg of Co2 </p>
         <br />
         <br />
-        <p>You can reduce your carbon footprint by planting trees </p>
-        <br />
-        <br />
-        <p>To compensate your emission is equivalent to planting <br /></p>
+        <p>You can reduce your carbon footprint by planting trees.</p>
+
+        <p>To compensate for your emissions you need to plant<br /></p>
         <p><label id="amountOfTreesToCompensate" style="font-size:300px; color:green"></label></p>
         <p> trees per year. </p>
         <br />
         <br />
-        <p>Your Emission of <label id="yourTotalCo3" style="color:red; font-size:50px">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage" style="font-size:50px">%</label> compared to the emission average in the community</p>
+        <p>Your emissions of <label id="yourTotalCo3" style="color:red; font-size:50px">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage" style="font-size:50px">%</label> of the total Co2 emissions</p>
+        <p> per Capita and year, in Sweden.</p>
         <br />
         <br />
     </h2>
@@ -40,35 +40,98 @@
 <br />
 <br />
 
-<script>
-    var treeAmountToCompensate = Math.round(@Model.TotalCo2/20000);
-    document.getElementById("amountOfTreesToCompensate").innerHTML = treeAmountToCompensate;
-</script>
+
+
+<div class="text-center">
+    <button style="background-color:green" type="button" class="btn btn-default btn-lg">See my travels</button> <button type="button" style="color:green" class="btn btn-default btn-lg">See my funky stats</button>
+</div>
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div id="chartContainer2" style="height: 500px; width: 100%;"></div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div id="chartContainer3" style="height: 500px; width: 100%;"></div>
+
+        </div>
+
+    </div>
+
+    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Type</th>
+                <th>Distance</th>
+                <th>CO2</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Type</th>
+                <th>Distance</th>
+                <th>CO2</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var item in Model.TravelInfo)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.FromAddress</td>
+                    <td>@item.ToAddress</td>
+                    <td>@item.Transport</td>
+                    <td>@item.Distance</td>
+                    <td>@item.Co2</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <script>
-    var procentValue = Math.round(@Model.TotalCo2/500000);
-    document.getElementById("procentComparedToAverage").innerHTML = procentValue + '%';
-    if (procentValue > 100) {
-        document.getElementById("procentComparedToAverage").setAttribute("style","color:red; font-size:50px"); 
-    }
-    else
-    {
-        document.getElementById("procentComparedToAverage").setAttribute("style","color:green; font-size:50px"); 
-    }
-</script>
 
-<script>
-    //function emissionConverter() {
-    var totalCo2 = @Model.TotalCo2;
+    var totalCo2 = "@Model.TotalCo2";
+    totalCo2 = totalCo2.replace(/,/g, '.');
     var personallEmission = Math.round(totalCo2 / 1000);
     document.getElementById("yourTotalCo2").innerHTML = personallEmission;
     document.getElementById("yourTotalCo3").innerHTML = personallEmission;
-    //};
+
+    //TREE CONVERTER
+
+    var treeAmountToCompensate = Math.round(totalCo2/20000);
+    document.getElementById("amountOfTreesToCompensate").innerHTML = treeAmountToCompensate;
+
+    //CO2 COMPARED TO OTHERS
+
+    var procentValue = Math.round(totalCo2/5500000);
+    document.getElementById("procentComparedToAverage").innerHTML = procentValue + '%';
+    if (procentValue > 100) {
+        document.getElementById("procentComparedToAverage").setAttribute("style","color:red; font-size:50px");
+    }
+    else
+    {
+        document.getElementById("procentComparedToAverage").setAttribute("style","color:green; font-size:50px");
+    }
 </script>
 
-<div class="text-center">
-    <button style="background-color:green" style="color:white" type="button" class="btn btn-default btn-lg">See my travels</button> <button type="button" style="color:green" class="btn btn-default btn-lg">See my funky stats</button>
-</div>
 <script type="text/javascript">
 
     window.onload = function () {
@@ -182,69 +245,7 @@
     }
 
 </script>
-<div class="container">
-    <div class="row">
 
-        <div class="col-md-6">
-
-            <div id="chartContainer" style="height: 500px; width: 100%;"></div>
-        </div>
-
-        <div class="col-md-6">
-
-            <div id="chartContainer2" style="height: 500px; width: 100%;"></div>
-
-        </div>
-
-        <div class="col-md-6">
-
-            <div id="chartContainer3" style="height: 500px; width: 100%;"></div>
-
-        </div>
-
-    </div>
-
-    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Type</th>
-                <th>Distance</th>
-                <th>CO2</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th>Date</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Type</th>
-                <th>Distance</th>
-                <th>CO2</th>
-            </tr>
-        </tfoot>
-        <tbody>
-            @foreach (var item in Model.TravelInfo)
-            {
-                <tr>
-                    <td>@item.Date</td>
-                    <td>@item.FromAddress</td>
-                    <td>@item.ToAddress</td>
-                    <td>@item.Transport</td>
-                    <td>@item.Distance</td>
-                    <td>@item.Co2</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<script type="text/javascript">
-    var procentOftotal = "valueToShow";
-    {Math.Round(@Model.TotalCo2/@Model.Co2Max.Co2))};
-</script>
 
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
