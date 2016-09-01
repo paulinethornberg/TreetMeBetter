@@ -32,22 +32,26 @@ $("#deleteAccountbtn").click(function () {
 
 $("#updatebtn").click(function () {
     $.post("/User/UpdateUser", { "Username": document.getElementById("usernameReg").value, "CurrentPassword": document.getElementById("oldpassword").value, "Password": document.getElementById("confirmPassword").value, "Email": document.getElementById("emailReg").value }, function (result) {
-        if (result === false)
-            $("#message").text("Update failed, please try again");
+        if (result === false) {
+            $("#alertMessage").removeClass("none");
+            $("#alertMessage").text("Update failed, please try again");
+        }
         else {
             $("#alertMessage").removeClass("none");
             //document.getElementById('alertMessage').innerHTML = 'Update executed';
             // Alertmessage for saving a travel
-            AlertSaveMessage();
+            AlertSaveMessage("#alertMessage");
             //document.getElementById('oldpassword').value = '';
             //document.getElementById('confirmPassword').value = '';
             //document.getElementById('passwordReg').value = '';
+
             document.getElementById("formVal").reset();
             $("#oldPasswordDiv").removeClass("has-feedback has-success");
             $("#newPassword").removeClass("has-feedback has-success");
             $("#confPassword").removeClass("has-feedback has-success");
             $("#validCheck").addClass("none");
             $("#errorCheck").addClass("none");
+
             //$("#").addClass("none");
         }
         //stäng rutan
@@ -66,9 +70,9 @@ document.getElementById("formVal").addEventListener("keypress", function (event)
 });
 
 
-function AlertSaveMessage() {
-    $("#alertMessage").alert();
-    $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
-        $("alertMessage").slideUp(500);
+function AlertSaveMessage(id) {
+    $(id).alert();
+    $(id).fadeTo(2000, 500).slideUp(500, function () {
+        $(id).slideUp(500);
     });
 }

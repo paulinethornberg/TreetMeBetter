@@ -26,11 +26,5 @@ namespace GoodBadStuff.Models.ViewModels
         public Travels Co2Mean { get; set; }
         public double? TotalCo2 { get; set; }
         public List<CityStatistics> CityStatistics { get; set; } = new List<ViewModels.CityStatistics>();
-
-        //public Travels City1 { get; set; 
-        //public Travels City2 { get; set; }
-        //public Travels City3 { get; set; }
-        //public Travels City4{ get; set; }
-        //public Travels City5 { get; set; }
     }
 }
