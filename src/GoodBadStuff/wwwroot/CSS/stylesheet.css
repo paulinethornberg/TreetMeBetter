@@ -506,10 +506,12 @@ div {	margin: 0; padding: 0;}
 #author a:hover, #about a:hover { color:#e800b4 }
 
 #footer {
-	position: absolute;
-	width: 100%; 
-	bottom: 0px;
-	margin: 0;
-	padding: 0;
+    background-color: black;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
 }
 /*footer end */
