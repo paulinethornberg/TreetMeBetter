@@ -50,12 +50,12 @@
     <div class="row">
 
         <div class="col-md-6">
-
+            <div id="chart_div"></div>
             <div id="chartContainer" style="height: 500px; width: 100%;"></div>
         </div>
 
         <div class="col-md-6">
-
+            @*<div id="chart_div"></div>*@
             <div id="chartContainer2" style="height: 500px; width: 100%;"></div>
 
         </div>
@@ -129,20 +129,47 @@
           ['Motorcycle', @Model.TravelsByMotorcycle],
           ['Bicycle', @Model.TravelsByBicycling],
           ['Walking', @Model.TravelsByWalking]
-
-
-
-
         ]);
+
+          
 
         // Set chart options
         var options = {'title':'Vehicle Type',
-                       'width':1200,
-                       'height':1000};
-
+                       'width':800,
+                       'height':700};
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
+
+        
+        @*google.charts.setOnLoadCallback(drawChartEmission);
+
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+        function drawChartEmission() {
+
+            // Create the data table.
+            var chartEmissionValues = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+              ['Car', @Model.TravelsByCar],
+              ['Bus', @Model.TravelsByBus],
+              ['Motorcycle', @Model.TravelsByMotorcycle],
+              ['Bicycle', @Model.TravelsByBicycling],
+              ['Walking', @Model.TravelsByWalking]
+            ]);
+
+          
+
+            // Set chart options
+            var options = {'title':'Vehicle Type',
+                'width':800,
+                'height':700};
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);*@
       }
 </script>
 
