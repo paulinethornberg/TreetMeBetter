@@ -19,6 +19,7 @@ $('#addTravelBtn').click(function () {
     });
 });
 
+// Alertmessage for saving a travel
 function AlertSaveMessage() {
     $("#success-alert").removeClass('none');
     $("#success-alert").alert();
@@ -27,6 +28,7 @@ function AlertSaveMessage() {
     });
 }
 
+// check if used is logged in 
 function checkIsLoggedIn() {
     $.get("/user/CheckIsLoggedIn", function (loggedIn) {
         if (loggedIn) {

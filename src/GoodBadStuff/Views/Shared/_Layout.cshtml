@@ -3,26 +3,27 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    @*<title>@ViewBag.Title</title>*@
+    <title>GrnTrvlr</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link href="~/CSS/Style.css" rel="stylesheet" />
     <meta charset="UTF-8">
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
+    <nav  class="navbar navbar-inverse" style="background-color:#21610B" >
+        <div class="container-fluid" >
             <div class="navbar-header">
-                <a class="navbar-brand" href="/home/index/">GrnTrvlr</a>
+                <a class="glyphicon glyphicon-tree-deciduous fa-4x" style="color:white" href="/home/index/"></a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/home/index">Home</a></li>
-                <li><a href="/user/SadFacts">Sad Facts</a></li>
+                @*<li class="active"><a href="/home/index">Home</a></li>*@
+                <li><a style="font-size:130%; color:white"href="/user/SadFacts"><b>Sad Facts</b></a></li>
             </ul>
-            <ul id="navBtns" class="nav navbar-nav navbar-right">
-                <li id="MyTravelsButton" class="none"><a href="/user/mytravels">My Travels</a></li>
-                <li id="MyAccountButton" class="none"><a href="/user/myaccount/">My Account</a></li>
-                <li id="loggBtn"><a data-toggle="modal" data-target="#myModal" href="#"><span id="btn2" class="glyphicon glyphicon-user"></span>Login/Register </a></li>
-                <li id="logOutButton" class="none"><a href="/user/logout"><span id="logOutSpan" class="glyphicon glyphicon-log-out"></span>Log Out</a></li>
+            <ul id="navBtns" class="nav navbar-nav navbar-right" >
+                <li id="MyTravelsButton" class="none"><a style="font-size:130%; color:white" href="/user/mytravels"><b>My Travels</b></a></li>
+                <li id="MyAccountButton" class="none"><a style="font-size:130%; color:white" href="/user/myaccount/"><b>My Account</b></a></li>
+                <li id="loggBtn"><a data-toggle="modal" data-target="#myModal" style="font-size:130%; color:white" href="#"><span id="btn2" class="glyphicon glyphicon-user"></span><b>Login/Register </b></a></li>
+                <li id="logOutButton" class="none"><a style="font-size:130%; color:white" href="/user/logout"><span id="logOutSpan" class="glyphicon glyphicon-log-out"></span><b>Log Out</b></a></li>
             </ul>
         </div>
     </nav>
