@@ -15,9 +15,17 @@ var travelInfoId
 $('#addTravelBtn').click(function () {
     $.post("/home/SaveCarbonData", { "Id": travelInfoId }, function (resultMessage) {
         console.log(resultMessage);
+        AlertSaveMessage();
     });
 });
 
+function AlertSaveMessage() {
+    $("#success-alert").removeClass('none');
+    $("#success-alert").alert();
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+        $("#success-alert").slideUp(500);
+    });
+}
 
 function checkIsLoggedIn() {
     $.get("/user/CheckIsLoggedIn", function (loggedIn) {
