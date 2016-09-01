@@ -48,14 +48,19 @@
 
 
 <div class="container">
-    <div id="chartDiv" class="row @*none*@">
+    <div id="chartDiv" class="row none" align="center">
         <table class="columns">
             <tr>
-                <td><div id="chart_div" style="border: 1px solid #ccc"></div></td>
-               
+                <td><div id="chart_div"></div></td>
+
             </tr>
             <tr>
-                <td><div id="emission_div" style="border: 1px solid #ccc"></div></td>
+                <td><div id="emission_div"></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="regions_div"></div>
+                </td>
             </tr>
         </table>
     </div>
@@ -101,16 +106,17 @@
     </div>
 </div>
 
- @*GOOGLE CHARTS*@
+@*GOOGLE CHARTS*@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 
     // Load the Visualization API and the corechart package.
-    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.load('current', { packages: ['corechart', 'geochart'] });
 
     // Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback(drawVehicleType);
     google.charts.setOnLoadCallback(drawEmission);
+    google.charts.setOnLoadCallback(drawRegionsMap);
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
@@ -125,14 +131,18 @@
           ['Bus', @Model.TravelsByBus],
           ['Motorcycle', @Model.TravelsByMotorcycle],
           ['Bicycle', @Model.TravelsByBicycling],
-          ['Walking', @Model.TravelsByWalking]
+          ['Train', @Model.TravelsByTrain]
         ]);
 
         // Set chart options
         var options = {
             'title': 'Vehicle Type',
             'width': 1000,
-            'height': 900
+            'height': 700,
+            titleTextStyle: {
+                fontSize: 32,
+                bold: true
+            }
         };
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -159,7 +169,11 @@
         var options = {
             'title': 'Your emissions',
             'width': 1000,
-            'height': 900
+            'height': 700,
+            titleTextStyle: {
+                fontSize: 32,
+                bold: true
+            }
         };
 
         // Instantiate and draw our chart, passing in some options.
@@ -168,6 +182,31 @@
 
     }
 
+    function drawRegionsMap() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['City', 'Times visited'],
+          @for (int i = 0; i < Model.CityStatistics.Count(); i++)
+          {
+              var lineEnding = i < Model.CityStatistics.Count-1 ? "," : "";
+          <text>['@Model.CityStatistics[i].CityName', @Model.CityStatistics[i].TimesVisited]@lineEnding</text>
+              }
+        ]);
+
+        var options = {
+            region: 154,
+            'title': 'Top 5 cities',
+            'width': 1000,
+            'height': 700,
+            titleTextStyle: {
+                fontSize: 32,
+                bold: true
+            }
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        chart.draw(data, options);
+    }
 </script>
 
 <script>

@@ -181,6 +181,7 @@ namespace GoodBadStuff.Models
 
             var resultSet = _context
                 .TravelInfo
+                .Where(a => a.UserId == userId)
                 .ToLookup(t => t.ToAddress)
                 .OrderByDescending(g => g.Count());
 
