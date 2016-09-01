@@ -36,7 +36,9 @@ $("#updatebtn").click(function () {
             $("#message").text("Update failed, please try again");
         else {
             $("#alertMessage").removeClass("none");
-            document.getElementById('alertMessage').innerHTML = 'Update executed';
+            //document.getElementById('alertMessage').innerHTML = 'Update executed';
+            // Alertmessage for saving a travel
+            AlertSaveMessage();
             //document.getElementById('oldpassword').value = '';
             //document.getElementById('confirmPassword').value = '';
             //document.getElementById('passwordReg').value = '';
@@ -54,3 +56,19 @@ $("#updatebtn").click(function () {
 
     });
 });
+
+//Register with enter
+document.getElementById("formVal").addEventListener("keypress", function (event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        document.getElementById("updatebtn").click();
+    }
+});
+
+
+function AlertSaveMessage() {
+    $("#alertMessage").alert();
+    $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
+        $("alertMessage").slideUp(500);
+    });
+}
