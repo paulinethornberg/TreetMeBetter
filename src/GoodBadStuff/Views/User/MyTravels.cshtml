@@ -52,7 +52,7 @@
 
         <div class="col-md-3">
             <div id="chart_div"></div>
-            
+            <div id="emission_div"></div>
         </div>
 
         <div class="col-md-3">
@@ -117,7 +117,7 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawVehicleType);
-
+      google.charts.setOnLoadCallback(drawEmissionType);
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
@@ -135,7 +135,7 @@
           ['Walking', @Model.TravelsByWalking]
         ]);
 
-          
+
 
         // Set chart options
         var options = {'title':'Vehicle Type',
@@ -146,6 +146,29 @@
         chart.draw(data, options);
 
       }
+    function drawVehicleType() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Highest emission', @(Model.Co2Max.Co2/1000)],
+          ['Average emission', @(Model.Co2Average/1000)],
+          ['Lowest emission', @(Model.Co2Min.Co2/1000)]
+        ]);
+
+
+        // Set chart options
+        var options = {'title':'Your emissions',
+            'width':1500,
+            'height':1400};
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('emission_div'));
+        chart.draw(data, options);
+
+    }
+
 </script>
 
 <script>
@@ -174,7 +197,7 @@
     }
 </script>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
 
     window.onload = function () {
         var pieChart = new CanvasJS.Chart("chartContainer",
@@ -286,7 +309,7 @@
         pieChartCities = {};
     }
 
-</script>
+</script>*@
 
 
 @section Script{
