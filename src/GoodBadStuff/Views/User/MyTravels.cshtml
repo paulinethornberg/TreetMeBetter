@@ -17,16 +17,20 @@
     <h2 class="text-center">
         <br />
         <br />
-        <label>You have polluted emissionConverter kg of Co2 </label>
+        <p>You have polluted <br /></p>
+        <label id="yourTotalCo2" style="color:red; font-size:300px">@Model.TotalCo2</label><br />
+        <p style="color:red"> kg of Co2 </p>
         <br />
         <br />
-        <label>You can reduce your carbon footprint by planting trees </label>
+        <p>You can reduce your carbon footprint by planting trees </p>
         <br />
         <br />
-        <label>@Model.Co2Max.Co2 kg of Co2 is equivalent to planting 50 trees per year. </label>
+        <p>To compensate your emission is equivalent to planting <br /></p>
+        <p><label id="amountOfTreesToCompensate" style="font-size:300px; color:green"></label></p>
+        <p> trees per year. </p>
         <br />
         <br />
-        <label>Your Emission of @Model.TotalCo2 is 20% compared to other in the community</label>
+        <p>Your Emission of <label id="yourTotalCo3" style="color:red; font-size:50px">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage" style="font-size:50px">%</label> compared to the emission average in the community</p>
         <br />
         <br />
     </h2>
@@ -37,9 +41,29 @@
 <br />
 
 <script>
-    function emissionConverter(co2) {
-        var personallEmission = {Math.round(@Model.TotalCo2 / 20000)}
-    };
+    var treeAmountToCompensate = Math.round(@Model.TotalCo2/20000);
+    document.getElementById("amountOfTreesToCompensate").innerHTML = treeAmountToCompensate;
+</script>
+
+<script>
+    var procentValue = Math.round(@Model.TotalCo2/500000);
+    document.getElementById("procentComparedToAverage").innerHTML = procentValue + '%';
+    if (procentValue > 100) {
+        document.getElementById("procentComparedToAverage").setAttribute("style","color:red; font-size:50px"); 
+    }
+    else
+    {
+        document.getElementById("procentComparedToAverage").setAttribute("style","color:green; font-size:50px"); 
+    }
+</script>
+
+<script>
+    //function emissionConverter() {
+    var totalCo2 = @Model.TotalCo2;
+    var personallEmission = Math.round(totalCo2 / 1000);
+    document.getElementById("yourTotalCo2").innerHTML = personallEmission;
+    document.getElementById("yourTotalCo3").innerHTML = personallEmission;
+    //};
 </script>
 
 <div class="text-center">
