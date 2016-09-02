@@ -19,18 +19,18 @@
         <br />
         <br />
         <p>You have polluted <br /></p>
-        <label id="yourTotalCo2" style="color:red; font-size:300px">@Model.TotalCo2</label><br />
-        <p style="color:red"> kg of Co2 </p>
+        <label id="yourTotalCo2">@Model.TotalCo2</label><br />
+        <p class="kgof"> kg of Co2 </p>
         <br />
         <br />
         <p>You can reduce your carbon footprint by planting trees.</p>
 
         <p>To compensate for your emissions you need to plant<br /></p>
-        <p><label id="amountOfTreesToCompensate" style="font-size:300px; color:green"></label></p>
+        <p><label id="amountOfTreesToCompensate"></label></p>
         <p> trees per year. </p>
         <br />
         <br />
-        <p>Your emissions of <label id="yourTotalCo3" style="color:red; font-size:50px">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage" style="font-size:50px">%</label> of the total Co2 emissions</p>
+        <p>Your emissions of <label id="yourTotalCo3">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage">%</label> of the total Co2 emissions</p>
         <p> per Capita and year, in Sweden.</p>
         <br />
         <br />
@@ -43,7 +43,8 @@
 
 <div class="text-center">
     <button id="toggleBtn" value="tableDiv" type="button" class="btn btn-default btn-lg seeMyTravelsBtn">See my travels</button>
-    <button id="toggleBtn" value="chartDiv" type="button" class="btn btn-default btn-lg seeMyTravelsBtn">See my funky stats</button>
+    <button id="toggleBtn" value="chartDiv" type="button" class="btn btn-default btn-lg seeMyTravelsBtn">See my travels</button>
+    <br />
 </div>
 
 
@@ -61,10 +62,10 @@
             </tr>
             <tr>
                 <td>
-                    <div class="row"><p style="font-family:Arial;font-weight:bold;color:black;font-size:32px">Most visited cities</p></div>
+                    <div class="row"><p class="mostvisited">Most visited cities</p></div>
                     <div id="regions_div"></div>
                 </td>
-                <td style="">* This maps represents your most visited cities around the world. The darker the colour the more visits at each city.</td>
+                <td>* This maps represents your most visited cities around the world. The darker the colour the more visits at each city.</td>
             </tr>
         </table>
     </div>

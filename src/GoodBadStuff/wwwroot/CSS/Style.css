@@ -216,3 +216,33 @@ button.seeMyTravelsBtn {
     display: inline-block;
     font-size: 50px;
 }
+
+#yourTotalCo2 {
+    color:red;
+    font-size:300px;
+}
+
+p.kgof{
+    color:red;
+}
+
+#amountOfTreesToCompensate{
+    font-size:300px;
+    color:green
+}
+
+#yourTotalCo3 {
+    color:red;
+    font-size:50px
+}
+
+#procentComparedToAverage{
+    font-size:50px
+}
+
+p.mostvisited {
+    font-family:Arial;
+    font-weight:bold;
+    color:black;
+    font-size:32px
+}
