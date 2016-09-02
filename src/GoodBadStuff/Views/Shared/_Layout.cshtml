@@ -29,6 +29,11 @@
     </nav>
 
     @RenderBody()
+    <div id="footer" class="footer navbar-fixed-bottom" style="font-size:100%; background-color:black; color:white; text-align:center">
+        <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
+        TreetMeBetter - compensate for your carbon footprint
+        <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
+    </div>
 
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -36,14 +41,5 @@
     @*<script src="~/Scripts/Login.js"></script>*@
 
     @RenderSection("Script", required: false)
-    <footer id="footer">
-        <div>
-            <div id="footer" class="footer navbar-fixed-bottom" style="font-size:100%; background-color:black; color:white; text-align:center">
-                <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
-                TreetMeBetter - compensate for your carbon footprint
-                <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>

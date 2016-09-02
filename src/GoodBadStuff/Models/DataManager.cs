@@ -118,7 +118,7 @@ namespace GoodBadStuff.Models
 
         public string GetLatestInputFromDb()
         {
-            return JsonConvert.SerializeObject(_context.TravelInfo.Take(5).ToArray());
+            return JsonConvert.SerializeObject(_context.TravelInfo.OrderByDescending(t => t.Date).Take(5).ToArray());
         }
 
         public int AddNewTravel(TravelInfo travelInfo)
