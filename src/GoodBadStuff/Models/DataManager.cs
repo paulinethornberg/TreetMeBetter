@@ -118,6 +118,10 @@ namespace GoodBadStuff.Models
 
          internal async Task<bool> UpdateUserInfo(string currentUsername, UserMyAccountVM viewModel)
         {
+            if (!viewModel.Email.Contains("@"))
+            {
+                return false;
+            }
             var currentUser = await _userManager.FindByNameAsync(currentUsername);
 
             currentUser.UserName = viewModel.UserName;

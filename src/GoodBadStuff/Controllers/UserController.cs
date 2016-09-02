@@ -110,12 +110,10 @@ namespace GoodBadStuff.Controllers
 
         [Authorize]
         [HttpPost]
+        
         public async Task<bool> UpdateUser(UserMyAccountVM viewModel)
         {
-            if (!viewModel.Email.Contains("@"))
-            {
-                return false;
-            }
+
             var currentUsername = User.Identity.Name;
             var isUpdateSuccess = await dataManager.UpdateUserInfo(currentUsername, viewModel);
 
