@@ -1,11 +1,4 @@
-﻿html{
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    width: 100%;
-    height: 100%;
+﻿body {
 }
 
 .checked {
@@ -102,10 +95,6 @@ body {
     -moz-box-shadow: none;
     box-shadow: none;
     border-color: #ccc;
-}
-
-#footer{
-    padding:5px;
 }
 
 .btn-login {
@@ -205,14 +194,53 @@ span.type {
 
 button.seeMyTravelsBtn {
     background-color: #4CAF50; /* Green */
-    border: solid;
-    border-color: white;
-    border-spacing: 20px;
-    color: ghostwhite;
+    border:solid;
+    border-color:white;
+    border-spacing:20px;
+    color:ghostwhite;
     padding: 35px 100px;
     text-align: center;
-    font: Helvetica;
-    font-weight: bold;
+    font:Helvetica;
+    font-weight:bold;
     display: inline-block;
     font-size: 50px;
+}
+
+#yourTotalCo2 {
+    color:red;
+    font-size:300px;
+}
+
+p.kgof{
+    color:red;
+}
+
+#amountOfTreesToCompensate{
+    font-size:300px;
+    color:green
+}
+
+#yourTotalCo3 {
+    color:red;
+    font-size:50px
+}
+
+#procentComparedToAverage{
+    font-size:50px
+}
+
+#headerStyle{
+    color:white;
+    font-size:130%
+}
+
+p.mostvisited {
+    font-family:Arial;
+    font-weight:bold;
+    color:black;
+    font-size:32px
+}
+
+div.mytravelinfo {
+    font-size:32px
 }

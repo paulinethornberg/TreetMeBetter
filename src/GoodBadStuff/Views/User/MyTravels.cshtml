@@ -15,26 +15,26 @@
     <i style="color:green; font-size: 15em" class="glyphicon glyphicon-tree-deciduous"></i>
 </div>
 <div>
-    <h2 class="text-center">
+    <div class="text-center mytravelinfo">
         <br />
-        <br />
+    
         <p>You have polluted <br /></p>
-        <label id="yourTotalCo2" style="color:red; font-size:300px">@Model.TotalCo2</label><br />
-        <p style="color:red"> kg of Co2 </p>
+        <label id="yourTotalCo2">@Model.TotalCo2</label><br />
+        <p class="kgof"> kg of Co2 </p>
         <br />
-        <br />
+       
         <p>You can reduce your carbon footprint by planting trees.</p>
 
         <p>To compensate for your emissions you need to plant<br /></p>
-        <p><label id="amountOfTreesToCompensate" style="font-size:300px; color:green"></label></p>
+        <p><label id="amountOfTreesToCompensate"></label></p>
         <p> trees per year. </p>
         <br />
-        <br />
-        <p>Your emissions of <label id="yourTotalCo3" style="color:red; font-size:50px">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage" style="font-size:50px">%</label> of the total Co2 emissions</p>
+   
+        <p>Your emissions of <label id="yourTotalCo3">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage">%</label> of the total travel-emissions</p>
         <p> per Capita and year, in Sweden.</p>
         <br />
-        <br />
-    </h2>
+
+    </div>
 </div>
 <br />
 <br />
@@ -43,7 +43,8 @@
 
 <div class="text-center">
     <button id="toggleBtn" value="tableDiv" type="button" class="btn btn-default btn-lg seeMyTravelsBtn">See my travels</button>
-    <button id="toggleBtn" value="chartDiv" type="button" class="btn btn-default btn-lg seeMyTravelsBtn">See my funky stats</button>
+    <button id="toggleBtn" value="chartDiv" type="button" class="btn btn-default btn-lg seeMyTravelsBtn">See my statistics</button>
+    <br />
 </div>
 
 
@@ -52,16 +53,19 @@
         <table class="columns">
             <tr>
                 <td><div id="chart_div"></div></td>
+                <td>* This chart shows your most frequently used means of transport.</td>
 
             </tr>
             <tr>
                 <td><div id="emission_div"></div></td>
+                <td>* In this chart, you can see your emissions data showing your highest emission amount and the average amount that your travels have produced.</td>
             </tr>
             <tr>
                 <td>
-                    <div class="row"><p style="font-family:Arial;font-weight:bold;color:black;font-size:32px">Most visited cities</p></div>
+                    <div class="row"><p class="mostvisited">Most visited cities</p></div>
                     <div id="regions_div"></div>
                 </td>
+                <td>* This maps represents your most visited cities around the world. The darker the colour the more visits at each city.</td>
             </tr>
         </table>
     </div>
@@ -153,9 +157,9 @@
     }
 
     function drawEmission() {
-        var max = Math.round(@(Model.Co2Max.Co2/1000));
-        var average = Math.round(@(Model.Co2Average/1000));
-        var min = Math.round(@(Model.Co2Min.Co2/1000));
+        var max = Math.round(@(Model.Co2CarMax.Co2/1000));
+        var average = Math.round(@(Model.Co2CarAverage/1000));
+        var min = Math.round(@(Model.Co2CarMin.Co2/1000));
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'EmissionType');
@@ -169,7 +173,7 @@
 
         // Set chart options
         var options = {
-            'title': 'Your emissions',
+            'title': 'Your car emissions',
             'width': 1000,
             'height': 700,
             titleTextStyle: {
@@ -249,20 +253,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
     <script src="~/Scripts/Login.js"></script>
     <script>checkIsLoggedIn()</script>
-    <script>
-        $("button").click(function () {
-            var buttonValue = $(this).val();
-            if (buttonValue === "tableDiv")
-                $('#chartDiv').addClass("none");
-            else if (buttonValue === "chartDiv")
-                $('#tableDiv').addClass("none");
+<script>
+    $("button").click(function() {
+        var buttonValue = $(this).val();
+        if (buttonValue === "tableDiv")
+            $('#chartDiv').addClass("none");
+        else if(buttonValue === "chartDiv")
+            $('#tableDiv').addClass("none");
 
-            $('#' + buttonValue).toggleClass("none");
-            $('html, body').animate({
-                scrollTop: $("#toggleBtn").offset().top
-            }, 200);
-        })
-    </script>
+        $('#' + buttonValue).toggleClass("none");
+        $('html, body').animate({
+            scrollTop: $("#toggleBtn").offset().top
+        }, 200);
+    })
+</script>
 }
 
 
