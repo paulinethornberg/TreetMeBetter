@@ -111,19 +111,22 @@
     </div>
 </div>
 
+@*GOOGLE CHARTS*@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { packages: ['corechart', 'geochart'] });
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawVehicleType);
-      google.charts.setOnLoadCallback(drawEmissionType);
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawVehicleType() {
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawVehicleType);
+    google.charts.setOnLoadCallback(drawEmission);
+    google.charts.setOnLoadCallback(drawRegionsMap);
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawVehicleType() {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
@@ -134,43 +137,84 @@
           ['Bus', @Model.TravelsByBus],
           ['Motorcycle', @Model.TravelsByMotorcycle],
           ['Bicycle', @Model.TravelsByBicycling],
-          ['Walking', @Model.TravelsByWalking]
+          ['Train', @Model.TravelsByTrain]
         ]);
 
-
-
         // Set chart options
-        var options = {'title':'Vehicle Type',
-                       'width':1500,
-                       'height':1400};
+        var options = {
+            'title': 'Vehicle Type',
+            'width': 1000,
+            'height': 800,
+            titleTextStyle: {
+                fontSize: 32,
+                bold: true
+            }
+        };
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
 
-      }
-    function drawVehicleType() {
+    }
 
+    function drawEmission() {
+        var max = Math.round(@(Model.Co2Max.Co2/1000));
+        var average = Math.round(@(Model.Co2Average/1000));
+        var min = Math.round(@(Model.Co2Min.Co2/1000));
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('string', 'EmissionType');
+        data.addColumn('number', 'Emissions');
         data.addRows([
-          ['Highest emission', @(Model.Co2Max.Co2/1000)],
-          ['Average emission', @(Model.Co2Average/1000)],
-          ['Lowest emission', @(Model.Co2Min.Co2/1000)]
+          ['Highest emission', max],
+          ['Average emission', average],
+          ['Lowest emission', min]
         ]);
 
 
         // Set chart options
-        var options = {'title':'Your emissions',
-            'width':1500,
-            'height':1400};
+        var options = {
+            'title': 'Your emissions',
+            'width': 1000,
+            'height': 700,
+            titleTextStyle: {
+                fontSize: 32,
+                bold: true
+            }
+        };
+
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('emission_div'));
         chart.draw(data, options);
 
     }
 
+    function drawRegionsMap() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['City', 'Times visited'],
+          @for (int i = 0; i < Model.CityStatistics.Count(); i++)
+          {
+              var lineEnding = i < Model.CityStatistics.Count-1 ? "," : "";
+          <text>['@Model.CityStatistics[i].CityName', @Model.CityStatistics[i].TimesVisited]@lineEnding</text>
+              }
+        ]);
+
+        var options = {
+            //region: 154,
+            'title': 'Top 5 cities',
+            'width': 1000,
+            'height': 700,
+            'displayMode': 'markers',
+            'colorAxis': { colors: ['#218603', '#FF8000'] },
+            titleTextStyle: {
+                fontSize: 32,
+                bold: true
+            }
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        chart.draw(data, options);
+    }
 </script>
 
 <script>
@@ -183,136 +227,20 @@
 
     //TREE CONVERTER
 
-    var treeAmountToCompensate = Math.round(totalCo2/20000);
+    var treeAmountToCompensate = Math.round(totalCo2 / 20000);
     document.getElementById("amountOfTreesToCompensate").innerHTML = treeAmountToCompensate;
 
     //CO2 COMPARED TO OTHERS
 
-    var procentValue = Math.round(totalCo2/55000);
+    var procentValue = Math.round(totalCo2/10400);
     document.getElementById("procentComparedToAverage").innerHTML = procentValue + '%';
     if (procentValue > 100) {
-        document.getElementById("procentComparedToAverage").setAttribute("style","color:red; font-size:50px");
+        document.getElementById("procentComparedToAverage").setAttribute("style", "color:red; font-size:50px");
     }
-    else
-    {
-        document.getElementById("procentComparedToAverage").setAttribute("style","color:green; font-size:50px");
+    else {
+        document.getElementById("procentComparedToAverage").setAttribute("style", "color:green; font-size:50px");
     }
 </script>
-
-@*<script type="text/javascript">
-
-    window.onload = function () {
-        var pieChart = new CanvasJS.Chart("chartContainer",
-        {
-            title: {
-                text: "Your most popular vehicle choices"
-            },
-            animationEnabled: true,
-            legend: {
-                verticalAlign: "center",
-                horizontalAlign: "left",
-                fontSize: 20,
-                fontFamily: "Helvetica"
-            },
-            theme: "theme2",
-            data: [
-            {
-                type: "pie",
-                indexLabelFontFamily: "Garamond",
-                indexLabelFontSize: 20,
-                indexLabel: "{label} {y}",
-                startAngle: -20,
-                showInLegend: true,
-                toolTipContent: "{legendText} {y}",
-                dataPoints: [
-                    { y: @Model.TravelsByCar, legendText: "Car", label: "Car" },
-                    { y: @Model.TravelsByTrain, legendText: "Train", label: "Train" },
-                    { y: @Model.TravelsByBus, legendText: "Bus", label: "Bus" },
-                    { y: @Model.TravelsByMotorcycle, legendText: "Motorcycle", label: "Motorcycle" },
-                    { y: @Model.TravelsByBicycling, legendText: "Bicycle", label: "Bicycle" },
-                  { y: @Model.TravelsByWalking, legendText: "Walking", label: "Walking" }
-                ]
-            }
-            ]
-        });
-
-        pieChart.render();
-        pieChart = {};
-
-        var columnChart = new CanvasJS.Chart("chartContainer2",
-  {
-      title:{
-          text: "Your emission values"
-      },
-      animationEnabled: true,
-      axisY: {
-          title: "Emissions"
-      },
-      legend: {
-          verticalAlign: "bottom",
-          horizontalAlign: "center"
-      },
-      theme: "theme2",
-      data: [
-
-      {
-          type: "column",
-          showInLegend: true,
-          legendMarkerColor: "Green",
-          legendText: "Values are shown in Kilos",
-          dataPoints: [
-          {y: Math.round(@(Model.Co2Max.Co2/1000)), label: "Highest emission"},
-          {y: Math.round(@(Model.Co2Average/1000)),  label: "Average emission" },
-          {y: @(Model.Co2Min.Co2/1000),  label: "Meadian emission"},
-          {y: @(Model.Co2Min.Co2/1000), label: "Lowest emission"}
-          ]
-      }
-      ]
-  });
-
-        columnChart.render();
-        columnChart = {};
-
-        var pieChartCities = new CanvasJS.Chart("chartContainer3",
-{
-    title: {
-        text: "Most visited cities"
-    },
-    animationEnabled: true,
-    legend: {
-        verticalAlign: "center",
-        horizontalAlign: "left",
-        fontSize: 20,
-        fontFamily: "Helvetica"
-    },
-    theme: "theme2",
-    data: [
-    {
-        type: "pie",
-        indexLabelFontFamily: "Garamond",
-        indexLabelFontSize: 20,
-        indexLabel: "{label} {y}",
-        startAngle: -20,
-        showInLegend: true,
-        toolTipContent: "{legendText} {y}",
-        dataPoints: [
-            { y: @Model.CityStatistics[0].TimesVisited, legendText: "@Model.CityStatistics[0].CityName", label: "@Model.CityStatistics[0].CityName"},
-            { y: @Model.CityStatistics[1].TimesVisited, legendText: "@Model.CityStatistics[1].CityName", label: "@Model.CityStatistics[1].CityName"},
-            { y: @Model.CityStatistics[2].TimesVisited, legendText: "@Model.CityStatistics[2].CityName", label: "@Model.CityStatistics[2].CityName"},
-            { y: @Model.CityStatistics[3].TimesVisited, legendText: "@Model.CityStatistics[3].CityName", label: "@Model.CityStatistics[3].CityName"},
-            { y: @Model.CityStatistics[4].TimesVisited, legendText: "@Model.CityStatistics[4].CityName", label: "@Model.CityStatistics[4].CityName"},
-            { y: @Model.CityStatistics[5].TimesVisited, legendText: "@Model.CityStatistics[5].CityName", label: "@Model.CityStatistics[5].CityName"}
-        ]
-    }
-    ]
-});
-
-        pieChartCities.render();
-        pieChartCities = {};
-    }
-
-</script>*@
-
 
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
