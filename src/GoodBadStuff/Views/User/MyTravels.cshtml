@@ -17,19 +17,19 @@
 <div>
     <div class="text-center mytravelinfo">
         <br />
-    
+
         <p>You have polluted <br /></p>
         <label id="yourTotalCo2">@Model.TotalCo2</label><br />
         <p class="kgof"> kg of Co2 </p>
         <br />
-       
+
         <p>You can reduce your carbon footprint by planting trees.</p>
 
         <p>To compensate for your emissions you need to plant<br /></p>
         <p><label id="amountOfTreesToCompensate"></label></p>
         <p> trees per year. </p>
         <br />
-   
+
         <p>Your emissions of <label id="yourTotalCo3">@Model.TotalCo2</label> kg is <label id="procentComparedToAverage">%</label> of the total travel-emissions</p>
         <p> per Capita and year, in Sweden.</p>
         <br />
@@ -232,7 +232,7 @@
 
     //CO2 COMPARED TO OTHERS
 
-    var procentValue = Math.round(totalCo2/10400);
+    var procentValue = Math.round(totalCo2 / 10400);
     document.getElementById("procentComparedToAverage").innerHTML = procentValue + '%';
     if (procentValue > 100) {
         document.getElementById("procentComparedToAverage").setAttribute("style", "color:red; font-size:50px");
@@ -244,29 +244,25 @@
 
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
-    <script src="~/Scripts/Map.js"></script>
     <script src="~/Scripts/Styling.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
     <script src="~/Scripts/Login.js"></script>
-    <script>checkIsLoggedIn()</script>
-<script>
-    $("button").click(function() {
-        var buttonValue = $(this).val();
-        if (buttonValue === "tableDiv")
-            $('#chartDiv').addClass("none");
-        else if(buttonValue === "chartDiv")
-            $('#tableDiv').addClass("none");
+    <script src="~/Scripts/CheckIsLoggedIn.js"></script>
+    <script>
+        $("button").click(function () {
+            var buttonValue = $(this).val();
+            if (buttonValue === "tableDiv")
+                $('#chartDiv').addClass("none");
+            else if (buttonValue === "chartDiv")
+                $('#tableDiv').addClass("none");
 
-        $('#' + buttonValue).toggleClass("none");
-        $('html, body').animate({
-            scrollTop: $("#toggleBtn").offset().top
-        }, 200);
-    })
-</script>
+            $('#' + buttonValue).toggleClass("none");
+            $('html, body').animate({
+                scrollTop: $("#toggleBtn").offset().top
+            }, 200);
+        })
+    </script>
 }
 
 

@@ -11,15 +11,15 @@
             <h2>My Account</h2>
         </div>
         <div class="dropdown pull-right">
-           <br />
-                <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
-                  Delete Account
-                    @*<span class="caret"></span>*@
-                </button>
-            
+            <br />
+            <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                Delete Account
+                @*<span class="caret"></span>*@
+            </button>
+
             <div class="dropdown-menu">
                 <div style="width:200px" align="center">Are you sure?</div><br />
-                <div align="center"><input type="button" id="deleteAccountbtn" class="btn btn-danger" value="Yes, please."/></div>
+                <div align="center"><input type="button" id="deleteAccountbtn" class="btn btn-danger" value="Yes, please." /></div>
             </div>
         </div>
     </div>
@@ -89,16 +89,11 @@
 <hr>
 
 @section Script{
-    @*tog bort asynkron inladdning*@
-    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw"></script>*@
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
-    <script src="~/Scripts/Map.js"></script>
     <script src="~/Scripts/Styling.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
+    <script src="~/Scripts/CheckIsLoggedIn.js"></script>
     <script src="~/Scripts/Login.js"></script>
     <script src="~/Scripts/UserProfile.js"></script>
-    <script>checkIsLoggedIn()</script>
-
 }
