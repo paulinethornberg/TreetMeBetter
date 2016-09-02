@@ -51,7 +51,18 @@ function checkIsLoggedIn() {
     });
 }
 
-
+(function worker() {
+    $.get({
+        url: '/home/GetLatestInput',
+        success: function (data) {
+            console.log(data);
+        },
+        complete: function () {
+            // Schedule the next request when the current one's complete
+            setTimeout(worker, 5000);
+        }
+    });
+})();
 
 $('#goBtn').click(function () {
     var from = document.getElementById('from').value;
