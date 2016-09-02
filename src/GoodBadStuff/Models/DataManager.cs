@@ -190,28 +190,28 @@ namespace GoodBadStuff.Models
                 .Select(c => new Travels { Co2 = c.Co2 })
                 .FirstOrDefault();
 
-            if (travelsToReturn.Co2CarMax == null)
-            {
-                travelsToReturn.Co2CarMax.Co2 = 0;
-            }
+            //if (travelsToReturn.Co2CarMax == null)
+            //{
+            //    travelsToReturn.Co2CarMax.Co2 = 0;
+            //}
 
-            travelsToReturn.Co2CarMin = _context.TravelInfo
-                .Where(c => c.UserId == userId && c.Transport == "DRIVING")
-                .OrderBy(c => c.Co2)
-                .Select(c => new Travels { Co2 = c.Co2 })
-                .FirstOrDefault();
-            if (travelsToReturn.Co2CarMin.Co2 == null)
-            {
-                travelsToReturn.Co2CarMin.Co2 = 0;
-            }
+            //travelsToReturn.Co2CarMin = _context.TravelInfo
+            //    .Where(c => c.UserId == userId && c.Transport == "DRIVING")
+            //    .OrderBy(c => c.Co2)
+            //    .Select(c => new Travels { Co2 = c.Co2 })
+            //    .FirstOrDefault();
+            //if (travelsToReturn.Co2CarMin.Co2 == null)
+            //{
+            //    travelsToReturn.Co2CarMin.Co2 = 0;
+            //}
 
-            travelsToReturn.Co2CarAverage = _context.TravelInfo
-                .Where(c => c.UserId == userId && c.Transport =="DRIVING")           
-                .OrderByDescending(c => c.Co2)
-                .Select(c => new Travels { Co2 = c.Co2 })
-                .Average(c => c.Co2);
+            //travelsToReturn.Co2CarAverage = _context.TravelInfo
+            //    .Where(c => c.UserId == userId && c.Transport =="DRIVING")           
+            //    .OrderByDescending(c => c.Co2)
+            //    .Select(c => new Travels { Co2 = c.Co2 })
+            //    .Average(c => c.Co2);
             travelsToReturn.TotalCo2 = _context.TravelInfo.Where(a => a.UserId == userId)
-                .Select(c=>c.Co2).Sum();
+                .Select(c => c.Co2).Sum();
 
             var resultSet = _context
                 .TravelInfo

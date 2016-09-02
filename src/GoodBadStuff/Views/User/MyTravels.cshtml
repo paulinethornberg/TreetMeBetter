@@ -56,10 +56,10 @@
                 <td>* This chart shows your most frequently used means of transport.</td>
 
             </tr>
-            <tr>
+            @*<tr>
                 <td><div id="emission_div"></div></td>
                 <td>* In this chart, you can see your emissions data showing your highest emission amount and the average amount that your travels have produced.</td>
-            </tr>
+            </tr>*@
             <tr>
                 <td>
                     <div class="row"><p class="mostvisited">Most visited cities</p></div>
@@ -121,7 +121,7 @@
 
     // Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback(drawVehicleType);
-    google.charts.setOnLoadCallback(drawEmission);
+    //google.charts.setOnLoadCallback(drawEmission);
     google.charts.setOnLoadCallback(drawRegionsMap);
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
@@ -156,7 +156,10 @@
 
     }
 
-    function drawEmission() {
+
+    //CHART FOR FUTURE IMPLEMENTATION
+
+    @*function drawEmission() {
         var max = Math.round(@(Model.Co2CarMax.Co2/1000));
         var average = Math.round(@(Model.Co2CarAverage/1000));
         var min = Math.round(@(Model.Co2CarMin.Co2/1000));
@@ -186,7 +189,7 @@
         var chart = new google.visualization.BarChart(document.getElementById('emission_div'));
         chart.draw(data, options);
 
-    }
+    }*@
 
     function drawRegionsMap() {
 
