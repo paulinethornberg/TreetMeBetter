@@ -40,7 +40,6 @@ $("#updatebtn").click(function () {
             $("#alertMessage").removeClass("none");
             // Alertmessage for saving a travel
             AlertSaveMessage("#alertMessage");
-           
             document.getElementById("formVal").reset();
             $("#oldPasswordDiv").removeClass("has-feedback has-success");
             $("#newPassword").removeClass("has-feedback has-success");
