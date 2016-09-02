@@ -229,6 +229,11 @@ p.kgof{
     font-size:50px
 }
 
+#headerStyle{
+    color:white;
+    font-size:130%
+}
+
 p.mostvisited {
     font-family:Arial;
     font-weight:bold;

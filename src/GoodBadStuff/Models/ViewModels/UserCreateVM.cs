@@ -8,13 +8,13 @@ namespace GoodBadStuff.Models.ViewModels
 {
     public class UserCreateVM
     {
-        [Required(ErrorMessage = "Du måste ange ett användarnamn")]
+        [Required(ErrorMessage = "Enter a user name")]
         [Range(3, 5, ErrorMessage = "Måste vara minst två bokstäver (2-15)")]
         public string Username { get; set; }
-        [Required(ErrorMessage = "Du måste ange en E-mail")]
+        [Required(ErrorMessage = "Enter an E-mail")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Du måste ange ett lösenord som har minst ens tor bokstav och ett alfanumeriskt tecken")]
-        [Range(3, 5, ErrorMessage = "Måste vara minst sex bokstäver (6-20)")]
+        [Required(ErrorMessage = "You have to enter a password that has at least one capital letter and one alphanumerical sign")]
+        [Range(3, 5, ErrorMessage = "Your password must be at least 6 letters (6-20)")]
         public string Password { get; set; }
     }
 }
