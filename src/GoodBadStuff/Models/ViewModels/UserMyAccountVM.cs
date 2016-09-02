@@ -11,6 +11,7 @@ namespace GoodBadStuff.Models.ViewModels
         [Required]
         public string UserName { get; set; }
 
+
         [Required(ErrorMessage = "Please enter your E-mail")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
