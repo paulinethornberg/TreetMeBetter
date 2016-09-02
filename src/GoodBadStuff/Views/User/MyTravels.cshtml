@@ -61,6 +61,7 @@
             </tr>
             <tr>
                 <td>
+                    <div class="row"><p style="font-family:Arial;font-weight:bold;color:black;font-size:32px">Most visited cities</p></div>
                     <div id="regions_div"></div>
                 </td>
                 <td style="">* This maps represents your most visited cities around the world. The darker the colour the more visits at each city.</td>
@@ -142,7 +143,7 @@
         var options = {
             'title': 'Vehicle Type',
             'width': 1000,
-            'height': 700,
+            'height': 800,
             titleTextStyle: {
                 fontSize: 32,
                 bold: true
@@ -198,11 +199,12 @@
         ]);
 
         var options = {
-            region: 154,
+            //region: 154,
             'title': 'Top 5 cities',
             'width': 1000,
             'height': 700,
             'displayMode': 'markers',
+            'colorAxis': { colors: ['#218603', '#FF8000'] },
             titleTextStyle: {
                 fontSize: 32,
                 bold: true
@@ -238,121 +240,6 @@
         document.getElementById("procentComparedToAverage").setAttribute("style", "color:green; font-size:50px");
     }
 </script>
-
-@*<script type="text/javascript">
-
-        window.onload = function () {
-            var pieChart = new CanvasJS.Chart("chartContainer",
-            {
-                title: {
-                    text: "Your most popular vehicle choices"
-                },
-                animationEnabled: true,
-                legend: {
-                    verticalAlign: "center",
-                    horizontalAlign: "left",
-                    fontSize: 20,
-                    fontFamily: "Helvetica"
-                },
-                theme: "theme2",
-                data: [
-                {
-                    type: "pie",
-                    indexLabelFontFamily: "Garamond",
-                    indexLabelFontSize: 20,
-                    indexLabel: "{label} {y}",
-                    startAngle: -20,
-                    showInLegend: true,
-                    toolTipContent: "{legendText} {y}",
-                    dataPoints: [
-                        { y: @Model.TravelsByCar, legendText: "Car", label: "Car" },
-                        { y: @Model.TravelsByTrain, legendText: "Train", label: "Train" },
-                        { y: @Model.TravelsByBus, legendText: "Bus", label: "Bus" },
-                        { y: @Model.TravelsByMotorcycle, legendText: "Motorcycle", label: "Motorcycle" },
-                        { y: @Model.TravelsByBicycling, legendText: "Bicycle", label: "Bicycle" },
-                      { y: @Model.TravelsByWalking, legendText: "Walking", label: "Walking" }
-                    ]
-                }
-                ]
-            });
-
-            pieChart.render();
-            pieChart = {};
-
-            var columnChart = new CanvasJS.Chart("chartContainer2",
-      {
-          title:{
-              text: "Your emission values"
-          },
-          animationEnabled: true,
-          axisY: {
-              title: "Emissions"
-          },
-          legend: {
-              verticalAlign: "bottom",
-              horizontalAlign: "center"
-          },
-          theme: "theme2",
-          data: [
-
-          {
-              type: "column",
-              showInLegend: true,
-              legendMarkerColor: "Green",
-              legendText: "Values are shown in Kilos",
-              dataPoints: [
-              {y: Math.round(@(Model.Co2Max.Co2/1000)), label: "Highest emission"},
-              {y: Math.round(@(Model.Co2Average/1000)),  label: "Average emission" },
-              {y: @(Model.Co2Min.Co2/1000),  label: "Meadian emission"},
-              {y: @(Model.Co2Min.Co2/1000), label: "Lowest emission"}
-              ]
-          }
-          ]
-      });
-
-            columnChart.render();
-            columnChart = {};
-
-            var pieChartCities = new CanvasJS.Chart("chartContainer3",
-    {
-        title: {
-            text: "Most visited cities"
-        },
-        animationEnabled: true,
-        legend: {
-            verticalAlign: "center",
-            horizontalAlign: "left",
-            fontSize: 20,
-            fontFamily: "Helvetica"
-        },
-        theme: "theme2",
-        data: [
-        {
-            type: "pie",
-            indexLabelFontFamily: "Garamond",
-            indexLabelFontSize: 20,
-            indexLabel: "{label} {y}",
-            startAngle: -20,
-            showInLegend: true,
-            toolTipContent: "{legendText} {y}",
-            dataPoints: [
-                { y: @Model.CityStatistics[0].TimesVisited, legendText: "@Model.CityStatistics[0].CityName", label: "@Model.CityStatistics[0].CityName"},
-                { y: @Model.CityStatistics[1].TimesVisited, legendText: "@Model.CityStatistics[1].CityName", label: "@Model.CityStatistics[1].CityName"},
-                { y: @Model.CityStatistics[2].TimesVisited, legendText: "@Model.CityStatistics[2].CityName", label: "@Model.CityStatistics[2].CityName"},
-                { y: @Model.CityStatistics[3].TimesVisited, legendText: "@Model.CityStatistics[3].CityName", label: "@Model.CityStatistics[3].CityName"},
-                { y: @Model.CityStatistics[4].TimesVisited, legendText: "@Model.CityStatistics[4].CityName", label: "@Model.CityStatistics[4].CityName"},
-                { y: @Model.CityStatistics[5].TimesVisited, legendText: "@Model.CityStatistics[5].CityName", label: "@Model.CityStatistics[5].CityName"}
-            ]
-        }
-        ]
-    });
-
-            pieChartCities.render();
-            pieChartCities = {};
-        }
-
-    </script>*@
-
 
 @section Script{
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>

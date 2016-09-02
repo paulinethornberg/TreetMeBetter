@@ -3,6 +3,7 @@ using GoodBadStuff.Models.Entities;
 using GoodBadStuff.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,6 @@ namespace GoodBadStuff.Models
             _context = context;
             _userManager = userManager;
         }
-
-        //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
-        //const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
 
         public int GetValuesFromAPIs(TravelInfoVM travelInfoVM, string json)
         {
@@ -79,7 +77,6 @@ namespace GoodBadStuff.Models
         {
             // kod för att stoppa in UserID or Name i 
             var userId = await GetIdFromUserName(userName);
-
             AddUserIdToTravelInfoDBTable(userId, travelInfoId);
         }
 
@@ -113,6 +110,11 @@ namespace GoodBadStuff.Models
                 Co2 = Convert.ToSingle(tempCo2);
                 travelInfo.Co2 = Co2;
             }
+        }
+
+        public string GetLatestInputFromDb()
+        {
+            return JsonConvert.SerializeObject(_context.TravelInfo.Take(5).ToArray());
         }
 
         public int AddNewTravel(TravelInfo travelInfo)
