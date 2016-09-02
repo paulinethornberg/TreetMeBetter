@@ -24,6 +24,8 @@ namespace GoodBadStuff.Controllers
 
         public UserController(TrvlrContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
+
+            dataManager = new DataManager(context, userManager);
             _userManager = userManager;
             _signinManager = signinManager;
             _identityContext = dbContext;
