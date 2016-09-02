@@ -34,7 +34,7 @@ $("#updatebtn").click(function () {
     $.post("/User/UpdateUser", { "Username": document.getElementById("usernameReg").value, "CurrentPassword": document.getElementById("oldpassword").value, "Password": document.getElementById("confirmPassword").value, "Email": document.getElementById("emailReg").value }, function (result) {
         if (result === false) {
             $("#alertMessage").removeClass("none");
-            $("#alertMessage").text("Update failed, please try again, check your email!");
+            $("#alertMessage").text("Update failed, please try again!");
         }
         else {
             $("#alertMessage").removeClass("none");

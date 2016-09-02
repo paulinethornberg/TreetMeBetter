@@ -1,8 +1,4 @@
 ﻿@model MyTravelsVM
-<link href="~/CSS/Style.css" rel="stylesheet" />
-<script src="~/Scripts/canvasjs.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-
 <div class="text-center">
     <br />
     <br />
@@ -56,10 +52,6 @@
                 <td>* This chart shows your most frequently used means of transport.</td>
 
             </tr>
-            @*<tr>
-                <td><div id="emission_div"></div></td>
-                <td>* In this chart, you can see your emissions data showing your highest emission amount and the average amount that your travels have produced.</td>
-            </tr>*@
             <tr>
                 <td>
                     <div class="row"><p class="mostvisited">Most visited cities</p></div>
@@ -111,7 +103,6 @@
     </div>
 </div>
 
-@*GOOGLE CHARTS*@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -156,41 +147,6 @@
 
     }
 
-
-    //CHART FOR FUTURE IMPLEMENTATION
-
-    @*function drawEmission() {
-        var max = Math.round(@(Model.Co2CarMax.Co2/1000));
-        var average = Math.round(@(Model.Co2CarAverage/1000));
-        var min = Math.round(@(Model.Co2CarMin.Co2/1000));
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'EmissionType');
-        data.addColumn('number', 'Emissions');
-        data.addRows([
-          ['Highest emission', max],
-          ['Average emission', average],
-          ['Lowest emission', min]
-        ]);
-
-
-        // Set chart options
-        var options = {
-            'title': 'Your car emissions',
-            'width': 1000,
-            'height': 700,
-            titleTextStyle: {
-                fontSize: 32,
-                bold: true
-            }
-        };
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('emission_div'));
-        chart.draw(data, options);
-
-    }*@
-
     function drawRegionsMap() {
 
         var data = google.visualization.arrayToDataTable([
@@ -218,9 +174,6 @@
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
         chart.draw(data, options);
     }
-</script>
-
-<script>
 
     var totalCo2 = "@Model.TotalCo2";
     totalCo2 = totalCo2.replace(/,/g, '.');
@@ -252,20 +205,6 @@
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/Login.js"></script>
     <script src="~/Scripts/CheckIsLoggedIn.js"></script>
-    <script>
-        $("button").click(function () {
-            var buttonValue = $(this).val();
-            if (buttonValue === "tableDiv")
-                $('#chartDiv').addClass("none");
-            else if (buttonValue === "chartDiv")
-                $('#tableDiv').addClass("none");
-
-            $('#' + buttonValue).toggleClass("none");
-            $('html, body').animate({
-                scrollTop: $("#toggleBtn").offset().top
-            }, 200);
-        })
-    </script>
+    <script src="~/Scripts/TravelButton.js"></script>
 }
-
 
