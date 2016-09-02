@@ -33,6 +33,12 @@ namespace GoodBadStuff.Controllers
             return View();
         }
 
+        public string GetLatestInput()
+        {
+            var ret = dataManager.GetLatestInputFromDb();
+            return ret;
+        }
+
         [HttpPost]
         public async Task<ActionResult> GetCarbonData(TravelInfoVM travelInfo)
         {

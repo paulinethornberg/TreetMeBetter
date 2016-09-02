@@ -3,6 +3,7 @@ using GoodBadStuff.Models.Entities;
 using GoodBadStuff.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,11 @@ namespace GoodBadStuff.Models
                 Co2 = Convert.ToSingle(tempCo2);
                 travelInfo.Co2 = Co2;
             }
+        }
+
+        public string GetLatestInputFromDb()
+        {
+            return JsonConvert.SerializeObject(_context.TravelInfo.Take(5).ToArray());
         }
 
         public int AddNewTravel(TravelInfo travelInfo)
