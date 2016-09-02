@@ -1,15 +1,21 @@
-﻿
-
-    <br />
+﻿    <br />
 
 <div>
     @Html.Partial("_SadInfo")
+    @Html.Partial("_LoginForm")
 
 
 </div>
 
  @section Script{
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQKAwOCdTQ2xE8c5Nnxn4AkQYgAFhXUw&libraries=places"></script>
 <script src="~/Scripts/Map.js"></script>
+<script src="~/Scripts/Styling.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
 <script src="~/Scripts/Login.js"></script>
 <script>checkIsLoggedIn()</script>
-}
+
