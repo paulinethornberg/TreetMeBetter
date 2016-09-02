@@ -21,7 +21,7 @@ namespace GoodBadStuff.Controllers
         IdentityDbContext _identityContext;
         DataManager dataManager;
         TrvlrContext _context;
-        
+
         public UserController(TrvlrContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
             _context = context;
@@ -51,10 +51,10 @@ namespace GoodBadStuff.Controllers
         {
             UserMyAccountVM userMyAccountVm = new UserMyAccountVM();
             var userName = User.Identity.Name;
-            var email = await dataManager.GetUserInfoFromdb(userName);
-            userMyAccountVm.Email = email;
+            userMyAccountVm.Email = await dataManager.GetUserInfoFromdb(userName);
+
             userMyAccountVm.UserName = userName;
-            
+
             return View(userMyAccountVm);
         }
 
@@ -74,7 +74,6 @@ namespace GoodBadStuff.Controllers
 
         }
 
-
         [HttpGet]
         public bool CheckIsLoggedIn()
         {
@@ -82,7 +81,7 @@ namespace GoodBadStuff.Controllers
             return isLogged;
         }
 
-       
+
         public async Task<bool> DeleteUser()
         {
             var userName = User.Identity.Name;
@@ -93,9 +92,9 @@ namespace GoodBadStuff.Controllers
             {
                 await _signinManager.SignOutAsync();
                 return delete.Succeeded;
-        }
+            }
             else
-                return false;   
+                return false;
         }
 
 
@@ -104,31 +103,21 @@ namespace GoodBadStuff.Controllers
         {
             var userName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userName);
-            var check =  await _userManager.CheckPasswordAsync(user, postContent);
-           
+            var check = await _userManager.CheckPasswordAsync(user, postContent);
+
             return check;
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<bool> UpdateUser(string Username, string CurrentPassword, string Password, string Email)
-        { 
-            
+        public async Task<bool> UpdateUser(UserMyAccountVM viewModel)
+        {
+
             var currentUsername = User.Identity.Name;
-            var currentUser = await _userManager.FindByNameAsync(currentUsername);
+            var isUpdateSuccess = await dataManager.UpdateUserInfo(currentUsername, viewModel);
 
-            currentUser.UserName = Username;
-            currentUser.Email = Email;
-
-            await _userManager.UpdateAsync(currentUser);
-            var passwordChange = await _userManager.ChangePasswordAsync(currentUser, CurrentPassword, Password);
-            if (passwordChange.Succeeded)
-                return true;
-            else
-                return false;
-
+            return isUpdateSuccess;
         }
-
 
         [HttpPost]
         [AllowAnonymous]

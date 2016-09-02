@@ -112,6 +112,21 @@ namespace GoodBadStuff.Models
             }
         }
 
+         internal async Task<bool> UpdateUserInfo(string currentUsername, UserMyAccountVM viewModel)
+        {
+            var currentUser = await _userManager.FindByNameAsync(currentUsername);
+
+            currentUser.UserName = viewModel.UserName;
+            currentUser.Email = viewModel.Email;
+
+            await _userManager.UpdateAsync(currentUser);
+            var passwordChange = await _userManager.ChangePasswordAsync(currentUser, viewModel.CurrentPassword, viewModel.Password);
+            if (passwordChange.Succeeded)
+                return true;
+            else
+                return false;
+        }
+
         public string GetLatestInputFromDb()
         {
             return JsonConvert.SerializeObject(_context.TravelInfo.Take(5).ToArray());
