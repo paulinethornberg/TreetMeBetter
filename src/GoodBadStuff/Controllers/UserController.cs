@@ -19,16 +19,13 @@ namespace GoodBadStuff.Controllers
         UserManager<IdentityUser> _userManager;
         SignInManager<IdentityUser> _signinManager;
         IdentityDbContext _identityContext;
-        DataManager dataManager;
-        TrvlrContext _context;
+        DataManager _dataManager;
         
-        public UserController(TrvlrContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
+        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
-            _context = context;
             _userManager = userManager;
             _signinManager = signinManager;
             _identityContext = dbContext;
-            dataManager = new DataManager(context, userManager);
         }
 
         [Authorize]
@@ -36,7 +33,8 @@ namespace GoodBadStuff.Controllers
         {
             var userName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userName);
-            var travels = dataManager.LoadTravels(user.Id);
+            _dataManager = new DataManager(new TrvlrContext(), _userManager);
+            var travels = _dataManager.LoadTravels(user.Id);
             return View(travels);
         }
 
@@ -51,7 +49,8 @@ namespace GoodBadStuff.Controllers
         {
             UserMyAccountVM userMyAccountVm = new UserMyAccountVM();
             var userName = User.Identity.Name;
-            var email = await dataManager.GetUserInfoFromdb(userName);
+            _dataManager = new DataManager(new TrvlrContext(), _userManager);
+            var email = await _dataManager.GetUserInfoFromdb(userName);
             userMyAccountVm.Email = email;
             userMyAccountVm.UserName = userName;
             
@@ -69,6 +68,8 @@ namespace GoodBadStuff.Controllers
                 Email = viewModel.Email
             };
             var result = await _userManager.CreateAsync(user, viewModel.Password);
+            //var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
+
             await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
             return result.Succeeded;
 
@@ -95,7 +96,7 @@ namespace GoodBadStuff.Controllers
                 return delete.Succeeded;
         }
             else
-                return false;   
+                return false;
         }
 
 
@@ -121,6 +122,9 @@ namespace GoodBadStuff.Controllers
             currentUser.Email = Email;
 
             await _userManager.UpdateAsync(currentUser);
+            //var emailConfirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(currentUser);
+            //var emailCheck= await _userManager.ChangeEmailAsync(currentUser, Email, emailConfirmationCode);
+
             var passwordChange = await _userManager.ChangePasswordAsync(currentUser, CurrentPassword, Password);
             if (passwordChange.Succeeded)
                 return true;
