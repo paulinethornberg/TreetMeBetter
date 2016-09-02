@@ -183,20 +183,33 @@ namespace GoodBadStuff.Models
             travelsToReturn.TravelsByCar = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "DRIVING").Count();
             travelsToReturn.TravelsByTrain = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "TRAIN").Count();
             travelsToReturn.TravelsByMotorcycle = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "MOTORCYCLE").Count();
-            travelsToReturn.Co2Max = _context.TravelInfo.OrderByDescending(c => c.Co2)
+
+            travelsToReturn.Co2CarMax = _context.TravelInfo
+                .Where(c => c.UserId == userId && c.Transport == "DRIVING")
+                .OrderByDescending(c => c.Co2)
                 .Select(c => new Travels { Co2 = c.Co2 })
-                .First();
-            travelsToReturn.Co2Min = _context.TravelInfo.OrderBy(c => c.Co2)
-                .Select(c => new Travels { Co2 = c.Co2 })
-                .First();
-            if (travelsToReturn.Co2Min.Co2 == null)
+                .FirstOrDefault();
+
+            if (travelsToReturn.Co2CarMax == null)
             {
-                travelsToReturn.Co2Min.Co2 = 0;
+                travelsToReturn.Co2CarMax.Co2 = 0;
             }
-            travelsToReturn.Co2Average = _context.TravelInfo.OrderByDescending(c => c.Co2)
+
+            travelsToReturn.Co2CarMin = _context.TravelInfo
+                .Where(c => c.UserId == userId && c.Transport == "DRIVING")
+                .OrderBy(c => c.Co2)
+                .Select(c => new Travels { Co2 = c.Co2 })
+                .FirstOrDefault();
+            if (travelsToReturn.Co2CarMin.Co2 == null)
+            {
+                travelsToReturn.Co2CarMin.Co2 = 0;
+            }
+
+            travelsToReturn.Co2CarAverage = _context.TravelInfo
+                .Where(c => c.UserId == userId && c.Transport =="DRIVING")           
+                .OrderByDescending(c => c.Co2)
                 .Select(c => new Travels { Co2 = c.Co2 })
                 .Average(c => c.Co2);
-            //travelsToReturn.TotalCo2 = _context.TravelInfo.Sum(c => c.Co2);
             travelsToReturn.TotalCo2 = _context.TravelInfo.Where(a => a.UserId == userId)
                 .Select(c=>c.Co2).Sum();
 
