@@ -4,9 +4,6 @@
     ViewBag.Title = "My Account";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css" />
-@*<script>$(document).ready(function () {
-        checkIsLoggedIn();
-    });</script>*@
 
 <div onload="GetUserInfo()" class="container">
     <div class="row">
@@ -39,7 +36,8 @@
         <!-- edit form column -->
         <div class="col-md-9 personal-info">
             <div id="alertMessage" class="alert alert-info alert-dismissable none">
-                <a class="panel-close close" data-dismiss="alert">×</a>
+                <p>Update Saved!</p>
+                <a class="panel-close close" data-dismiss="alert"></a>
 
 
             </div>
@@ -66,13 +64,13 @@
                         <i id="errorCheck" class="form-control-feedback bv-no-label glyphicon glyphicon-remove none" data-bv-icon-for="passwordReg" style=""></i>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="newPassword">
                     <label class="col-md-3 control-label">New Password:</label>
                     <div class="col-md-8">
                         <input name="passwordReg" id="passwordReg" class="form-control" type="password" value="">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="confPassword">
                     <label class="col-md-3 control-label">Confirm new password:</label>
                     <div class="col-md-8">
                         <input class="form-control" name="confirmPassword" id="confirmPassword" type="password" value="">

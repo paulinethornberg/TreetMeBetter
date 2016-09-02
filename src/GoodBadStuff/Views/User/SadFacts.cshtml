@@ -1,28 +1,5 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>SadFacts</title>
-</head>
-<body>
+﻿
 
-    <container>
-        <div>
-            @Html.Partial("_PieChart")
-        </div>
-    </container>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br /><br />
-<br /><br />
-<br />
-<br /><br />
-
-    <br />
-    <br />
-    <br />
-    <br />
     <br />
 
 <div>
@@ -31,8 +8,8 @@
 
 </div>
 
- 
-
-
-</body>
-</html>
+ @section Script{
+<script src="~/Scripts/Map.js"></script>
+<script src="~/Scripts/Login.js"></script>
+<script>checkIsLoggedIn()</script>
+}

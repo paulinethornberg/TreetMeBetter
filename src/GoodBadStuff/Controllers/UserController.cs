@@ -19,13 +19,16 @@ namespace GoodBadStuff.Controllers
         UserManager<IdentityUser> _userManager;
         SignInManager<IdentityUser> _signinManager;
         IdentityDbContext _identityContext;
-        DataManager _dataManager;
+        DataManager dataManager;
+        TrvlrContext _context;
         
-        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
+        public UserController(TrvlrContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
+            _context = context;
             _userManager = userManager;
             _signinManager = signinManager;
             _identityContext = dbContext;
+            dataManager = new DataManager(context, userManager);
         }
 
         [Authorize]
@@ -33,8 +36,8 @@ namespace GoodBadStuff.Controllers
         {
             var userName = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userName);
-            _dataManager = new DataManager(new TrvlrContext(), _userManager);
-            var travels = _dataManager.LoadTravels(user.Id);
+            //_dataManager = new DataManager(new TrvlrContext(), _userManager);
+            var travels = dataManager.LoadTravels(user.Id);
             return View(travels);
         }
 
@@ -49,8 +52,8 @@ namespace GoodBadStuff.Controllers
         {
             UserMyAccountVM userMyAccountVm = new UserMyAccountVM();
             var userName = User.Identity.Name;
-            _dataManager = new DataManager(new TrvlrContext(), _userManager);
-            var email = await _dataManager.GetUserInfoFromdb(userName);
+            //_dataManager = new DataManager(new TrvlrContext(), _userManager);
+            var email = await dataManager.GetUserInfoFromdb(userName);
             userMyAccountVm.Email = email;
             userMyAccountVm.UserName = userName;
             
@@ -62,7 +65,14 @@ namespace GoodBadStuff.Controllers
         [AllowAnonymous]
         public async Task<bool> Create(UserCreateVM viewModel)
         {
-            var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
+            var user = new IdentityUser()
+            {
+                UserName = viewModel.Username,
+                Email = viewModel.Email
+            };
+            var result = await _userManager.CreateAsync(user, viewModel.Password);
+            //var result = await _userManager.CreateAsync(new IdentityUser(viewModel.Username), viewModel.Password);
+
             await _signinManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
             return result.Succeeded;
 
@@ -89,7 +99,7 @@ namespace GoodBadStuff.Controllers
                 return delete.Succeeded;
         }
             else
-                return false;
+                return false;   
         }
 
 
