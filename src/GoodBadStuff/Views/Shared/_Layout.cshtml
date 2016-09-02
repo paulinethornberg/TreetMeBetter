@@ -10,16 +10,17 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <nav class="navbar navbar-inverse" style="background-color:#21610B">
-        <div class="container-fluid">
+    <nav  class="navbar navbar-inverse" style="background-color:#21610B" >
+        <div class="container-fluid" >
             <div class="navbar-header">
                 <a class="glyphicon glyphicon-tree-deciduous fa-3x" style="color:white" href="/home/index/"></a>
             </div>
             <ul class="nav navbar-nav">
                 @*<li class="active"><a href="/home/index">Home</a></li>*@
-                <li><a style="font-size:130%; color:white" href="/user/SadFacts"><b>Sad Facts</b></a></li>
+                <li><a style="font-size:130%; color:white"href="/user/SadFacts"><b>About</b></a></li>
+
             </ul>
-            <ul id="navBtns" class="nav navbar-nav navbar-right">
+            <ul id="navBtns" class="nav navbar-nav navbar-right" >
                 <li id="MyTravelsButton" class="none"><a style="font-size:130%; color:white" href="/user/mytravels"><b>My Travels</b></a></li>
                 <li id="MyAccountButton" class="none"><a style="font-size:130%; color:white" href="/user/myaccount/"><b>My Account</b></a></li>
                 <li id="loggBtn"><a data-toggle="modal" data-target="#myModal" style="font-size:130%; color:white" href="#"><span id="btn2" class="glyphicon glyphicon-user"></span><b>Login/Register </b></a></li>
@@ -36,14 +37,12 @@
     @*<script src="~/Scripts/Login.js"></script>*@
 
     @RenderSection("Script", required: false)
-    <footer id="footer">
-        <div>
-            <div id="footer" class="footer navbar-fixed-bottom" style="font-size:100%; background-color:black; color:white; text-align:center">
-                <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
-                TreetMeBetter - compensate for your carbon footprint
-                <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>
+<footer id="footer">
+<div><div class="panel-footer" style="font-size:100%; background-color:black; color:white; text-align:center" >
+         <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
+    TreetMeBetter - compensate for your carbon footprint
+         <a class="glyphicon glyphicon-tree-deciduous fa-2x" style="color:white"></a>
+    </div></div>
+ </footer>
