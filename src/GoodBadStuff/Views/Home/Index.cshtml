@@ -1,9 +1,17 @@
 ﻿@Html.Partial("_Map")
+
 <div class="container">
+
     @Html.Partial("_Search")
     @Html.Partial("_searchresult")
-    @Html.Partial("_LoginForm")
+
 </div>
+
+@*Future implementation of feed*@
+@*    @Html.Partial("TravelData")*@
+
+
+@Html.Partial("_LoginForm")
 
 @section Script{
     @*tog bort asynkron inladdning*@

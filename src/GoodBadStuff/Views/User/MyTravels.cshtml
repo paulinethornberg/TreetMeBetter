@@ -157,9 +157,9 @@
     }
 
     function drawEmission() {
-        var max = Math.round(@(Model.Co2Max.Co2/1000));
-        var average = Math.round(@(Model.Co2Average/1000));
-        var min = Math.round(@(Model.Co2Min.Co2/1000));
+        var max = Math.round(@(Model.Co2CarMax.Co2/1000));
+        var average = Math.round(@(Model.Co2CarAverage/1000));
+        var min = Math.round(@(Model.Co2CarMin.Co2/1000));
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'EmissionType');
@@ -173,7 +173,7 @@
 
         // Set chart options
         var options = {
-            'title': 'Your emissions',
+            'title': 'Your car emissions',
             'width': 1000,
             'height': 700,
             titleTextStyle: {

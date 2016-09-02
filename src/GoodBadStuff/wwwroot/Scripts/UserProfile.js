@@ -34,17 +34,13 @@ $("#updatebtn").click(function () {
     $.post("/User/UpdateUser", { "Username": document.getElementById("usernameReg").value, "CurrentPassword": document.getElementById("oldpassword").value, "Password": document.getElementById("confirmPassword").value, "Email": document.getElementById("emailReg").value }, function (result) {
         if (result === false) {
             $("#alertMessage").removeClass("none");
-            $("#alertMessage").text("Update failed, please try again");
+            $("#alertMessage").text("Update failed, please try again, check your email!");
         }
         else {
             $("#alertMessage").removeClass("none");
-            //document.getElementById('alertMessage').innerHTML = 'Update executed';
             // Alertmessage for saving a travel
             AlertSaveMessage("#alertMessage");
-            //document.getElementById('oldpassword').value = '';
-            //document.getElementById('confirmPassword').value = '';
-            //document.getElementById('passwordReg').value = '';
-
+           
             document.getElementById("formVal").reset();
             $("#oldPasswordDiv").removeClass("has-feedback has-success");
             $("#newPassword").removeClass("has-feedback has-success");
@@ -52,10 +48,7 @@ $("#updatebtn").click(function () {
             $("#validCheck").addClass("none");
             $("#errorCheck").addClass("none");
 
-            //$("#").addClass("none");
         }
-        //stäng rutan
-        //Ändra massa greher till inloggat och sånt Gott och blandat.
         console.log(result);
 
     });
