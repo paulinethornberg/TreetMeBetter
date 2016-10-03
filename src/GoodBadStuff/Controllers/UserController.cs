@@ -62,7 +62,9 @@ namespace GoodBadStuff.Controllers
         [AllowAnonymous]
         public async Task<bool> Create(UserCreateVM viewModel)
         {
-            // if(!modelstate.isValid) 
+            if (!ModelState.IsValid)
+                return false;
+
             var user = new IdentityUser()
             {
                 UserName = viewModel.Username,
@@ -113,12 +115,8 @@ namespace GoodBadStuff.Controllers
         
         public async Task<bool> UpdateUser(UserMyAccountVM viewModel)
         {
-            // validate viewModel
-            //if (!ModelState.IsValid)
-            //{
-            //    bool invalid = false;
-            //    return View(invalid);
-            //}
+            if (!ModelState.IsValid)
+                return false;
 
             var currentUsername = User.Identity.Name;
             var isUpdateSuccess = await dataManager.UpdateUserInfo(currentUsername, viewModel);

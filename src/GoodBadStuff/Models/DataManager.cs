@@ -112,10 +112,7 @@ namespace GoodBadStuff.Models
 
          internal async Task<bool> UpdateUserInfo(string currentUsername, UserMyAccountVM viewModel)
         {
-            if (!viewModel.Email.Contains("@"))
-            {
-                return false;
-            }
+            
             var currentUser = await _userManager.FindByNameAsync(currentUsername);
 
             currentUser.UserName = viewModel.UserName;
@@ -129,6 +126,7 @@ namespace GoodBadStuff.Models
                 return false;
         }
 
+        // Method for 5 latest tweets 
         public string GetLatestInputFromDb()
         {
             return JsonConvert.SerializeObject(_context.TravelInfo.OrderByDescending(t => t.Date).Take(5).ToArray());
@@ -139,34 +137,7 @@ namespace GoodBadStuff.Models
             _context.TravelInfo.Add(travelInfo);
             _context.SaveChanges();
             return travelInfo.Id;
-
-            #region Old ugly SQL solution
-            //SqlConnection myConnection = new SqlConnection(CON_STR);
-            //SqlCommand myCommand = new SqlCommand();
-
-            ////myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, Date, TreeCount, Distance, FromAddress, ToAddress) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2}, {travelInfoDb.Created}, {travelInfoDb.TreeCount}, {travelInfoDb.Distance}, '{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}')";
-            //myCommand.CommandText = $"insert into TravelInfo (Transport, Co2, FromAddress, ToAddress, Distance) values ('{travelInfoDb.Transport}', {travelInfoDb.Co2},'{travelInfoDb.FromAddress}', '{travelInfoDb.ToAddress}', {travelInfoDb.Distance}); select @@identity";
-
-
-            //myCommand.CommandType = System.Data.CommandType.Text;
-            //myCommand.Connection = myConnection;
-
-            //try
-            //{
-            //    myConnection.Open();
-            //    //myCommand.ExecuteNonQuery();
-            //    ret = Convert.ToInt32(myCommand.ExecuteScalar());
-            //}
-            //catch (Exception e)
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    myConnection.Close();
-            //}
-            //return ret.Value;
-            #endregion
+            
         }
 
         public MyTravelsVM LoadTravels(string userId)
@@ -175,6 +146,7 @@ namespace GoodBadStuff.Models
             travelsToReturn.TravelInfo = _context.TravelInfo.Where(a => a.UserId == userId)
                 .Select(c => new Travels { Transport = c.Transport, Co2 = c.Co2, Date = c.Date, Distance = c.Distance, FromAddress = c.FromAddress, ToAddress = c.ToAddress, UserId = c.UserId })
             .ToList();
+
             travelsToReturn.TravelsByBus = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BUS").Count();
             travelsToReturn.TravelsByWalking = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "WALKING").Count();
             travelsToReturn.TravelsByBicycling = _context.TravelInfo.Where(a => a.UserId == userId && a.Transport == "BICYCLING").Count();
@@ -188,26 +160,6 @@ namespace GoodBadStuff.Models
                 .Select(c => new Travels { Co2 = c.Co2 })
                 .FirstOrDefault();
 
-            //if (travelsToReturn.Co2CarMax == null)
-            //{
-            //    travelsToReturn.Co2CarMax.Co2 = 0;
-            //}
-
-            //travelsToReturn.Co2CarMin = _context.TravelInfo
-            //    .Where(c => c.UserId == userId && c.Transport == "DRIVING")
-            //    .OrderBy(c => c.Co2)
-            //    .Select(c => new Travels { Co2 = c.Co2 })
-            //    .FirstOrDefault();
-            //if (travelsToReturn.Co2CarMin.Co2 == null)
-            //{
-            //    travelsToReturn.Co2CarMin.Co2 = 0;
-            //}
-
-            //travelsToReturn.Co2CarAverage = _context.TravelInfo
-            //    .Where(c => c.UserId == userId && c.Transport =="DRIVING")           
-            //    .OrderByDescending(c => c.Co2)
-            //    .Select(c => new Travels { Co2 = c.Co2 })
-            //    .Average(c => c.Co2);
             travelsToReturn.TotalCo2 = _context.TravelInfo.Where(a => a.UserId == userId)
                 .Select(c => c.Co2).Sum();
 
@@ -226,7 +178,6 @@ namespace GoodBadStuff.Models
                 if (counter > 5)
                     break;
             }
-
             return travelsToReturn;
         }
 

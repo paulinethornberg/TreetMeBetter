@@ -37,12 +37,12 @@ namespace GoodBadStuff.Controllers
         [HttpPost]
         public async Task<ActionResult> GetCarbonData(TravelInfoVM travelInfo)
         {
-
+            //Get info from CO2-api
             string webapiurl = $"http://api.commutegreener.com/api/co2/emissions?startLat={travelInfo.FromLat}&startLng={travelInfo.FromLng}&endLat={travelInfo.ToLat}&endLng={travelInfo.ToLng}&format=json";
             var client = new HttpClient();
             var json = await client.GetStringAsync(webapiurl);
 
-            // SAVE DATA TO TO DB EVERY TIME SOMEONE SEARCHES
+            // save data to database on every search
 
             var id = dataManager.GetValuesFromAPIs(travelInfo, json);
 
