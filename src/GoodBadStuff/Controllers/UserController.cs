@@ -20,9 +20,9 @@ namespace GoodBadStuff.Controllers
         SignInManager<IdentityUser> _signinManager;
         IdentityDbContext _identityContext;
         DataManager dataManager;
-        TrvlrContext _context;
+        TreetMeBetterContext _context;
 
-        public UserController(TrvlrContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
+        public UserController(TreetMeBetterContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signinManager, IdentityDbContext dbContext)
         {
 
             dataManager = new DataManager(context, userManager);
@@ -62,9 +62,10 @@ namespace GoodBadStuff.Controllers
         [AllowAnonymous]
         public async Task<bool> Create(UserCreateVM viewModel)
         {
-            if (!ModelState.IsValid)
-                return false;
+            //if (!ModelState.IsValid)
+            //    return false;
 
+            await _identityContext.Database.EnsureCreatedAsync();
             var user = new IdentityUser()
             {
                 UserName = viewModel.Username,

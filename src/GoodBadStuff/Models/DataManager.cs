@@ -16,10 +16,10 @@ namespace GoodBadStuff.Models
 {
     public class DataManager
     {
-        TrvlrContext _context;
+        TreetMeBetterContext _context;
         UserManager<IdentityUser> _userManager;
 
-        public DataManager(TrvlrContext context, UserManager<IdentityUser> userManager)
+        public DataManager(TreetMeBetterContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;

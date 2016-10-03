@@ -22,7 +22,7 @@ namespace GoodBadStuff.Controllers
     {
         DataManager dataManager;
 
-        public HomeController(TrvlrContext context, UserManager<IdentityUser> userManager)
+        public HomeController(TreetMeBetterContext context, UserManager<IdentityUser> userManager)
         {
             dataManager = new DataManager(context, userManager);
 
