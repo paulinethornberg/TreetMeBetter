@@ -52,7 +52,6 @@ namespace GoodBadStuff.Controllers
             UserMyAccountVM userMyAccountVm = new UserMyAccountVM();
             var userName = User.Identity.Name;
             userMyAccountVm.Email = await dataManager.GetUserInfoFromdb(userName);
-
             userMyAccountVm.UserName = userName;
 
             return View(userMyAccountVm);
@@ -114,7 +113,12 @@ namespace GoodBadStuff.Controllers
         
         public async Task<bool> UpdateUser(UserMyAccountVM viewModel)
         {
-            // if(!modelstate.isValid) 
+            // validate viewModel
+            //if (!ModelState.IsValid)
+            //{
+            //    bool invalid = false;
+            //    return View(invalid);
+            //}
 
             var currentUsername = User.Identity.Name;
             var isUpdateSuccess = await dataManager.UpdateUserInfo(currentUsername, viewModel);

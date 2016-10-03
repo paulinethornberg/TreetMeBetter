@@ -25,9 +25,6 @@ namespace GoodBadStuff.Models
             _userManager = userManager;
         }
 
-        //  const string CON_STR = "Server=tcp:trvlr.database.windows.net,1433;Initial Catalog=TRVLRdb;Persist Security Info=False;User ID=trvlr;Password=Secret123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
-        //const string CON_STR = @"Data Source=trvlr.database.windows.net;Initial Catalog=TRVLRdb;Persist Security Info=True;User ID=trvlr;Password=Secret123";
-
         public int GetValuesFromAPIs(TravelInfoVM travelInfoVM, string json)
         {
             var travelInfo = new TravelInfo();
@@ -66,14 +63,11 @@ namespace GoodBadStuff.Models
 
         internal async Task<string> GetUserInfoFromdb(string userName)
         {
-
             var user = await _userManager.FindByNameAsync(userName);
             if (user.Email == null)
                 return user.Email = "";
             else
                 return user.Email;
-
-
         }
 
         internal async Task SaveTravelToUser(int travelInfoId, string userName)

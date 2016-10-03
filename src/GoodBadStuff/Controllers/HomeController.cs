@@ -25,6 +25,7 @@ namespace GoodBadStuff.Controllers
         public HomeController(TrvlrContext context, UserManager<IdentityUser> userManager)
         {
             dataManager = new DataManager(context, userManager);
+
         }
 
         // GET: /<controller>/
