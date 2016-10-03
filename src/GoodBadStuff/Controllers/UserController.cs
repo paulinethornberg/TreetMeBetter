@@ -138,6 +138,7 @@ namespace GoodBadStuff.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
         public IActionResult SadFacts()
         {
             return View();

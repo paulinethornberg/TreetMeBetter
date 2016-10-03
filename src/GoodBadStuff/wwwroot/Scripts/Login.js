@@ -9,14 +9,10 @@
                 $('#myModal').modal('hide');
                 checkIsLoggedIn();
             }
-            //stäng rutan
-            //Ändra massa greher till inloggat och sånt Gott och blandat.
             console.log(result);
 
         });
     });
-
-    
 
     //Log Out
     $("#logOutButton").click(function () {
@@ -25,9 +21,8 @@
         });
     });
 
-    //REGISTER JS
+    //REGISTER JS with validation
     $('#formVal').bootstrapValidator({
-        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -87,7 +82,7 @@
         }
     })
                .on('success.form.bv', function (e) {
-                   $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+                   $('#success_message').slideDown({ opacity: "show" }, "slow") 
                    //$('#registerForm').data('bootstrapValidator').resetForm();
 
                    // Prevent form submission
@@ -113,14 +108,5 @@
         $('#myModal').modal('hide');
     });
 
-    //INPUT VALIDATER
-    //$("usernameReg")
-    //  .focusout(function () {
-    //      $("#usernameReg").addClass("");
-    //  })
-
-    //function LoggedIn() {
-    //    $("#navBtns").html(" <li><a href='#'><span id='btn1' class='glyphicon glyphicon-user'></span> Sign Up</a></li>");
-    //}
 
 });

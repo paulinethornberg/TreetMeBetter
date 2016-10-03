@@ -53,7 +53,7 @@ $("#updatebtn").click(function () {
     });
 });
 
-//Register with enter
+//Register with "enter"
 document.getElementById("formVal").addEventListener("keypress", function (event) {
     if (event.keyCode == 13) {
         event.preventDefault();
@@ -61,7 +61,7 @@ document.getElementById("formVal").addEventListener("keypress", function (event)
     }
 });
 
-
+//Message for saving travel
 function AlertSaveMessage(id) {
     $(id).alert();
     $(id).fadeTo(2000, 500).slideUp(500, function () {

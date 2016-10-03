@@ -57,7 +57,7 @@ $('#goBtn').click(function () {
     });
 });
 
-// CONVERT TO TREES
+// CONVERT CO2-EMISSIONS TO TREES 
 
 function treeConverter(co2) {
     $("#treeDiv").empty();
@@ -172,7 +172,7 @@ function drawRoute() {
         }
     });
 }
-
+// GOOGLE MAPS API: 
 function initialize() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(59.334591, 18.063240);

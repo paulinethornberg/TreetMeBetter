@@ -1,4 +1,4 @@
-﻿// check if used is logged in 
+﻿// check if user is logged in 
 function checkIsLoggedIn() {
     $.get("/user/CheckIsLoggedIn", function (loggedIn) {
         if (loggedIn) {
